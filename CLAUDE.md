@@ -17,6 +17,32 @@ TheEnoughPoint helps financially aware Singaporeans and Asia-based readers inves
 - No hype
 - No get-rich-quick language
 
+## Long-form clarity and density
+
+For a decision article, state the actual choice in the opening 120 words. Do
+not spend several sections rephrasing the same framing before reaching the
+trade-off.
+
+- Give each section one distinct job: explain the mechanism, name a trade-off,
+  show a calculation, or give the reader a decision check. If a paragraph does
+  none of these, cut it.
+- Put non-load-bearing method detail, repeated caveats and source defence in a
+  fold or sources block. Keep only the assumption that materially changes the
+  conclusion in the body.
+- Use one plain-English translation after a technical passage. Do not restate
+  the same conclusion again in the summary, conclusion and tool introduction.
+- For a normal explanatory article, aim for 1,200–1,600 words of body copy,
+  excluding sources, tables and interactive-tool labels. Go longer only when
+  original reporting or a calculation needs the space.
+- Before requesting review, run a density pass: state the article's decision in
+  one sentence, identify the three most useful reader takeaways, then delete
+  duplicate framing and any paragraph that does not change understanding,
+  options or action.
+
+The intended reader is smart but busy. Rigour is shown through a checkable
+calculation and a clear boundary, not by making the reader carry the full audit
+trail through the article.
+
 ## Visual direction
 
 Adapt the Astromag theme toward the reference mockup:

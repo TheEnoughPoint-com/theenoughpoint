@@ -11,7 +11,7 @@ const INFLATION = 0.02;            // a stated assumption, not a forecast
     <div><span class="ccp-lbl">Three-path decision map</span><h4>What does the same amount become?</h4></div>
     <span class="card-live is-kicker">Interactive</span>
   </figcaption>
-  <p class="ccp-intro">Enter the child’s age and the amount. The map shows the same amount as accessible cash, as a CPF top-up and as an equity investment: what each is worth on the child’s 55th birthday, and what the family could reach before then. It does not select a path.</p>
+  <p class="ccp-intro">Enter the child’s age and the amount. The map compares the same amount as accessible cash, a CPF top-up and an equity scenario at age 55 and when the family might need it.</p>
 
   <div class="ccp-controls">
     <label><span>Child’s age today</span><span class="ccp-input"><input id="ccp-age" type="text" value="1" inputmode="numeric" aria-label="Child’s age today, in years" /><i>yrs</i></span></label>
@@ -21,7 +21,7 @@ const INFLATION = 0.02;            // a stated assumption, not a forecast
     <label><span>Cash rate, % a year (0% is the worst case)</span><span class="ccp-input"><input id="ccp-cash-rate" type="text" value="0" inputmode="decimal" aria-label="Cash rate, per cent a year; zero is the worst case" /><i>%</i></span></label>
     <label><span>Years until the money might be needed</span><span class="ccp-input"><input id="ccp-need" type="text" value="17" inputmode="numeric" aria-label="Years until the family might need the money" /><i>yrs</i></span></label>
   </div>
-  <p class="ccp-context">Balances across all CPF accounts set the S$60,000 extra-interest tier; only Special Account savings count against today’s top-up room. Most Singapore-citizen children already hold the MediSave Grant for Newborns, S$4,000 for births from 1 January 2015 to 31 March 2025 and S$5,000 from 1 April 2025. Singapore Savings Bonds, Treasury bills and fixed deposits pay published rates; enter the one that applies.</p>
+  <p class="ccp-context">Balances across all CPF accounts set the S$60,000 extra-interest tier; only Special Account savings count against today’s top-up room. Enter the published cash rate that applies to the accessible option you are considering.</p>
   <p class="ccp-alert" id="ccp-alert" role="alert" hidden></p>
   <p class="ccp-horizon" id="ccp-horizon"></p>
 
@@ -29,7 +29,7 @@ const INFLATION = 0.02;            // a stated assumption, not a forecast
     <section>
       <h5>Keep it as cash</h5>
       <dl>
-        <div><dt>At age 55 (<span class="ccp-year55"></span>)</dt><dd id="ccp-cash-55">—</dd><small>At the cash rate entered, before tax.</small></div>
+        <div><dt>At age 55 (about <span class="ccp-year55"></span>)</dt><dd id="ccp-cash-55">—</dd><small>At the cash rate entered, before tax.</small></div>
         <div><dt>Same, in today’s dollars at 2% inflation</dt><dd id="ccp-cash-55-real">—</dd><small>Inflation is an assumption, not a return.</small></div>
         <div><dt>Reachable in <span class="ccp-need"></span> years</dt><dd id="ccp-cash-need">—</dd><small>Available at any time.</small></div>
       </dl>
@@ -37,7 +37,7 @@ const INFLATION = 0.02;            // a stated assumption, not a forecast
     <section>
       <h5>Put it into CPF now</h5>
       <dl>
-        <div><dt>At age 55 (<span class="ccp-year55"></span>)</dt><dd id="ccp-cpf-55">—</dd><small>Value from this top-up at today’s 5%/4% tiers, after the all-account balances entered.</small></div>
+        <div><dt>At age 55 (about <span class="ccp-year55"></span>)</dt><dd id="ccp-cpf-55">—</dd><small>Value from this top-up at today’s 5%/4% tiers, after the all-account balances entered.</small></div>
         <div><dt>Same, in today’s dollars at 2% inflation</dt><dd id="ccp-cpf-55-real">—</dd><small>Same assumption as the other columns.</small></div>
         <div><dt>Reachable in <span class="ccp-need"></span> years</dt><dd>S$0</dd><small id="ccp-cpf-need-note">—</small></div>
       </dl>
@@ -45,7 +45,7 @@ const INFLATION = 0.02;            // a stated assumption, not a forecast
     <section>
       <h5>Invest in equities</h5>
       <dl>
-        <div><dt>At age 55 (<span class="ccp-year55"></span>)</dt><dd id="ccp-eq-55">—</dd><small>Two constant-return paths, 4% and 8% a year. Neither is a floor or a forecast; a loss over the period is possible.</small></div>
+        <div><dt>At age 55 (about <span class="ccp-year55"></span>)</dt><dd id="ccp-eq-55">—</dd><small>Two constant-return paths, 4% and 8% a year. Neither is a floor or a forecast; a loss over the period is possible.</small></div>
         <div><dt>Same, in today’s dollars at 2% inflation</dt><dd id="ccp-eq-55-real">—</dd><small>Same assumption as the other columns.</small></div>
         <div><dt>Reachable in <span class="ccp-need"></span> years</dt><dd id="ccp-eq-need">—</dd><small>Available at any time at market value, which may be below the amount invested.</small></div>
       </dl>
@@ -54,7 +54,7 @@ const INFLATION = 0.02;            // a stated assumption, not a forecast
 
   <p class="ccp-room" id="ccp-room"></p>
   <p class="ccp-unpriced"><strong>The part that cannot be priced here:</strong> whether the family can accept a lower equity value when money is needed, and whether the equity account belongs to a parent or the child. Those are ownership and risk decisions, not rate inputs.</p>
-  <p class="ccp-note">Assumes the child has no CPF balances beyond those entered (all-account balances set the extra-interest tier; Special Account savings alone set the top-up room), nothing invested under the CPF Investment Scheme, and no later deposits. Interest is applied once a year at today’s tiers; CPF computes interest monthly and credits it annually, and rates are reviewed quarterly. The 4% and 8% equity paths are constant total returns with dividends reinvested, before fees, taxes and currency; neither is a floor or a forecast, and a loss over the period is possible. Inflation at 2% is an assumption, not a forecast. Nothing here is a CPF-rate forecast or a personal recommendation.</p>
+  <p class="ccp-note">Assumes no CPF balances beyond those entered, no CPF Investment Scheme holdings and no later deposits. Interest is applied annually at today’s tiers; CPF credits it monthly and rates are reviewed quarterly. Equity figures are constant total-return scenarios before fees, tax and currency. Inflation at 2% is an assumption. This is not a CPF-rate forecast or a personal recommendation.</p>
 </figure>
 
 <style is:global>
@@ -97,7 +97,7 @@ const INFLATION = 0.02;            // a stated assumption, not a forecast
 
     document.querySelectorAll('.ccp-year55').forEach(el => { el.textContent = String(year55); });
     document.querySelectorAll('.ccp-need').forEach(el => { el.textContent = String(need); });
-    $('ccp-horizon').textContent = 'A child aged ' + age + ' today turns 55 in ' + year55 + ' and 65 in ' + year65 + '. The point at which the family might need the money is ' + needYear + '.';
+    $('ccp-horizon').textContent = 'This annual illustration places a child aged ' + age + ' today at 55 around ' + year55 + ' and at 65 around ' + year65 + '. The point at which the family might need the money is around ' + needYear + '.';
 
     const cash55 = amount * Math.pow(1 + cashRate, yearsTo55);
     const cpf55 = tieredBalance(balances + amount, yearsTo55) - tieredBalance(balances, yearsTo55);

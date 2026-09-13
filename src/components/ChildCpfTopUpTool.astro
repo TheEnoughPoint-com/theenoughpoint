@@ -1,0 +1,143 @@
+---
+// Current CPF-rule inputs are deliberately local and visible. Re-verify before publication.
+const CURRENT_FRS = 220400;        // Full Retirement Sum for 2026; refresh each January
+const FRS_AS_AT = '1 January 2026';
+const EXTRA_INTEREST_CAP = 60000;  // the extra 1% applies to the first S$60,000 of combined balances
+const INFLATION = 0.02;            // a stated assumption, not a forecast
+---
+
+<figure class="ccp" data-card="tool">
+  <figcaption class="ccp-head">
+    <div><span class="ccp-lbl">Three-path decision map</span><h4>What does the same amount become?</h4></div>
+    <span class="card-live is-kicker">Interactive</span>
+  </figcaption>
+  <p class="ccp-intro">Enter the child’s age and the amount. The map shows the same amount as accessible cash, as a CPF top-up and as an equity investment: what each is worth on the child’s 55th birthday, and what the family could reach before then. It does not select a path.</p>
+
+  <div class="ccp-controls">
+    <label><span>Child’s age today</span><span class="ccp-input"><input id="ccp-age" type="text" value="1" inputmode="numeric" aria-label="Child’s age today, in years" /><i>yrs</i></span></label>
+    <label><span>CPF balances today, all accounts</span><span class="ccp-input"><i>S$</i><input id="ccp-balances" type="text" value="0" inputmode="numeric" aria-label="Child’s CPF balances today across all accounts" /></span></label>
+    <label><span>Of which Special Account savings</span><span class="ccp-input"><i>S$</i><input id="ccp-sa" type="text" value="0" inputmode="numeric" aria-label="Of which Special Account savings" /></span></label>
+    <label><span>Amount being considered</span><span class="ccp-input"><i>S$</i><input id="ccp-amount" type="text" value="10,000" inputmode="numeric" aria-label="Amount being considered" /></span></label>
+    <label><span>Cash rate, % a year (0% is the worst case)</span><span class="ccp-input"><input id="ccp-cash-rate" type="text" value="0" inputmode="decimal" aria-label="Cash rate, per cent a year; zero is the worst case" /><i>%</i></span></label>
+    <label><span>Years until the money might be needed</span><span class="ccp-input"><input id="ccp-need" type="text" value="17" inputmode="numeric" aria-label="Years until the family might need the money" /><i>yrs</i></span></label>
+  </div>
+  <p class="ccp-context">Balances across all CPF accounts set the S$60,000 extra-interest tier; only Special Account savings count against today’s top-up room. Most Singapore-citizen children already hold the MediSave Grant for Newborns, S$4,000 for births from 1 January 2015 to 31 March 2025 and S$5,000 from 1 April 2025. Singapore Savings Bonds, Treasury bills and fixed deposits pay published rates; enter the one that applies.</p>
+  <p class="ccp-alert" id="ccp-alert" role="alert" hidden></p>
+  <p class="ccp-horizon" id="ccp-horizon"></p>
+
+  <div class="ccp-paths" aria-live="polite">
+    <section>
+      <h5>Keep it as cash</h5>
+      <dl>
+        <div><dt>At age 55 (<span class="ccp-year55"></span>)</dt><dd id="ccp-cash-55">—</dd><small>At the cash rate entered, before tax.</small></div>
+        <div><dt>Same, in today’s dollars at 2% inflation</dt><dd id="ccp-cash-55-real">—</dd><small>Inflation is an assumption, not a return.</small></div>
+        <div><dt>Reachable in <span class="ccp-need"></span> years</dt><dd id="ccp-cash-need">—</dd><small>Available at any time.</small></div>
+      </dl>
+    </section>
+    <section>
+      <h5>Put it into CPF now</h5>
+      <dl>
+        <div><dt>At age 55 (<span class="ccp-year55"></span>)</dt><dd id="ccp-cpf-55">—</dd><small>Value from this top-up at today’s 5%/4% tiers, after the all-account balances entered.</small></div>
+        <div><dt>Same, in today’s dollars at 2% inflation</dt><dd id="ccp-cpf-55-real">—</dd><small>Same assumption as the other columns.</small></div>
+        <div><dt>Reachable in <span class="ccp-need"></span> years</dt><dd>S$0</dd><small id="ccp-cpf-need-note">—</small></div>
+      </dl>
+    </section>
+    <section>
+      <h5>Invest in equities</h5>
+      <dl>
+        <div><dt>At age 55 (<span class="ccp-year55"></span>)</dt><dd id="ccp-eq-55">—</dd><small>Two constant-return paths, 4% and 8% a year. Neither is a floor or a forecast; a loss over the period is possible.</small></div>
+        <div><dt>Same, in today’s dollars at 2% inflation</dt><dd id="ccp-eq-55-real">—</dd><small>Same assumption as the other columns.</small></div>
+        <div><dt>Reachable in <span class="ccp-need"></span> years</dt><dd id="ccp-eq-need">—</dd><small>Available at any time at market value, which may be below the amount invested.</small></div>
+      </dl>
+    </section>
+  </div>
+
+  <p class="ccp-room" id="ccp-room"></p>
+  <p class="ccp-unpriced"><strong>The part that cannot be priced here:</strong> whether the family can accept a lower equity value when money is needed, and whether the equity account belongs to a parent or the child. Those are ownership and risk decisions, not rate inputs.</p>
+  <p class="ccp-note">Assumes the child has no CPF balances beyond those entered (all-account balances set the extra-interest tier; Special Account savings alone set the top-up room), nothing invested under the CPF Investment Scheme, and no later deposits. Interest is applied once a year at today’s tiers; CPF computes interest monthly and credits it annually, and rates are reviewed quarterly. The 4% and 8% equity paths are constant total returns with dividends reinvested, before fees, taxes and currency; neither is a floor or a forecast, and a loss over the period is possible. Inflation at 2% is an assumption, not a forecast. Nothing here is a CPF-rate forecast or a personal recommendation.</p>
+</figure>
+
+<style is:global>
+.ccp{--ccp-paper:#fff;--ccp-soft:var(--color-surface);--ccp-ink:var(--color-dark);--ccp-body:var(--color-body);--ccp-muted:var(--color-muted);--ccp-rule:var(--color-border);--ccp-green:var(--color-brand-700);margin:28px 0;background:var(--ccp-paper);border:1px solid var(--ccp-rule);border-radius:12px;overflow:hidden;color:var(--ccp-ink)}.ccp-head{padding:14px 20px;background:var(--ccp-soft);border-bottom:1px solid var(--ccp-rule);display:flex;align-items:start;justify-content:space-between;gap:12px}.ccp-lbl{display:block;color:var(--ccp-muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.post-content .ccp h4{margin:3px 0 0;color:var(--ccp-ink);font-size:18px;letter-spacing:0}.post-content .ccp-intro{margin:0;padding:15px 20px 0;color:var(--ccp-body);font-size:14px;line-height:1.6}.ccp-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:16px 20px 6px}.ccp-controls label{display:flex;align-items:baseline;justify-content:space-between;gap:10px;color:var(--ccp-body);font-size:13px;font-weight:600;line-height:1.35}.ccp-input{display:inline-flex;align-items:baseline;flex:none;font-family:var(--font-mono),'SF Mono',monospace;font-size:16px;font-weight:600}.ccp-input i{font-style:normal;color:var(--ccp-muted);margin:0 2px}.ccp-input input{min-height:44px;width:8ch;padding:0 0 1px;background:transparent;border:0;border-bottom:1px dashed var(--ccp-rule);color:var(--ccp-ink);font:inherit;text-align:right}.ccp-input input:focus{outline:none;border-bottom:1px solid var(--ccp-green)}.post-content .ccp-context,.post-content .ccp-room{margin:0;padding:8px 20px 12px;color:var(--ccp-muted);font-size:12px;line-height:1.55}.post-content .ccp-room{padding:12px 20px 0}.post-content .ccp-alert{margin:0 20px 13px;color:#9b3127;font-size:12px;font-weight:600;line-height:1.5}.post-content .ccp-horizon{margin:0 20px 14px;padding:10px 12px;border-left:3px solid var(--ccp-green);background:var(--ccp-soft);color:var(--ccp-body);font-size:13px;line-height:1.5}.ccp-paths{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ccp-rule);border-bottom:1px solid var(--ccp-rule)}.ccp-paths>section{padding:15px 20px}.ccp-paths>section+section{border-left:1px solid var(--ccp-rule)}.post-content .ccp-paths h5{margin:0 0 10px;color:var(--ccp-ink);font-size:15px;letter-spacing:0}.ccp-paths dl{margin:0}.ccp-paths dl>div+div{margin-top:11px;padding-top:11px;border-top:1px solid var(--ccp-rule)}.ccp-paths dt{color:var(--ccp-muted);font-size:11px;font-weight:700;letter-spacing:.05em;line-height:1.35;text-transform:uppercase}.ccp-paths dd{margin:3px 0;color:var(--ccp-ink);font-family:var(--font-mono),'SF Mono',monospace;font-size:18px;font-weight:700;line-height:1.3;font-variant-numeric:tabular-nums}.ccp-paths small{display:block;color:var(--ccp-muted);font-size:11px;line-height:1.4}.post-content .ccp-unpriced{margin:0;padding:12px 20px;border-top:1px solid var(--ccp-rule);border-bottom:1px solid var(--ccp-rule);background:var(--ccp-soft);color:var(--ccp-body);font-size:13px;line-height:1.5}.post-content .ccp-note{margin:0;padding:13px 20px 16px;color:var(--ccp-muted);font-size:11px;line-height:1.55}.ccp *{box-sizing:border-box}@media(max-width:780px){.ccp-controls,.ccp-paths{grid-template-columns:1fr}.ccp-controls{gap:12px}.ccp-paths>section+section{border-left:0;border-top:1px solid var(--ccp-rule)}}@media(prefers-reduced-motion:reduce){.ccp *{transition:none!important}}
+</style>
+
+<script is:inline define:vars={{ CURRENT_FRS, FRS_AS_AT, EXTRA_INTEREST_CAP, INFLATION }}>
+(() => {
+  const $ = id => document.getElementById(id);
+  // Every amount prints as "S$" plus a comma-grouped whole number.
+  const money = n => 'S$' + Math.round(n).toLocaleString('en-SG');
+  const parse = (el, fallback, min, max) => {
+    const raw = String(el.value).replace(/[^\d.]/g, '');
+    if (raw === '') return fallback;
+    const n = Number(raw);
+    return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
+  };
+  // Today's tiers held constant: 5% on the first S$60,000 of combined balances, 4% above it, applied once a year.
+  const tieredBalance = (opening, years) => {
+    let balance = opening;
+    for (let year = 0; year < years; year += 1) balance += Math.min(balance, EXTRA_INTEREST_CAP) * .05 + Math.max(balance - EXTRA_INTEREST_CAP, 0) * .04;
+    return balance;
+  };
+  // Calendar year only: integer year arithmetic with no month or day component, so month indexing does not arise.
+  const yearNow = new Date().getFullYear();
+  const update = () => {
+    const age = Math.floor(parse($('ccp-age'), 0, 0, 54));
+    const balancesEntered = parse($('ccp-balances'), 0, 0, 1e7);
+    const sa = parse($('ccp-sa'), 0, 0, 1e7);
+    // All-account balances set the extra-interest tier; the total can never be below its Special Account part.
+    const balances = Math.max(balancesEntered, sa);
+    // Special Account savings alone determine today's top-up room under the Full Retirement Sum formula.
+    const roomToday = Math.max(0, CURRENT_FRS - sa);
+    const amount = parse($('ccp-amount'), 0, 0, 1e7);
+    const cashRate = parse($('ccp-cash-rate'), 0, 0, 10) / 100;
+    const need = Math.floor(parse($('ccp-need'), 1, 1, 60));
+    const yearsTo55 = 55 - age, yearsTo65 = 65 - age;
+    const year55 = yearNow + yearsTo55, year65 = yearNow + yearsTo65, needYear = yearNow + need;
+    const deflator = Math.pow(1 + INFLATION, yearsTo55);
+
+    document.querySelectorAll('.ccp-year55').forEach(el => { el.textContent = String(year55); });
+    document.querySelectorAll('.ccp-need').forEach(el => { el.textContent = String(need); });
+    $('ccp-horizon').textContent = 'A child aged ' + age + ' today turns 55 in ' + year55 + ' and 65 in ' + year65 + '. The point at which the family might need the money is ' + needYear + '.';
+
+    const cash55 = amount * Math.pow(1 + cashRate, yearsTo55);
+    const cpf55 = tieredBalance(balances + amount, yearsTo55) - tieredBalance(balances, yearsTo55);
+    const eq4 = amount * Math.pow(1.04, yearsTo55), eq8 = amount * Math.pow(1.08, yearsTo55);
+
+    $('ccp-cash-55').textContent = money(cash55);
+    $('ccp-cash-55-real').textContent = money(cash55 / deflator);
+    $('ccp-cash-need').textContent = money(amount * Math.pow(1 + cashRate, need));
+    $('ccp-cpf-55').textContent = money(cpf55);
+    $('ccp-cpf-55-real').textContent = money(cpf55 / deflator);
+    $('ccp-eq-55').innerHTML = money(eq4) + ' at 4%<br>' + money(eq8) + ' at 8%';
+    $('ccp-eq-55-real').innerHTML = money(eq4 / deflator) + ' at 4%<br>' + money(eq8 / deflator) + ' at 8%';
+    $('ccp-eq-need').innerHTML = money(amount * Math.pow(1.04, need)) + ' at 4%<br>' + money(amount * Math.pow(1.08, need)) + ' at 8%';
+    $('ccp-cpf-need-note').textContent = need >= yearsTo55
+      ? 'That point is at or after 55. Before 55 nothing is reachable; from 65 at the earliest the money arrives as monthly payouts.'
+      : 'Top-ups are irreversible; at 55 they move to the Retirement Account for monthly payouts.';
+    $('ccp-room').textContent = 'Top-up room today: the Full Retirement Sum of ' + money(CURRENT_FRS) + ' (as at ' + FRS_AS_AT + ') less ' + money(sa) + ' of Special Account savings leaves ' + money(roomToday) + '. MediSave and Ordinary Account savings do not count against it.';
+
+    const alert = $('ccp-alert');
+    if (amount > roomToday) {
+      alert.hidden = false;
+      alert.textContent = 'The amount exceeds today’s top-up room of ' + money(roomToday) + ' by ' + money(amount - roomToday) + ': the Full Retirement Sum of ' + money(CURRENT_FRS) + ' (as at ' + FRS_AS_AT + ') less the Special Account savings entered.';
+    } else {
+      alert.hidden = true;
+      alert.textContent = '';
+    }
+  };
+  const moneyFields = ['ccp-balances', 'ccp-sa', 'ccp-amount'];
+  ['ccp-age', 'ccp-balances', 'ccp-sa', 'ccp-amount', 'ccp-cash-rate', 'ccp-need'].forEach(id => {
+    const el = $(id);
+    el.addEventListener('input', update);
+    el.addEventListener('change', update);
+    el.addEventListener('blur', () => {
+      if (moneyFields.includes(id)) el.value = Math.round(parse(el, 0, 0, 1e7)).toLocaleString('en-SG');
+      else if (id === 'ccp-cash-rate') el.value = String(parse(el, 0, 0, 10));
+      else if (id === 'ccp-age') el.value = String(Math.floor(parse(el, 0, 0, 54)));
+      else el.value = String(Math.floor(parse(el, 1, 1, 60)));
+      update();
+    });
+  });
+  update();
+})();
+</script>

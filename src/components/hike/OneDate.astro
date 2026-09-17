@@ -1,0 +1,82 @@
+---
+// The one date that changes the answer. Gold's six-month record after a first hike, with
+// all six hikes, with the five dates the circulating tables use (March 1997 left out), and
+// the usual six-month outcome since 1994. One tint; the bars are the same variable on the
+// same basis; the labels say which set of dates each one is.
+//
+// Our computation: World Bank Pink Sheet monthly averages, US dollars, six months from the
+// hike month's average. In US dollars because that is the currency the claim is made in.
+import ToolBrand from '../ToolBrand.astro';
+
+const MAX = 10; // % — headroom above the largest bar
+const ROWS = [
+  { label: 'All six first hikes since 1994', med: 3.9, note: 'higher in 3 of 6' },
+  { label: 'The five most tables use (March 1997 left out)', med: 8.4, note: 'higher in 3 of 5' },
+  { label: 'Any six-month window since 1994', med: 3.5, note: 'higher 61% of the time' },
+];
+---
+
+<div class="od" data-card="figure">
+  <div class="od-head">
+    <span class="od-lbl">Gold six months after a first hike: the same claim, three sets of dates</span>
+    <span class="od-sub">Middle outcome &middot; change in gold&rsquo;s monthly average price, US dollars</span>
+  </div>
+
+  <div class="od-body">
+    {ROWS.map((r) => (
+      <div class="od-grp">
+        <div class="od-grp-h"><span class="od-cond">{r.label}</span><span class="od-n">{r.note}</span></div>
+        <div class="od-track" role="img" aria-label={`${r.label}: median six-month change +${r.med} per cent, ${r.note}`}>
+          <span class="od-bar" style={`width:${(r.med / MAX) * 100}%`}><span class="od-in">+{r.med.toFixed(1)}%</span></span>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="od-out">
+    <p class="od-out-s">
+      Leave out one hike and gold&rsquo;s post-hike figure <b>more than doubles</b>. A figure that changes that much when one date is dropped is telling you about the dates, not about gold &mdash; and with all six counted, gold after a first hike looks like gold in any six months.
+    </p>
+  </div>
+
+  <div class="od-notes">
+    <p>
+      World Bank Commodity Markets Outlook monthly data, gold (London afternoon price, monthly average,
+      US$/troy oz). Six months counted from the hike month&rsquo;s average. March 1997 was the first increase
+      after a two-year pause and falls inside every version&rsquo;s stated window. Our computation; script on
+      this page.
+    </p>
+    <ToolBrand />
+  </div>
+</div>
+
+<style is:global>
+.od{
+  --od-bd:var(--color-border); --od-t1:var(--color-dark); --od-t2:var(--color-body);
+  --od-gold:var(--color-gold); --od-deep:var(--color-navy);
+  --od-mono:var(--font-mono),'SF Mono',Menlo,Consolas,monospace;
+  background:#fff;border:1px solid var(--od-bd);border-radius:12px;
+  box-shadow:0 4px 6px rgba(0,0,0,.05),0 2px 4px rgba(0,0,0,.04);
+  overflow:hidden;margin:26px 0;color:var(--od-t1)
+}
+.od-head{padding:14px 20px;background:var(--color-surface);border-bottom:1px solid var(--od-bd)}
+.od-lbl{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.1px;color:var(--od-t1)}
+.od-sub{display:block;margin-top:4px;font-size:11.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.8px;color:var(--od-t2)}
+.od-body{padding:4px 20px 14px}
+.od-grp{padding:13px 0 6px;border-bottom:1px dashed var(--od-bd)}
+.od-grp:last-of-type{border-bottom:0}
+.od-grp-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.od-cond{font-size:14px;font-weight:700;color:var(--od-t1)}
+.od-n{font-family:var(--od-mono);font-size:11.5px;color:var(--od-t2)}
+.od-track{position:relative;width:100%;height:32px;border-radius:5px;overflow:hidden;
+  border:1px solid var(--od-bd);background:var(--color-surface)}
+.od-bar{display:flex;align-items:center;justify-content:flex-end;height:100%;min-width:0;background:var(--od-gold)}
+/* Navy on gold measures 6.6:1 at 13.5px. */
+.od-in{font-family:var(--od-mono);font-size:13.5px;font-weight:700;padding:0 8px;white-space:nowrap;color:var(--od-deep)}
+.od-out{background:var(--od-deep);color:#fff;padding:17px 20px}
+.post-content .od-out-s{font-size:15px;line-height:1.62;color:#D8DEE8;margin:0}
+.od-out-s b{font-weight:600;color:#fff}
+.od-notes{padding:14px 20px 15px;border-top:1px solid var(--od-bd);background:var(--color-surface)}
+.post-content .od-notes p{font-size:12px;line-height:1.5;color:var(--color-muted);margin:0 0 8px}
+</style>

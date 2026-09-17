@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" role="img" aria-label="A three-by-three grid: US shares, gold and the STI, against one, six and twelve months after each of the six first Fed hikes since 1994, in Singapore dollars. Each cell shows how many of the six hikes were followed by a higher level: US shares 1 of 6, 3 of 6 and 4 of 6; gold 4 of 6, 3 of 6 and 3 of 6; the STI 2 of 6, 2 of 6 and 2 of 6. A line beneath gives the usual share of windows that end higher: 62, 71 and 78 per cent. Caption: the only consistent move was a one-month dip in US shares.">
+  <!-- Share card for the first-hike piece — the article's single strongest atom (the
+       count-of-six grid with the base rate beneath) as a self-contained 4:5 portrait for
+       WhatsApp / Telegram / Instagram forwards.
+
+       Glance grammar: "N of 6" with six pips per cell so the pattern reads before the
+       text does; one tint for the pips (filled = higher), no red/green verdict; the
+       usual-share line makes every cell answer "compared to what?". Provenance travels on
+       the image: basis, sample, sources, URL. -->
+
+  <rect width="1080" height="1350" fill="#081627"/>
+  <rect width="1080" height="1350" fill="#0E2038" opacity="0.55"/>
+
+  <!-- kicker -->
+  <text x="540" y="92" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="26" letter-spacing="4" fill="#C89A3C" font-weight="700">THE FED'S FIRST HIKE SINCE 2023</text>
+
+  <!-- headline -->
+  <text x="540" y="178" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="62" fill="#F6F4EF">Six first hikes since 1994.</text>
+  <text x="540" y="240" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="38" font-style="italic" fill="#F6F4EF" opacity="0.85">How often each sleeve was higher afterwards.</text>
+
+  <text x="540" y="304" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="24" fill="#F6F4EF" opacity="0.7">In Singapore dollars, price return, counted out of the six hikes</text>
+
+  <!-- column headers -->
+  <text x="430" y="376" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#F6F4EF">1 MONTH</text>
+  <text x="660" y="376" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#F6F4EF">6 MONTHS</text>
+  <text x="890" y="376" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#F6F4EF">12 MONTHS</text>
+
+  <!-- row: US shares  (1, 3, 4) -->
+  <text x="60" y="468" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#C89A3C">US SHARES</text>
+  <text x="60" y="500" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#F6F4EF" opacity="0.6">S&amp;P 500</text>
+  <g>
+    <rect x="325" y="404" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="430" y="482" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">1<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(355 512)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="56" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="84" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+    <rect x="555" y="404" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="660" y="482" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">3<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(585 512)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="#3FA989"/><rect x="84" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+    <rect x="785" y="404" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="890" y="482" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">4<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(815 512)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="#3FA989"/><rect x="84" width="22" height="22" rx="4" fill="#3FA989"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+  </g>
+
+  <!-- row: Gold  (4, 3, 3) -->
+  <text x="60" y="648" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#C89A3C">GOLD</text>
+  <text x="60" y="680" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#F6F4EF" opacity="0.6">monthly averages</text>
+  <g>
+    <rect x="325" y="584" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="430" y="662" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">4<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(355 692)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="#3FA989"/><rect x="84" width="22" height="22" rx="4" fill="#3FA989"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+    <rect x="555" y="584" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="660" y="662" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">3<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(585 692)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="#3FA989"/><rect x="84" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+    <rect x="785" y="584" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="890" y="662" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">3<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(815 692)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="#3FA989"/><rect x="84" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+  </g>
+
+  <!-- row: STI  (2, 2, 2) -->
+  <text x="60" y="828" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#C89A3C">STI</text>
+  <text x="60" y="860" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#F6F4EF" opacity="0.6">Straits Times Index</text>
+  <g>
+    <rect x="325" y="764" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="430" y="842" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">2<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(355 872)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="84" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+    <rect x="555" y="764" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="660" y="842" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">2<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(585 872)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="84" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+    <rect x="785" y="764" width="210" height="150" rx="14" fill="#10233D" stroke="#1E3A5F" stroke-width="2"/>
+    <text x="890" y="842" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#F6F4EF">2<tspan font-size="34" opacity="0.75"> of 6</tspan></text>
+    <g transform="translate(815 872)"><rect width="22" height="22" rx="4" fill="#3FA989"/><rect x="28" width="22" height="22" rx="4" fill="#3FA989"/><rect x="56" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="84" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="112" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/><rect x="140" width="22" height="22" rx="4" fill="none" stroke="#3FA989" stroke-width="2"/></g>
+  </g>
+
+  <!-- compared to what: the usual share of windows ending higher -->
+  <text x="60" y="966" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="1.2" fill="#3FA989">USUAL, ANY START</text>
+  <text x="60" y="994" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#F6F4EF" opacity="0.6">share of windows higher, 1994–2026</text>
+  <text x="430" y="984" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#3FA989">62%</text>
+  <text x="660" y="984" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#3FA989">71%</text>
+  <text x="890" y="984" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#3FA989">78%</text>
+  <text x="540" y="1032" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#F6F4EF" opacity="0.55">usual row is US shares in Singapore dollars; gold 52 · 63 · 68, the STI 56 · 59 · 57</text>
+
+  <!-- killer line -->
+  <text x="540" y="1100" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="#C89A3C">The only consistent move was a</text>
+  <text x="540" y="1154" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="#C89A3C">one-month dip in US shares. Six is not a plan.</text>
+
+  <!-- provenance -->
+  <text x="540" y="1218" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#F6F4EF" opacity="0.55">Six first hikes, Feb 1994 to Mar 2022, each measured from the last close before the announcement</text>
+  <text x="540" y="1250" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#F6F4EF" opacity="0.55">FRED · Yahoo Finance · World Bank Pink Sheet · price returns · our computation · script on the article</text>
+
+  <!-- url + wordmark -->
+  <text x="540" y="1298" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#C89A3C">theenoughpoint.com/fed-rate-hike-us-shares-gold-sti</text>
+  <text x="540" y="1332" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="4.2" fill="#F6F4EF" opacity="0.6">THEENOUGHPOINT.COM</text>
+</svg>

@@ -5,3 +5,9 @@
 /rising-rates-bull-market /rates-rising-market-about-to-crash/ 301
 /where-is-your-enough-point-v2/ /where-is-your-enough-point/ 301
 /where-is-your-enough-point-v2 /where-is-your-enough-point/ 301
+
+# The estate-tax tool page was converted into an Invest Better article in
+# cf15030 (2026-07-24) without a redirect, so /tools/us-estate-tax/ has 404ed
+# since. Same content, new home.
+/tools/us-estate-tax/ /us-estate-tax-singapore-investors/ 301
+/tools/us-estate-tax /us-estate-tax-singapore-investors/ 301

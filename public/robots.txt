@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+# Cloudflare rewrites the mailto links on /contact/ into /cdn-cgi/l/email-protection
+# to obfuscate the addresses. That endpoint returns 404 to a crawler following it
+# directly, which Search Console then reports against the site. Nothing under
+# /cdn-cgi/ is ours or worth crawling.
+Disallow: /cdn-cgi/
+
 Sitemap: https://theenoughpoint.com/sitemap-index.xml

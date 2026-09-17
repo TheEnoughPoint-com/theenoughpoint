@@ -1,0 +1,144 @@
+---
+// Range of outcomes, the dashboard's second surface: the twelve months after each of the six
+// first hikes as its own thin line, the shaded span between the best and worst of them, and
+// the cross-event median in bold. The point is the width of the cloud, not the line through
+// it. US shares in Singapore dollars, the sleeve with the one robust cell.
+//
+// Construction follows the house pattern: the SVG carries ONLY geometry (viewBox 0 0 100 100,
+// preserveAspectRatio none, strokes non-scaling), and every piece of text is HTML positioned
+// by percentages, so type never scales below the 11px floor on a phone.
+//
+// y-domain −16% to +32%. The 1997 path leaves the top of the box (it ends at +56%); the
+// end-value list under the chart says so rather than squashing the other five to fit it.
+// Data: sampled every 6 sessions from the last close before each announcement; S&P 500
+// closes (Yahoo Finance) times SGD per USD (FRED DEXSIUS). Re-derivable with
+// /data/first-hike.py: the 21/63/126/252-session medians match the bars above.
+import ToolBrand from '../ToolBrand.astro';
+
+const YEARS = [1994, 1997, 1999, 2004, 2015, 2022];
+const PATHS = [[0.0,-2.3,-1.8,-3.8,-3.5,-2.2,-5.1,-7.6,-8.6,-8.5,-7.7,-10.1,-8.1,-8.0,-8.0,-7.5,-9.9,-10.9,-11.3,-10.6,-10.1,-9.8,-8.9,-8.5,-6.5,-8.1,-8.6,-10.0,-12.4,-9.1,-10.1,-9.0,-10.5,-10.1,-13.1,-12.8,-13.5,-11.8,-12.2,-12.2,-10.5,-10.8,-8.5],
+  [0.0,-5.0,-4.2,-3.0,-1.9,5.2,5.5,5.1,6.5,8.0,11.4,10.8,15.1,17.4,20.7,23.3,21.5,21.7,19.9,24.2,22.8,28.3,27.4,33.1,29.9,30.8,27.4,27.6,33.0,33.9,39.5,45.1,36.7,47.8,48.2,49.1,47.8,47.3,49.4,49.6,53.1,52.2,56.5],
+  [0.0,2.8,5.2,-1.3,-3.3,-5.3,-3.5,-1.1,-0.7,-3.3,-4.6,-5.6,-2.4,-8.2,-5.8,-1.3,1.2,3.2,2.2,2.7,3.4,5.5,0.9,5.2,2.5,4.0,3.8,2.9,0.7,1.3,3.7,13.6,11.5,12.4,6.4,8.7,7.2,9.4,3.6,9.0,9.1,11.8,9.3],
+  [0.0,-2.9,-3.9,-4.2,-3.1,-5.5,-4.3,-2.7,-2.3,-2.8,-3.7,-2.4,-3.0,-5.3,-3.8,-1.5,0.3,-0.6,-0.3,0.6,0.7,1.8,-0.1,-1.5,-2.5,0.2,0.8,1.0,0.3,1.4,-1.3,-1.2,0.5,0.5,-4.0,-3.5,-1.4,-0.9,1.3,3.2,2.6,4.5,3.7],
+  [0.0,0.9,-0.3,-3.2,-6.9,-4.0,-9.7,-5.9,-4.9,-4.5,-3.5,-3.1,-3.7,-4.2,-1.6,-1.8,-3.2,-1.6,-1.4,0.4,-0.9,-2.3,-4.5,-2.0,0.7,2.0,1.4,2.1,1.3,2.4,2.5,1.9,1.2,2.7,3.0,3.0,4.2,1.9,4.9,7.7,9.1,9.1,11.4],
+  [0.0,3.9,5.3,5.1,4.8,-0.8,-1.2,-3.7,-6.2,-3.1,-4.7,-12.3,-9.0,-6.1,-7.2,-5.5,-3.0,-1.0,1.8,-3.0,-5.6,-4.8,-8.4,-11.6,-11.2,-9.1,-7.5,-9.2,-5.0,-6.2,-4.1,-7.9,-10.1,-11.4,-12.0,-9.3,-8.9,-7.2,-7.3,-6.3,-8.2,-7.2,-8.4]];
+const MEDIAN = [0.0,-0.7,-1.1,-3.1,-3.2,-3.1,-3.9,-3.2,-3.6,-3.2,-4.2,-4.3,-3.4,-5.7,-4.8,-1.6,-1.4,-0.8,0.8,0.5,-0.1,-0.2,-2.3,-1.8,-0.9,1.1,1.1,1.6,0.5,1.4,0.6,0.3,0.8,1.6,-0.5,-0.2,1.4,0.5,2.5,5.5,5.8,6.8,6.5];
+
+const TOP = 32, BOT = -16;
+const N = PATHS[0].length;
+const X = (k) => (k / (N - 1)) * 100;
+const Y = (v) => ((TOP - v) / (TOP - BOT)) * 100;
+const pts = (arr) => arr.map((v, k) => `${X(k).toFixed(2)},${Y(v).toFixed(2)}`).join(' ');
+const hi = MEDIAN.map((_, k) => Math.min(TOP + 6, Math.max(...PATHS.map((p) => p[k]))));
+const lo = MEDIAN.map((_, k) => Math.min(...PATHS.map((p) => p[k])));
+const band = [...hi.map((v, k) => `${X(k).toFixed(2)},${Y(v).toFixed(2)}`), ...lo.map((v, k) => `${X(k).toFixed(2)},${Y(v).toFixed(2)}`).reverse()].join(' ');
+const GRID = [30, 20, 10, 0, -10];
+const XT = [{ v: '1M', k: 21 }, { v: '3M', k: 63 }, { v: '6M', k: 126 }, { v: '9M', k: 189 }, { v: '1Y', k: 252 }];
+const ends = YEARS.map((y, i) => ({ y, v: PATHS[i][N - 1] })).sort((a, b) => b.v - a.v);
+const fmt = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(0) + '%';
+---
+
+<div class="hf" data-card="figure">
+  <div class="hf-head">
+    <span class="hf-lbl">The twelve months after each first hike, one line per hike</span>
+    <span class="hf-sub">US shares in Singapore dollars &middot; price change from the last close before each announcement</span>
+  </div>
+
+  <div class="hf-key">
+    <span class="hf-k"><i class="hf-sw med"></i>middle of the six</span>
+    <span class="hf-k"><i class="hf-sw one"></i>each hike</span>
+    <span class="hf-k"><i class="hf-sw band"></i>span from worst to best</span>
+  </div>
+
+  <div class="hf-body">
+    <div class="hf-chart">
+      <div class="hf-ycol" aria-hidden="true">
+        {GRID.map((g) => (<span class={g === 0 ? 'is-base' : ''} style={`top:${Y(g)}%`}>{g > 0 ? '+' : ''}{g}%</span>))}
+      </div>
+      <div class="hf-plot" role="img"
+           aria-label={`Six lines, one per first hike, showing US shares in Singapore dollars over the twelve months after each. The median dips to about minus 4 per cent in the first three months, recovers to zero by six months and is at plus 6.5 per cent a year later. The span is wide: 1997 climbs to plus 56 per cent, while 1994 and 2022 stay below zero for the whole twelve months and end near minus 8 per cent.`}>
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polygon points={band} fill="#0B4732" opacity="0.08" />
+          {GRID.map((g) => (
+            <line x1="0" y1={Y(g)} x2="100" y2={Y(g)} stroke={g === 0 ? '#55606E' : '#E3DDCF'} stroke-width="1"
+                  stroke-dasharray={g === 0 ? '3 3' : 'none'} vector-effect="non-scaling-stroke" />
+          ))}
+          {XT.map((t) => (
+            <line x1={X(t.k / 6)} y1="0" x2={X(t.k / 6)} y2="100" stroke="#E3DDCF" stroke-width="1" vector-effect="non-scaling-stroke" />
+          ))}
+          {PATHS.map((p) => (
+            <polyline points={pts(p)} fill="none" stroke="#0B1D33" stroke-width="1.25" opacity="0.38"
+                      stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          ))}
+          <polyline points={pts(MEDIAN)} fill="none" stroke="#0B4732" stroke-width="3"
+                    stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        </svg>
+        <span class="hf-off" style={`left:${X(30)}%`}>1997 leaves the chart, ending at +56%</span>
+      </div>
+      <div class="hf-x" aria-hidden="true">
+        {XT.map((t, i) => (<span style={`left:${X(t.k / 6)}%`} class={i === XT.length - 1 ? 'is-last' : ''}>{t.v}</span>))}
+      </div>
+    </div>
+    <p class="hf-ends">
+      A year on: {ends.map((e, i) => (<span>{i > 0 ? ' · ' : ''}{e.y} <b>{fmt(e.v)}</b></span>))} · middle <b class="m">+6.5%</b>
+    </p>
+  </div>
+
+  <div class="hf-out">
+    <p class="hf-out-s"><b>Six first hikes, six different years.</b> The middle line dips for three months and is up 6.5% a year later, but the best and worst of the six finish 65 percentage points apart. Whether the next twelve months look like 2004 or 2022 is not something the hike tells you.</p>
+  </div>
+
+  <div class="hf-notes">
+    <p>
+      S&amp;P 500 closes (Yahoo Finance) converted at SGD per USD (FRED DEXSIUS), sampled every six sessions
+      for 252 sessions from the last close before each announcement. Price return, before dividends. The 21,
+      63, 126 and 252-session medians match the bars above. Our computation; script on this page.
+    </p>
+    <ToolBrand />
+  </div>
+</div>
+
+<style is:global>
+.hf{
+  --hf-bd:var(--color-border); --hf-t1:var(--color-dark); --hf-t2:var(--color-body);
+  --hf-jade:var(--color-brand-700); --hf-deep:var(--color-navy);
+  --hf-mono:var(--font-mono),'SF Mono',Menlo,Consolas,monospace;
+  background:#fff;border:1px solid var(--hf-bd);border-radius:12px;
+  box-shadow:0 4px 6px rgba(0,0,0,.05),0 2px 4px rgba(0,0,0,.04);
+  overflow:hidden;margin:26px 0;color:var(--hf-t1)
+}
+.hf-head{padding:14px 20px;background:var(--color-surface);border-bottom:1px solid var(--hf-bd)}
+.hf-lbl{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.1px;color:var(--hf-t1)}
+.hf-sub{display:block;margin-top:4px;font-size:11.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.8px;color:var(--hf-t2)}
+.hf-key{display:flex;flex-wrap:wrap;gap:7px 18px;padding:11px 20px;border-bottom:1px dashed var(--hf-bd)}
+.hf-k{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--hf-t2)}
+.hf-sw{width:18px;height:4px;border-radius:2px;flex:none;display:inline-block}
+.hf-sw.med{background:var(--hf-jade)}
+.hf-sw.one{background:var(--hf-deep);opacity:.4;height:2px}
+.hf-sw.band{background:rgba(11,71,50,.12);height:12px;border-radius:3px}
+.hf-body{padding:16px 20px 10px}
+.hf-chart{display:grid;grid-template-columns:42px minmax(0,1fr);grid-template-rows:auto auto;column-gap:6px}
+.hf-ycol{grid-area:1/1;position:relative}
+.hf-ycol span{position:absolute;right:2px;transform:translateY(-50%);font-family:var(--hf-mono);
+  font-size:11px;color:var(--color-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hf-ycol span.is-base{color:var(--hf-t1);font-weight:700}
+.hf-plot{grid-area:1/2;position:relative;width:100%;aspect-ratio:8/5;min-height:250px;
+  background:linear-gradient(#FBFAF7,#fff);border:1px solid var(--hf-bd);border-radius:8px;overflow:hidden}
+.hf-plot svg{position:absolute;inset:0;width:100%;height:100%}
+.hf-off{position:absolute;top:6px;transform:translateX(-50%);font-size:11px;font-weight:600;color:var(--hf-t2);
+  background:rgba(255,255,255,.85);padding:2px 6px;border-radius:4px;white-space:nowrap}
+.hf-x{grid-area:2/2;position:relative;height:18px;margin-top:4px}
+.hf-x span{position:absolute;transform:translateX(-50%);font-family:var(--hf-mono);font-size:11px;
+  color:var(--color-muted)}
+.hf-x span.is-last{transform:translateX(-100%)}
+.post-content .hf-ends{margin:12px 0 0;font-size:12px;line-height:1.6;color:var(--hf-t2)}
+.hf-ends b{font-family:var(--hf-mono);font-weight:700;color:var(--hf-t1);font-variant-numeric:tabular-nums}
+.hf-ends b.m{color:var(--hf-jade)}
+.hf-out{background:var(--hf-deep);color:#fff;padding:17px 20px}
+.post-content .hf-out-s{font-size:15px;line-height:1.62;color:#D8DEE8;margin:0}
+.hf-out-s b{font-weight:600;color:#fff}
+.hf-notes{padding:14px 20px 15px;border-top:1px solid var(--hf-bd);background:var(--color-surface)}
+.post-content .hf-notes p{font-size:12px;line-height:1.5;color:var(--color-muted);margin:0 0 8px}
+@media (max-width:420px){ .hf-off{font-size:11px;white-space:normal;max-width:60%;text-align:center} }
+</style>

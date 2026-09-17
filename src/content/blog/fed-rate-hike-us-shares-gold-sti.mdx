@@ -1,0 +1,208 @@
+---
+title: "Fed Rate Hike: What US Shares, Gold and the STI Did Next"
+cover: "/img/Published/sg-skyline-night.jpg"
+date: "2026-09-17"
+category: "invest-better"
+tags:
+  - Investing
+  - Interest Rates
+  - Market History
+  - Singapore
+  - Gold
+  - Behaviour
+readTime: 7
+inlineShare: true
+figuresAsOf: "Computed 17 September 2026. US prices to 16 September 2026, Singapore prices to 17 September 2026, USD/SGD to 11 September 2026, gold monthly averages to August 2026"
+takeaways:
+  - "After the six first Fed hikes since 1994, US shares were lower a month later in <strong>five of six</strong>, by about 2.5%. From six months on, a coin flip."
+  - "Gold rose in the six months after <strong>three of six</strong> hikes — the same as any six months. Leave out March 1997, as most tables do, and the figure doubles."
+  - "The STI was lower a year later in <strong>four of six</strong>, two of them crisis years. Banks are 58% of the index and did not lift it inside six months."
+  - "The Singapore dollar strengthened after <strong>four of six</strong> hikes, by 2 to 5 points — more than the stock market's own wobble."
+authorId: "fi"
+excerpt: |
+  The Fed raised rates this week for the first time since 2023, and every feed has a table of what happens next. We ran all six first hikes since 1994 on free public data — US shares, gold and the STI, in Singapore dollars — with the usual outcome beside every number. The one-month dip is real; the rest is six observations.
+---
+
+import HikeBars from '@src/components/hike/HikeBars.astro';
+import HikeFan from '@src/components/hike/HikeFan.astro';
+import HikeCheck from '@src/components/hike/HikeCheck.astro';
+import SocialShare from '@src/components/SocialShare.astro';
+
+**In the early hours of Thursday, Singapore time, the US Federal Reserve raised its policy rate by a quarter point, to a range of 3.75% to 4.00%. The vote was 12 to 0. It is the first increase since July 2023, and the Fed's own projections pencil in one more this year.**
+
+By breakfast the feed had decided what it means. Shares wobble after a first hike. Gold falls into it and rallies after. Banks win. If you hold what most Singapore investors hold — a US or world index fund, some gold, the STI ETF — the question is simple. Do you need to do anything?
+
+It is a checkable question, so we checked. We took every first hike since 1994 and looked at what each of the three did next, in Singapore dollars, with the script attached. Nothing here forecasts the next six months. It measures the last six first hikes.
+
+## What counts as a first hike
+
+Six, since 1994: 4 February 1994, 25 March 1997, 30 June 1999, 30 June 2004, 16 December 2015 and 16 March 2022. The rule is simple: the first time the Fed raised its rate after at least a year of not raising it, taken from the Fed's own records. Most tables in circulation show five. The one they drop is March 1997, and it matters later.
+
+For each hike we take the market's level just before the announcement and see where it stood one, three, six and twelve months later. Beside every figure we put the number the tables leave out: what the same stretch of time usually delivered if you had started on any random day since 1994. We call that "the usual". The figures are middle outcomes — the median of the six — so one wild year cannot drag the number around.
+
+## US shares: a one-month dip, then nothing unusual
+
+<HikeBars
+  title="US shares after a first hike, against the usual"
+  sub="S&P 500, in Singapore dollars · middle outcome of the six hikes · price change, before dividends"
+  legendAfter="after a first hike (middle of the six)"
+  legendUsual="usual — starting on any day since 1994"
+  upMax={12} downMax={6}
+  rows={[
+    { label: '1 month', after: -2.2, usual: 1.1, note: '1 of 6 higher' },
+    { label: '3 months', after: -4.3, usual: 3.1, note: '1 of 6 higher' },
+    { label: '6 months', after: -0.3, usual: 5.4, note: '3 of 6 higher' },
+    { label: '12 months', after: 6.5, usual: 10.3, note: '4 of 6 higher' },
+  ]}
+  aria="Four pairs of bars. One month after a first hike US shares in Singapore dollars were down a median 2.2 per cent against a usual plus 1.1; three months, minus 4.3 against plus 3.1; six months, minus 0.3 against plus 5.4; twelve months, plus 6.5 against plus 10.3. Higher in 1, 1, 3 and 4 of the six hikes."
+  notes="S&P 500 closes (Yahoo Finance) converted at Singapore dollars per US dollar (FRED DEXSIUS). Measured 21, 63, 126 and 252 trading days from the last close before each announcement. Usual: the middle outcome of the same stretch started on every trading day from 3 January 1994 to 16 September 2026. In US dollars the figures are −2.5%, −3.7%, +4.3% and +6.5%. Our computation; script on this page."
+>
+  One month after the hike, US shares were <b>lower in five of the six</b>. Three months out, still only one of six higher. From six months on it is a coin flip — and still below the usual.
+</HikeBars>
+
+In the first month the middle outcome was a 2.2% fall in Singapore dollars, when a usual month gains 1.1%. A year on, four of six were higher, with a middle outcome of +6.5% against a usual +10.3%.
+
+In plain English — the wobble is real, small and short. After the first month, a first hike was followed by roughly what any other month is followed by, on six tries.
+
+A middle figure also hides how different the six years were. Here is each one on its own.
+
+<HikeFan />
+
+1997 is the line that leaves the chart. US shares rose 21% in dollars in six months, the Singapore dollar fell 5.5% into the Asian crisis on top, and a Singapore holder saw 28% by six months and 56% by a year. 1994 and 2022 are the two that stayed under water for the whole twelve months. Whether the next twelve months look like 2004 or 2022 is not something the hike tells you.
+
+## Gold: it depends which dates you count
+
+The gold story runs: falls into the hike, rallies after. The first half holds. Gold fell into four of the six hikes, and it fell 13% into this one. The second half depends on which dates you count.
+
+<HikeBars
+  title="Gold after a first hike, against the usual"
+  sub="Gold, monthly average price in US dollars · middle outcome of the six hikes"
+  legendAfter="after a first hike (middle of the six)"
+  legendUsual="usual — starting in any month since 1994"
+  upMax={7} downMax={1.5}
+  rows={[
+    { label: '1 month', after: 0, usual: 0.1, note: '3 of 6 higher' },
+    { label: '3 months', after: 0.6, usual: 1.3, note: '3 of 6 higher' },
+    { label: '6 months', after: 3.9, usual: 3.5, note: '3 of 6 higher' },
+    { label: '12 months', after: 3.1, usual: 6.2, note: '3 of 6 higher' },
+  ]}
+  aria="Four pairs of bars. One month after a first hike gold's monthly average price in US dollars was unchanged against a usual plus 0.1 per cent; three months, plus 0.6 against plus 1.3; six months, plus 3.9 against plus 3.5; twelve months, plus 3.1 against plus 6.2. Higher in 3 of the six hikes at every horizon."
+  notes="World Bank Commodity Markets monthly data, gold (London afternoon price, monthly average, US$/troy oz). Months counted from the hike month's average. Usual: the middle outcome of the same stretch started in every month from January 1994 to August 2026. In Singapore dollars the six-month figure is +1.5% against a usual +2.9%, and the counts are the same. Our computation; script on this page."
+>
+  Higher in <b>three of six</b> at every horizon, and close to the usual: gold after a first hike looks like gold in any stretch of months. Leave out March 1997, as the five-date tables do, and the six-month figure becomes <b>+8.4%</b>.
+</HikeBars>
+
+Count all six hikes, and gold was higher six months later after three of them, by a middle figure of 3.9% in US dollars. Any six months since 1994 usually gave 3.5%. Nothing special. Leave out March 1997, as the five-date tables do, and the figure jumps to 8.4%. Same claim, same data, one date fewer, double the number. The one-year gold figures quoted this week — around +8% to +9% after 1999, 2004 and 2015, as one publisher computed them — are a four-date version of the same thing.
+
+## The STI: lower a year later in four of six
+
+<HikeBars
+  title="The STI after a first Fed hike, against the usual"
+  sub="Straits Times Index · middle outcome of the six hikes · price change, before dividends"
+  legendAfter="after a first hike (middle of the six)"
+  legendUsual="usual — starting on any day since 1994"
+  upMax={6} downMax={6}
+  rows={[
+    { label: '1 month', after: -2.4, usual: 0.6, note: '2 of 6 higher' },
+    { label: '3 months', after: -4.7, usual: 1.3, note: '2 of 6 higher' },
+    { label: '6 months', after: -1.7, usual: 2.3, note: '2 of 6 higher' },
+    { label: '12 months', after: -4.8, usual: 3.2, note: '2 of 6 higher' },
+  ]}
+  aria="Four pairs of bars. One month after a first Fed hike the STI was down a median 2.4 per cent against a usual plus 0.6; three months, minus 4.7 against plus 1.3; six months, minus 1.7 against plus 2.3; twelve months, minus 4.8 against plus 3.2. Higher in 2 of the six hikes at every horizon."
+  notes="STI closes (Yahoo Finance), Singapore sessions, from the close of the announcement date, which ends before the 2pm New York release. Usual: the middle outcome of the same stretch started on every session from 3 January 1994 to 16 September 2026. The index pays about 4.6% a year in dividends (FTSE Russell, 31 August 2026), roughly a point a quarter on top of every bar. Our computation; script on this page."
+>
+  The STI was lower a year later in <b>four of six</b>. Two of the four were crisis years, 1994 and 1997. The other two were 2004 (+19.8%) and 2015 (+3.2%).
+</HikeBars>
+
+The local reflex says a hiking Fed is good for the banks, and the banks are 58% of the index. The record does not show it inside a year. Two of the four losing years were crises — 1994's emerging-market sell-off and the 1997 Asian crisis, in which the STI lost 21% — and a Fed hike did not cause either on its own. Add the STI's dividends, about 4.6% a year, and the typical twelve months after a hike come out roughly flat. The count of four losing years does not change.
+
+## Your currency moved more than the market
+
+Two of your three holdings — the US fund and the gold — are priced in US dollars, whatever currency you paid in. So what the Singapore dollar did matters as much as what the market did.
+
+<HikeBars
+  title="The Singapore dollar in the six months after each first hike"
+  sub="Change in Singapore dollars per US dollar · up = US dollar stronger"
+  legendAfter="six months after the hike"
+  ref={{ value: -0.4, label: 'usual six months since 1994: −0.4%' }}
+  upMax={7} downMax={7}
+  rows={[
+    { label: '1994', after: -5.0 },
+    { label: '1997', after: 5.5 },
+    { label: '1999', after: -2.2 },
+    { label: '2004', after: -4.3 },
+    { label: '2015', after: -3.8 },
+    { label: '2022', after: 2.9 },
+  ]}
+  aria="Six bars, one per hike, showing the change in Singapore dollars per US dollar over the six months after each: 1994 minus 5.0 per cent, 1997 plus 5.5, 1999 minus 2.2, 2004 minus 4.3, 2015 minus 3.8, 2022 plus 2.9. A dashed line marks the usual six-month change of minus 0.4 per cent."
+  notes="FRED DEXSIUS, Singapore dollars per US dollar, noon buying rates in New York. 126 fixings from the last one before each announcement. Into the hikes the dollar had risen in five of the six; in 2026 it fell 1.2% into the hike instead, to the 11 September fixing. Our computation; script on this page."
+>
+  In the six months after a first hike the Singapore dollar was the stronger currency in <b>four of six</b>, by 2 to 5 points. That is enough to turn a small gain into none: US shares&rsquo; typical six-month result after a hike was <b>+4.3%</b> in US dollars and <b>−0.3%</b> in Singapore dollars.
+</HikeBars>
+
+The dollar rose into five of the six hikes, then gave it back. In 2026 it fell 1.2% into the hike instead — a different starting line, not a forecast.
+
+In plain English — the return on your US fund's screen is in dollars. Yours is in Singapore dollars, and around first hikes the two have differed by more than the market's own wobble.
+
+## Six is not a plan
+
+Everything here rests on six events. That is not many. With only six, almost any pattern can show up by luck, the way six coin tosses can land five heads.
+
+So we checked how lucky you would have to be. Pick any six random days since 1994 and measure the month that followed. Only about one time in twenty does a random set of six look as bad as the six first hikes did. The one-month dip is probably not luck. Every other number in this piece — three months on, six months on, gold, the STI — is the kind of result random days produce all the time.
+
+And the one result that survives is small: a dip of about 2.5% over one month. If you invest S$1,000 a month, skipping the month after a hike would have saved you about S$25 on average. It would have cost you the times it went the other way, as in 2022. And in four of the six cases the market was higher six months later, so the money went back in at a higher price. This is not advice to ignore the hike. It is what the dip is worth in dollars, put next to how easily it could be noise.
+
+## So what do you do
+
+**Watch inflation, not the number of hikes.** Our [rising-rates piece](/rates-rising-market-about-to-crash/) found the losing years were the ones with inflation above about 4%, whichever way rates moved. 2022 had 6.5%. 1994, when inflation was low, was the exception, and it ended roughly flat. US inflation was 3.4% in August, and the Fed's own projection for this year is 3.7%. The safer side of the line, and close to it.
+
+**Then the question that is actually yours.** Six first hikes in 32 years is about one every five. Anyone investing across a working life will sit through several more, and nobody can tell in advance whether the year after each one looks like 2004 or 2022. So the honest test of a plan is not whether it dodges this quarter-point move. It is whether the plan still gets you to enough if it dodges none of them. If it does, this week changes nothing. If it does not, the problem was never the Fed.
+
+<details class="hk-fold">
+  <summary>Check it yourself — the rule we ran, the figures you should get, and our script</summary>
+  <HikeCheck />
+</details>
+
+<SocialShare title={frontmatter.title} />
+
+<details class="hk-fold">
+<summary>Where our numbers are soft — where we would push back on ourselves</summary>
+<div class="hk-fold-body">
+
+Everything above is our computation, so here is where we would push back on it hardest.
+
+- **Six is not a sample, in the technical sense too.** The "one time in twenty" is a randomisation check on one cell, uncorrected for the two dozen cells we looked at. Screen enough cells and a one-in-twenty result turns up by design. We report it as the strongest cell, not as a discovery, and the rest as noise.
+- **The event list is ours.** Any rule for "first hike" is a choice. The nearest alternative — the first step-up in the US bank prime rate after a year without one — finds the same six, dating 1994 seven weeks later; the results do not move.
+- **The clock is ours too.** We start from the last close before the announcement, so the day's reaction is inside the window. Starting from the announcement-day close instead gives one of six higher at one month (median −2.7% in US dollars) and one of six at three months (−4.1%). Same picture.
+- **Price indices, before dividends.** The S&P 500's dividend yield is low, a little over 1% a year, which is nothing at these horizons. The STI pays 4.58%, which adds roughly 1.1 points a quarter to its bars and takes its one-year median from −4.8% to about zero. The counts do not change.
+- **Gold is a monthly average, not a daily close.** The canonical daily London series became licensed in 2025 and the free futures series starts in August 2000, so the six-hike gold figures use the World Bank's monthly averages, which blur the first month. The three episodes the futures do cover — 2004 (+11%), 2015 (+22%), 2022 (−11%) — point the same way.
+- **The currency is a New York noon rate.** FRED's DEXSIUS series is the Fed's noon buying rate, not a Singapore close; month-ends agree with SingStat's end-of-period table to within 0.2%. The 2026 figure runs to 11 September, the last fixing published before the decision.
+- **The 1990s STI closes rest on one free source.** Yahoo Finance is the only free daily STI history reaching 1994; the series has no gaps inside any window and about 250 sessions a year, and the S&P 500 series from the same source matches FRED to the cent from 2016. We could not find a free second source for 1994–1999 and say so.
+- **Two of the six are crisis years.** 1994 and 1997 dominate the STI's losing count, and neither was made in Washington. Remove them and the STI is two of four higher a year later; keep them and it is two of six. Both are honest readings of too few events.
+- **2026 has no after-window.** The run-ups into this hike use closes to 15 and 16 September. Nothing here says what follows.
+
+</div>
+</details>
+
+<details class="hk-fold">
+<summary>Sources — where every figure comes from, all free and public</summary>
+<div class="hk-fold-body">
+
+Every source below is free and public, so you can check any figure yourself.
+
+- **The decision** — [FOMC statement, 16 September 2026](https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm) (Federal Reserve): target range 3.75% to 4.00%, vote 12–0, "inflation remains elevated"; the [Summary of Economic Projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm) of the same day, median policy rate 4.1% at end-2026, PCE inflation 3.7% for 2026.
+- **The six dates** — the Federal Reserve's [open market operations table](https://www.federalreserve.gov/monetarypolicy/openmarket.htm) (2003 onward, including the last increase on 27 July 2023) and its [1990–2002 archive](https://www.federalreserve.gov/monetarypolicy/openmarket_archive.htm); the [30 June 2004 statement](https://www.federalreserve.gov/boarddocs/press/monetary/2004/20040630/default.htm). The rule that picks them reads the target from [FRED DFEDTAR](https://fred.stlouisfed.org/series/DFEDTAR) and [DFEDTARU](https://fred.stlouisfed.org/series/DFEDTARU).
+- **Prices** — S&P 500 (^GSPC), Straits Times Index (^STI) and COMEX gold futures (GC=F) daily closes from [Yahoo Finance](https://finance.yahoo.com/quote/%5ESTI/history/); the S&P series cross-checked against [FRED SP500](https://fred.stlouisfed.org/series/SP500) from 2016.
+- **Gold, monthly** — [World Bank Commodity Markets](https://www.worldbank.org/en/research/commodity-markets), the monthly historical data file, gold column (London afternoon price, monthly average, US$/troy oz), CC BY 4.0.
+- **USD/SGD** — [FRED DEXSIUS](https://fred.stlouisfed.org/series/DEXSIUS) (Federal Reserve H.10, noon buying rates in New York); month-ends cross-checked against [SingStat's end-of-period exchange rates](https://data.gov.sg/datasets/d_cdd73fd4341b345fa4307e44d6f82175/view) on data.gov.sg.
+- **The STI's make-up** — [FTSE Russell, Straits Times Index factsheet](https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssue?issueName=STI&IsManual=false), data as at 31 August 2026: DBS 29.35%, OCBC 19.04%, UOB 9.38%; dividend yield 4.58%.
+- **US inflation now** — [Consumer Price Index, August 2026](https://www.bls.gov/news.release/cpi.nr0.htm) (Bureau of Labor Statistics, 11 September 2026): all items 3.4% over the year, energy +16.3%.
+- **The story in circulation**, cited as what circulates and not for its numbers — [Wellington Management, "Fed rate hike history and market performance"](https://www.wellington.com/en/insights/fed-rate-hike-history-market-performance) (31 May 2022; six cycles since 1994, US shares and credit); [Benzinga, "Gold's performance after Fed rate hikes"](https://www.benzinga.com/markets/commodities/26/09/61798255/gold-performance-after-fed-rate-hikes-history) (September 2026; the one-year gold figures after 1999, 2004, 2015 and 2022 are that publisher's computation); [World Gold Council, "The impact of monetary policy on gold"](https://www.gold.org/goldhub/research/the-impact-of-monetary-policy-on-gold); [The Kopi Notes, "Fed rate hike to 3.75%–4%: what it means for your ETFs"](https://thekopinotes.com/articles/etfs/fed-rate-hike-etf-singapore-2026/) (17 September 2026).
+- **Our earlier pieces** — [Rates are rising again. Is the market about to crash?](/rates-rising-market-about-to-crash/) (the inflation divider and the rule shapes); [You want gold. Which gold?](/ways-to-own-gold-singapore/) (what "gold" is in Singapore); [The dip you are waiting for](/waiting-for-a-dip/) (what waiting for a fall has cost).
+
+All event-window, base-rate, per-hike, currency and run-up figures are ours, re-derivable with the script above.
+
+</div>
+</details>
+
+Past performance is no guarantee of future returns. This is general information about how markets have behaved, not advice about your circumstances — and nothing here recommends buying or selling anything.

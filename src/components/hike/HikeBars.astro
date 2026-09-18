@@ -3,11 +3,12 @@
 // for "after a first hike" (the median of the six) beside one hollow bar for "usual" (the
 // median of the same window started on any day since 1994). Bars grow up or down from a
 // shared zero line, so the sign is carried by direction and the printed value; colour is
-// identity (filled = after a hike, hollow = usual), never a verdict.
+// identity (filled = after a hike, hollow = usual, gold = this hike), never a verdict.
 //
 // Pure HTML/CSS — no SVG text — so labels keep their pixel size on a phone. One scale for
 // both zones: the up zone is UP_PX tall for `upMax` points, and the down zone takes the
-// height `downMax` needs at the same pixels-per-point.
+// height `downMax` needs at the same pixels-per-point. A value beyond the scale is clamped
+// to the zone; its printed label still carries the true figure.
 //
 // Props
 //   title, sub            head lines
@@ -15,20 +16,27 @@
 //   upMax, downMax        the scale, in % points (headroom included)
 //   legendAfter, legendUsual   legend text; legendUsual may be null when no hollow bars
 //   ref                   optional { value, label } — a dashed reference line
+//   live                  optional { label, asAt, values } — THIS hike's dated readings, one
+//                         per row, null where the horizon has not completed yet. Drawn as a
+//                         narrow gold bar beside the pair; a null draws nothing. The
+//                         checkpoint discipline lives in the article: readings are added on
+//                         a pre-announced schedule, whatever they show, never between.
 //   aria                  one-sentence description for screen readers
 //   notes                 the data note under the chart
 // Slot: the outcome sentence(s) shown in the navy strip.
 import ToolBrand from '../ToolBrand.astro';
 
 const {
-  title, sub, rows, upMax, downMax, legendAfter, legendUsual = null, ref = null, aria, notes,
+  title, sub, rows, upMax, downMax, legendAfter, legendUsual = null, ref = null, live = null, aria, notes,
 } = Astro.props;
 const UP_PX = 118;
 const ppp = UP_PX / upMax;                       // pixels per percentage point
 const DOWN_PX = Math.round(downMax * ppp);
-const h = (v) => Math.max(2, Math.round(Math.abs(v) * ppp));
+const h = (v, zone) => Math.min(zone, Math.max(2, Math.round(Math.abs(v) * ppp)));
 const fmt = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%';
 const refTop = ref ? (ref.value >= 0 ? UP_PX - ref.value * ppp : UP_PX + Math.abs(ref.value) * ppp) : null;
+const liveAny = !!(live && live.values && live.values.some((v) => v !== null && v !== undefined));
+const lv = (i) => (liveAny && live.values[i] !== null && live.values[i] !== undefined ? live.values[i] : null);
 ---
 
 <div class="hb" data-card="figure">
@@ -41,28 +49,35 @@ const refTop = ref ? (ref.value >= 0 ? UP_PX - ref.value * ppp : UP_PX + Math.ab
     <span class="hb-k"><i class="hb-sw after"></i>{legendAfter}</span>
     {legendUsual && <span class="hb-k"><i class="hb-sw usual"></i>{legendUsual}</span>}
     {ref && <span class="hb-k"><i class="hb-sw ref"></i>{ref.label}</span>}
+    {liveAny && <span class="hb-k"><i class="hb-sw live"></i>{live.label}, this hike &middot; as at {live.asAt}</span>}
   </div>
 
   <div class="hb-body">
     <div class="hb-plot" role="img" aria-label={aria} style={`--up:${UP_PX}px;--down:${DOWN_PX}px`}>
       {ref && <i class="hb-ref" style={`top:${refTop}px`} aria-hidden="true"></i>}
       <i class="hb-zero" aria-hidden="true"></i>
-      {rows.map((r) => (
+      {rows.map((r, i) => (
         <div class="hb-col">
           <div class="hb-up">
             <div class="hb-slot">
-              {r.after > 0 && <><b class="hb-v">{fmt(r.after)}</b><span class="hb-bar after" style={`height:${h(r.after)}px`}></span></>}
+              {r.after > 0 && <><b class="hb-v">{fmt(r.after)}</b><span class="hb-bar after" style={`height:${h(r.after, UP_PX)}px`}></span></>}
             </div>
             {legendUsual && <div class="hb-slot">
-              {r.usual !== null && r.usual > 0 && <><b class="hb-v u">{fmt(r.usual)}</b><span class="hb-bar usual" style={`height:${h(r.usual)}px`}></span></>}
+              {r.usual !== null && r.usual > 0 && <><b class="hb-v u">{fmt(r.usual)}</b><span class="hb-bar usual" style={`height:${h(r.usual, UP_PX)}px`}></span></>}
+            </div>}
+            {liveAny && <div class="hb-slot lv">
+              {lv(i) !== null && lv(i) > 0 && <><b class="hb-v l">{fmt(lv(i))}</b><span class="hb-bar live" style={`height:${h(lv(i), UP_PX)}px`}></span></>}
             </div>}
           </div>
           <div class="hb-down">
             <div class="hb-slot">
-              {r.after <= 0 && <><span class="hb-bar after" style={`height:${h(r.after)}px`}></span><b class="hb-v">{fmt(r.after)}</b></>}
+              {r.after <= 0 && <><span class="hb-bar after" style={`height:${h(r.after, DOWN_PX)}px`}></span><b class="hb-v">{fmt(r.after)}</b></>}
             </div>
             {legendUsual && <div class="hb-slot">
-              {r.usual !== null && r.usual <= 0 && <><span class="hb-bar usual" style={`height:${h(r.usual)}px`}></span><b class="hb-v u">{fmt(r.usual)}</b></>}
+              {r.usual !== null && r.usual <= 0 && <><span class="hb-bar usual" style={`height:${h(r.usual, DOWN_PX)}px`}></span><b class="hb-v u">{fmt(r.usual)}</b></>}
+            </div>}
+            {liveAny && <div class="hb-slot lv">
+              {lv(i) !== null && lv(i) <= 0 && <><span class="hb-bar live" style={`height:${h(lv(i), DOWN_PX)}px`}></span><b class="hb-v l">{fmt(lv(i))}</b></>}
             </div>}
           </div>
           <span class="hb-x">{r.label}</span>
@@ -85,7 +100,7 @@ const refTop = ref ? (ref.value >= 0 ? UP_PX - ref.value * ppp : UP_PX + Math.ab
 <style is:global>
 .hb{
   --hb-bd:var(--color-border); --hb-t1:var(--color-dark); --hb-t2:var(--color-body);
-  --hb-jade:var(--color-brand-700); --hb-deep:var(--color-navy);
+  --hb-jade:var(--color-brand-700); --hb-deep:var(--color-navy); --hb-live:var(--color-gold-ink);
   --hb-mono:var(--font-mono),'SF Mono',Menlo,Consolas,monospace;
   background:#fff;border:1px solid var(--hb-bd);border-radius:12px;
   box-shadow:0 4px 6px rgba(0,0,0,.05),0 2px 4px rgba(0,0,0,.04);
@@ -100,6 +115,7 @@ const refTop = ref ? (ref.value >= 0 ? UP_PX - ref.value * ppp : UP_PX + Math.ab
 .hb-sw{width:14px;height:14px;border-radius:3px;flex:none;display:inline-block;box-sizing:border-box}
 .hb-sw.after{background:var(--hb-jade)}
 .hb-sw.usual{background:#fff;border:2px solid var(--hb-deep)}
+.hb-sw.live{background:var(--hb-live);width:8px}
 .hb-sw.ref{height:0;border-top:2px dashed var(--color-muted);border-radius:0;width:18px}
 .hb-body{padding:18px 12px 8px}
 .hb-plot{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:4px;
@@ -111,13 +127,16 @@ const refTop = ref ? (ref.value >= 0 ? UP_PX - ref.value * ppp : UP_PX + Math.ab
 .hb-up{height:var(--up);display:flex;align-items:flex-end;gap:5px}
 .hb-down{height:var(--down);display:flex;align-items:flex-start;gap:5px;margin-bottom:6px}
 .hb-slot{width:26px;display:flex;flex-direction:column;align-items:center}
+.hb-slot.lv{width:16px}
 .hb-up .hb-slot{justify-content:flex-end}
 .hb-bar{display:block;width:26px;border-radius:2px;box-sizing:border-box}
 .hb-bar.after{background:var(--hb-jade)}
 .hb-bar.usual{background:#fff;border:2px solid var(--hb-deep)}
+.hb-bar.live{width:16px;background:var(--hb-live)}
 .hb-v{font-family:var(--hb-mono);font-size:11px;font-weight:700;line-height:1;color:var(--hb-t1);
   white-space:nowrap;font-variant-numeric:tabular-nums;padding:3px 0}
 .hb-v.u{color:var(--hb-t2);font-weight:600}
+.hb-v.l{color:var(--hb-live)}
 .hb-x{font-size:12px;font-weight:700;color:var(--hb-t1);margin-top:2px}
 .hb-n{font-size:11px;color:var(--hb-jade);font-weight:700;margin-top:1px;white-space:nowrap}
 .hb-out{background:var(--hb-deep);color:#fff;padding:17px 20px}
@@ -127,6 +146,7 @@ const refTop = ref ? (ref.value >= 0 ? UP_PX - ref.value * ppp : UP_PX + Math.ab
 .post-content .hb-notes p{font-size:12px;line-height:1.5;color:var(--color-muted);margin:0 0 8px}
 @media (max-width:420px){
   .hb-slot,.hb-bar{width:20px}
+  .hb-slot.lv,.hb-bar.live{width:12px}
   .hb-up,.hb-down{gap:4px}
   .hb-v{font-size:11px}
 }

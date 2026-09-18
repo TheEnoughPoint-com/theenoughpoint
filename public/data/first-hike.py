@@ -247,6 +247,46 @@ for k, lab in [("spx", "US shares, USD"), ("sti", "STI"), ("fx", "USD/SGD"), ("g
 day = {d.year: (spx.iloc[spx.index.searchsorted(d)] / spx.iloc[spx.index.searchsorted(d) - 1] - 1) * 100 for d in EVENTS + [LIVE]}
 print("\nS&P 500 on the announcement day itself: " + "  ".join(f"{y}:{x:+.2f}%" for y, x in day.items()))
 
+# ------------------------------------------------------------------ 3b. 2026, the live hike
+# The article adds this hike's readings as dated points at the same four horizons, on a
+# pre-announced schedule (one month in mid-October 2026, three in mid-December, six in
+# mid-March 2027, twelve in mid-September 2027), whatever they show, and never between.
+# This block prints whatever has completed so far; a horizon prints "pending" until its
+# full count of sessions exists after the base close.
+print("\n2026, THE LIVE HIKE — readings available so far")
+def live_line(name, s, market, fx_series=None):
+    if fx_series is not None:
+        s = (s * fx_series.reindex(s.index, method="ffill")).dropna()
+    i = base_index(s, LIVE, market)
+    avail = len(s) - 1 - i
+    parts = []
+    for hh, lab in H:
+        if i + hh < len(s):
+            parts.append(f"{lab} {(s.iloc[i + hh] / s.iloc[i] - 1) * 100:+.1f}% (as at {s.index[i + hh].date()})")
+        else:
+            parts.append(f"{lab} pending ({avail}/{hh} sessions)")
+    print(f"  {name:22s} " + "  ".join(parts))
+live_line("US shares, USD", spx, "US")
+live_line("US shares, SGD", spx, "US", fx)
+live_line("STI", sti, "SG")
+live_line("USD/SGD", fx, "US")
+live_line("gold futures, USD", gcf, "US")
+gi = gold_m.index.searchsorted(LIVE + pd.offsets.MonthEnd(0))
+if gi < len(gold_m) and gold_m.index[gi] == LIVE + pd.offsets.MonthEnd(0):
+    parts = []
+    for hm, lab in [(1, "1M"), (3, "3M"), (6, "6M"), (12, "12M")]:
+        parts.append(f"{lab} {(gold_m.iloc[gi + hm] / gold_m.iloc[gi] - 1) * 100:+.1f}% (to {gold_m.index[gi + hm].strftime('%b %Y')})"
+                     if gi + hm < len(gold_m) else f"{lab} pending")
+    print("  gold monthly, USD      " + "  ".join(parts))
+else:
+    print(f"  gold monthly, USD      pending: the World Bank file does not yet carry the {LIVE.strftime('%B %Y')} average "
+          f"(series ends {gold_m.index[-1].strftime('%b %Y')})")
+sg_live = (spx * fx.reindex(spx.index, method="ffill")).dropna()
+li = base_index(sg_live, LIVE, "US")
+fan_path = [round(float(sg_live.iloc[li + k] / sg_live.iloc[li] - 1) * 100, 1) for k in range(0, len(sg_live) - li, 6)]
+print(f"  fan path so far (US shares in SGD, every 6 sessions, {len(fan_path)} points, "
+      f"as at {sg_live.index[li + 6 * (len(fan_path) - 1)].date()}): {fan_path}")
+
 # ------------------------------------------------------------------ 4. checks against the article
 print("\nCHECKS AGAINST THE PUBLISHED FIGURES")
 print("US shares, US dollars")

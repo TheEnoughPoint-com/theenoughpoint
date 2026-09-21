@@ -1,0 +1,50 @@
+---
+// A single TikTok video embed for the sidebar — structured props rather than
+// pasting TikTok's raw HTML snippet into frontmatter, so a future article
+// can feature a different video by filling in data, not hand-editing markup.
+// The internal blockquote shape mirrors TikTok's own generated embed code
+// exactly (structure their embed.js script expects); only the values move.
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  videoId:    string;
+  cite:       string;
+  authorHandle: string;
+  caption:    string;
+  hashtag?:   string;
+  mention?:   string;
+  musicLabel: string;
+  musicHref:  string;
+}
+
+const { videoId, cite, authorHandle, caption, hashtag, mention, musicLabel, musicHref } = Astro.props;
+---
+
+<div class="bg-white border border-cream-dark rounded-lg overflow-hidden">
+  <h3 class="flex items-center gap-2 px-5 py-3 border-b border-cream-dark text-navy font-semibold text-sm">
+    <Icon name="bi:tiktok" class="size-4 text-forest shrink-0" />
+    Watch on TikTok
+  </h3>
+  <div class="p-4 flex justify-center">
+    <blockquote
+      class="tiktok-embed"
+      cite={cite}
+      data-video-id={videoId}
+      data-embed-from="embed_page"
+      style="max-width:100%; min-width:280px;"
+    >
+      <section>
+        <a target="_blank" title={`@${authorHandle}`} href={`https://www.tiktok.com/@${authorHandle}?refer=embed`}>@{authorHandle}</a>
+        <p>
+          {caption}
+          {' '}
+          {hashtag && <a title={hashtag} target="_blank" href={`https://www.tiktok.com/tag/${hashtag}?refer=embed`}>#{hashtag}</a>}
+          {mention && ` @${mention}`}
+        </p>
+        <a target="_blank" title={musicLabel} href={musicHref}>{musicLabel}</a>
+      </section>
+    </blockquote>
+  </div>
+</div>
+
+<script is:inline async src="https://www.tiktok.com/embed.js"></script>

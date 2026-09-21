@@ -30,6 +30,19 @@ const blog = defineCollection({
     /** Set when a published piece is materially revised; feeds dateModified. */
     updated: z.string().optional(),
     lifeStage: z.array(z.string()).optional().default([]),
+    /** A single featured TikTok video in the sidebar, between Our Tools and
+     *  the newsletter box. Structured rather than raw embed HTML so a future
+     *  article can feature a different video by filling in data. */
+    tiktokEmbed: z.object({
+      videoId:      z.string(),
+      cite:         z.string(),
+      authorHandle: z.string(),
+      caption:      z.string(),
+      hashtag:      z.string().optional(),
+      mention:      z.string().optional(),
+      musicLabel:   z.string(),
+      musicHref:    z.string(),
+    }).optional(),
   }),
 });
 

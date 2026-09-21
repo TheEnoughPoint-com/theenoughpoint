@@ -8,16 +8,20 @@ import NewsletterBox from './NewsletterBox.astro';
 import TopViewedArticles from './TopViewedArticles.astro';
 import ToolsWidget from './ToolsWidget.astro';
 import AffiliateDisclosureBox from './AffiliateDisclosureBox.astro';
+import TikTokEmbed from './TikTokEmbed.astro';
+import type { InferEntrySchema } from 'astro:content';
 
 interface Props {
   showNewsletter?: boolean;
   showDisclosure?: boolean;
+  tiktokEmbed?: InferEntrySchema<'blog'>['tiktokEmbed'];
 }
 
-const { showNewsletter = true, showDisclosure = true } = Astro.props;
+const { showNewsletter = true, showDisclosure = true, tiktokEmbed } = Astro.props;
 ---
 
 <div class="flex flex-col gap-6">
+  {tiktokEmbed && <TikTokEmbed {...tiktokEmbed} />}
   <TopViewedArticles />
   <ToolsWidget />
   {showNewsletter && <NewsletterBox />}

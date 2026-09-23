@@ -272,6 +272,60 @@
       });
     }
 
+    // ---- 4b. contrast of SVG text ----------------------------------------
+    // Check 4 reads getComputedStyle().color, which is exactly the property SVG
+    // text does NOT paint with — it paints with `fill`. Every chart label on
+    // this site is SVG text, so check 4 walked straight past all of them.
+    //
+    // That gap hid a real defect across fourteen components: each card set
+    // background:#fff unconditionally and then lightened its palette inside a
+    // prefers-color-scheme:dark block, so a dark-mode reader got pale ink on a
+    // white card. On the leveraged-ETF page alone that was fifteen SVG labels
+    // between 2.8:1 and 3.63:1, and check 4 reported one failure — the single
+    // HTML <em> that happened to inherit the same variable.
+    //
+    // Size has to be scaled, not read. The font-size on an SVG label is in user
+    // units; what the reader sees is that multiplied by the viewBox-to-CSS-pixel
+    // ratio. A 13px label in a 720-unit viewBox rendered 358px wide is 6.5px on
+    // a phone, and treating it as 13px would apply the wrong threshold.
+    var svgTextFails = [];
+    Array.prototype.forEach.call(root.querySelectorAll('svg'), function (svg) {
+      var vb = svg.viewBox && svg.viewBox.baseVal;
+      var box = svg.getBoundingClientRect();
+      var scale = (vb && vb.width && box.width) ? box.width / vb.width : 1;
+      var bg = effectiveBackground(svg);
+      Array.prototype.forEach.call(svg.querySelectorAll('text, tspan'), function (t) {
+        if (t.tagName.toLowerCase() === 'text' && t.querySelector('tspan')) return;
+        var txt = (t.textContent || '').trim();
+        if (!txt) return;
+        var cs = getComputedStyle(t);
+        if (cs.visibility === 'hidden' || cs.display === 'none' || parseFloat(cs.opacity) === 0) return;
+        var r = t.getBoundingClientRect();
+        if (!r.width && !r.height) return;
+        var fill = cs.fill;
+        if (!fill || fill === 'none' || isTransparent(fill)) return;
+        var ratio = contrast(fill, bg);
+        if (ratio === null) return;
+        var px = parseFloat(cs.fontSize) * scale;
+        var weight = parseInt(cs.fontWeight, 10) || 400;
+        var need = (px >= 24 || (px >= 18.66 && weight >= 700)) ? 3.0 : 4.5;
+        if (ratio < need) {
+          svgTextFails.push({
+            el: describe(t), ratio: Math.round(ratio * 100) / 100, required: need,
+            renderedPx: Math.round(px * 10) / 10, color: fill, background: bg,
+            sample: txt.slice(0, 40),
+          });
+        }
+      });
+    });
+    if (svgTextFails.length) {
+      failures.push({
+        check: 'svg-text-contrast',
+        detail: svgTextFails.length + ' SVG label(s) below the WCAG AA minimum.',
+        elements: svgTextFails.slice(0, 8),
+      });
+    }
+
     // ---- 5. fused words from .astro whitespace collapse ------------------
     // Measured structurally, not lexically. The first version matched a
     // lowercase letter followed by a capital and needed a brand allowlist to

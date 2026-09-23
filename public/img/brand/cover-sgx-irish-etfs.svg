@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="S&amp;P 500 on SGX: running cost a year falls from 0.41% in the US trust to 0.19% in the Irish fund, dividend tax included">
+  <!-- Cover for the SGX Irish-ETF article. Ivory comparison field with a 6px navy
+       top rule; one gold serif figure; two bars drawn to scale against the printed
+       values (0.406% and 0.186%, public/data/sgx-irish-etfs.py defaults). Both
+       bars share one neutral tint: colour is identity, never verdict (VOICE C10).
+       Safe zone: content kept within x 300-900 for the square crop. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F6F4EF"/>
+      <stop offset="100%" stop-color="#E4DCCB"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <rect width="1200" height="6" fill="#10233D"/>
+
+  <text x="600" y="130" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700"
+        letter-spacing="3.5" fill="#10233D" opacity="0.66">S&amp;P 500 ON SGX &#183; TWO DOMICILES</text>
+
+  <text x="600" y="282" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="104"
+        letter-spacing="-2" fill="#9C7526">0.41% &#8594; 0.19%</text>
+
+  <text x="600" y="338" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="26"
+        fill="#10233D" opacity="0.78">running cost a year, dividend tax included</text>
+
+  <!-- bars to scale: 580px = 0.406%; 0.186% -> 266px -->
+  <text x="310" y="397" font-family="Arial, Helvetica, sans-serif" font-size="15"
+        letter-spacing="0.5" fill="#10233D" opacity="0.8">US trust</text>
+  <rect x="310" y="408" width="580" height="13" rx="6.5" fill="#10233D" opacity="0.72"/>
+  <text x="310" y="461" font-family="Arial, Helvetica, sans-serif" font-size="15"
+        letter-spacing="0.5" fill="#10233D" opacity="0.8">Irish fund</text>
+  <rect x="310" y="472" width="266" height="13" rx="6.5" fill="#10233D" opacity="0.72"/>
+
+  <text x="600" y="560" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700"
+        letter-spacing="2.6" fill="#9C7526" opacity="0.85">THEENOUGHPOINT.COM</text>
+</svg>

@@ -116,8 +116,9 @@ def main():
 
     print("\n2. US estate tax (holder neither US citizen nor US-domiciled; only US-situated asset)")
     print(f"   US$60,000 threshold = S${60_000 * fx:,.0f}")
-    for amt in (100_000, 300_000):
-        print(f"   S${amt:,} -> S${estate_tax_sgd(amt, fx):,.0f}")
+    for amt in (100_000, 300_000, 500_000):
+        tax = estate_tax_sgd(amt, fx)
+        print(f"   S${amt:,} -> S${tax:,.0f}  ({tax / amt * 100:.1f}% of the holding)")
 
     print("\n3. Recovery of a one-off cost by the annual gap")
     half = 0.40 / 2

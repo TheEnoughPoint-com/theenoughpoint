@@ -9,137 +9,159 @@ tags:
   - Singapore
   - SRS
   - EstatePlanning
-readTime: 8
+readTime: 7
 authorId: "fi"
 inlineShare: true
-figuresAsOf: "31 August 2026 for fund charges and sizes (issuer factsheets); 22 September 2026 for the index dividend yield; listing terms per the Singapore prospectus registered by MAS on 14 September 2026"
+figuresAsOf: "Fund fees and sizes 31 August 2026 (issuer factsheets; S27 22 September 2026); S&P 500 dividend yield 22 September 2026; exchange rate 18 September 2026; listing terms per the Singapore prospectus registered by MAS on 14 September 2026"
 takeaways:
-  - "The US still taxes a foreigner's US shares and US-domiciled funds above <strong>US$60,000</strong>, at up to 40%. That rule has not changed."
-  - "From <strong>13 October 2026</strong>, four Ireland-domiciled index funds trade on SGX in Singapore dollars. They are existing funds with a new listing."
-  - "Against the US trust on SGX, the Irish S&P 500 line costs about <strong>0.22 percentage points a year</strong> less once dividend tax is counted: S$220 on S$100,000."
-  - "For anyone already holding the London fund, the saving is <strong>0.04 points a year</strong>. A switch costing 0.2% takes five years to repay."
-  - "Still unchanged: a Singapore-dollar price is <strong>not</strong> currency protection, CPF money cannot buy these funds, and single US shares have no Irish equivalent."
+  - "US estate tax follows a fund's <strong>legal home</strong>, not its exchange. S27 trades on SGX and is still a US fund."
+  - "What is new from <strong>13 October 2026</strong> is access: four Ireland-domiciled index funds on SGX, in Singapore dollars, which SRS money can buy."
+  - "Against S27, the Irish S&P 500 line carries an estimated <strong>S$192 a year</strong> less in fund fee and dividend tax on S$100,000, before dealing costs."
+  - "Anyone already holding an Irish S&P 500 fund overseas has the same estate treatment. Against CSPX the fee gap is <strong>0.04 points</strong>, so dealing costs can outweigh it."
 excerpt: |
-  The standard fix for US estate tax, an Ireland-domiciled fund, used to mean a London account, US dollars and cash only. From 13 October 2026 four such funds trade on SGX in Singapore dollars. What that changes for cash and SRS money, what it costs against the old routes, and what it still does not fix.
+  From 13 October 2026, four Ireland-domiciled index funds trade on SGX in Singapore dollars, within reach of SRS money. What decides the US estate tax, what the listing changes, what it costs against S27 and CSPX, and why an existing overseas holder may gain little.
 ---
 
 import SP500RoutesTool from '@src/components/sgxirish/SP500RoutesTool.astro';
 import AffiliateDisclosureBox from '@src/components/AffiliateDisclosureBox.astro';
 
-**The US estate-tax rule has not changed. What has changed is where the fix is sold: from 13 October, on SGX, in Singapore dollars, on the exchange SRS money already uses.**
+**Yes, if the fund's legal home is Ireland and you are neither a US citizen nor domiciled in the US. The SGX listing is not what does it: S27, the existing S&P 500 fund on SGX, is a US fund and sits inside the US estate tax.**
 
-If you own US shares or a US-domiciled fund, the US taxes that holding when you die once it passes **US$60,000**, about S$76,650 today, at rates up to 40%. [The estate piece](/us-estate-tax-singapore-investors) has the mechanics. The standard way around it is a fund domiciled in Ireland. It holds the same companies, but what you own is a share of an Irish company, and the US does not count that.
+What 13 October changes is access. From that Tuesday, four index funds whose legal home is Ireland trade on SGX in Singapore dollars, where SRS money can buy them. Against S27, the Irish S&P 500 line carries an estimated S$192 a year less in fund fee and dividend tax on S$100,000, and no US estate tax. Against an Irish fund you may already hold overseas, the difference is small, and the cost of switching can exceed it.
 
-The catch was the doorway. Those Irish funds traded in London, in US dollars. You needed a broker with London access and a currency conversion. In practice you also needed cash, because SRS money reaches SGX-listed securities and locally offered funds, not London listings. On SGX itself, the S&P 500 fund was S27, which is a US trust: inside the estate rule, and losing 30% of its dividends to US tax.
+<AffiliateDisclosureBox title="Disclosure" text="This article is not sponsored and carries no affiliate or partner links. The partner-link note in the sidebar is a site-wide statement and applies to no link on this page. Some launch coverage in circulation is sponsored by the funds' distributor; none of it is a source here." />
 
-From **Tuesday 13 October 2026**, four Irish-domiciled index funds run by DWS, Deutsche Bank's asset manager, trade on SGX in Singapore dollars under its Xtrackers brand. MAS registered their Singapore prospectus on 14 September.
+## What changes, and what does not
 
-<AffiliateDisclosureBox title="No relationship" text="We have no commercial relationship with DWS, with the broker distributing this launch, or with any fund or platform named here, and no link on this page pays us. Some of the launch coverage in circulation is sponsored by the distributor and carries referral codes. None of it is a source for any figure below." />
+A fund is a company or a trust, and its domicile is its legal home. For someone who is neither a US citizen nor US-domiciled, the US taxes US-situated assets on death above **US$60,000**, S$76,650 at the 18 September 2026 exchange rate, at rates up to 40%. [The estate piece](/us-estate-tax-singapore-investors/) has the mechanics. Shares in a US-domiciled fund count as US-situated. Shares in an Irish-domiciled fund do not, even when it holds the same American companies.
 
-| SGX counter | Tracks | Annual charge | Fund running since | Fund size |
-|---|---|---|---|---|
-| XT S&P 500 SGD (XUS) | S&P 500 | 0.03% | 2015 | US$4.2bn |
-| XT NASDAQ 100 SGD (XND) | Nasdaq-100 | 0.20% | 2021 | US$2.6bn |
-| XT MS World SGD (XWR) | MSCI World | 0.12% | 2014 | US$30.9bn |
-| XT S&P 500 EW SGD (EUS) | S&P 500 Equal Weight | 0.15% | 2014 | US$16.4bn |
+Irish funds are not new. They have traded for years on overseas exchanges such as London, including the same Xtrackers S&P 500 share class at the same 0.03% fee. Buying them needed access to that overseas market, usually in US dollars. Whether that meant a second broker depended on the account you already had.
 
-<p class="sx-quiet">DWS all-in fees and total fund size across every listing, both at 31 August 2026. All four are physically replicated and accumulating: dividends are reinvested, not paid out.</p>
+The new part is SRS, the Supplementary Retirement Scheme: a voluntary retirement account whose contributions reduce your taxable income. SGX states that SRS money can buy any ETF listed on SGX, through a broker linked to the SRS account. S27 is second in SGX's table of the ten ETFs held by SRS investors, as of October 2025. From 13 October, the same exchange also lists Irish-domiciled funds. CPF money is a different case: none of the four is on CPF Board's list of included ETFs, last updated 17 September 2025.
 
-None of them is a new fund. Each SGX line is an existing share class, with the same ISIN that already trades in London and Frankfurt. The fund's size, record and costs are already public.
+| SGX counter (code) | Tracks | Fund fee a year |
+|---|---|---|
+| XT S&P 500 SGD (XUS) | S&P 500 | 0.03% |
+| XT NASDAQ 100 SGD (XND) | Nasdaq-100 | 0.20% |
+| XT MS World SGD (XWR) | MSCI World | 0.12% |
+| XT S&P 500 EW SGD (EUS) | S&P 500 Equal Weight | 0.15% |
 
-## What actually changed
+<p class="sx-quiet">DWS all-in fees at 31 August 2026. Each SGX line is an existing share class of an existing fund, not a new fund. Codes are to be confirmed on SGX at listing.</p>
 
-<div class="sx-door"><b>SRS money.</b> Until now, SRS money buying the S&P 500 on SGX bought a US trust. It is the second most widely held ETF in SRS accounts, on SGX's own ranking. The other road was an index unit trust through a fund platform, with its own running costs on top. SGX states that [SRS money](/cpf-vs-srs-top-up/) can buy any ETF listed on SGX, through a broker linked to your SRS account. From 13 October that includes an Irish S&P 500 line.</div>
+<details class="src-details">
+<summary><b>Fund details</b>: ISINs, launch dates, fund sizes and factsheets.</summary>
 
-<div class="sx-door"><b>No second broker, no second currency.</b> Before, the Irish route meant London hours, a US-dollar conversion and a broker with UK access. Now it trades in Singapore hours, in Singapore dollars, on the exchange you already use.</div>
+- **S&P 500:** Xtrackers S&P 500 UCITS ETF 4C, ISIN IE000Z9SJA06. Fund launched 27 February 2015; this share class 8 June 2022. Whole fund US$4.15bn, all listings together. Full physical replication. [DWS factsheet, 31 August 2026](https://etf.dws.com/download/asset/5b5c4dfb-d37a-4ab8-b9d2-50fa5cc61d9c).
+- **Nasdaq-100:** Xtrackers NASDAQ 100 UCITS ETF 1C, ISIN IE00BMFKG444. Launched 21 January 2021. Whole fund US$2.56bn. Full physical replication. [DWS factsheet](https://etf.dws.com/download/asset/778d6508-45e0-4068-900a-6342df6e5131).
+- **MSCI World:** Xtrackers MSCI World UCITS ETF 1C, ISIN IE00BJ0KDQ92. Launched 22 July 2014. Whole fund US$30.87bn. Optimised physical replication: it holds most, not all, of the index. [DWS factsheet](https://etf.dws.com/download/asset/7479ae20-a6b8-4a30-82e5-639d29ab8ea4).
+- **S&P 500 Equal Weight:** Xtrackers S&P 500 Equal Weight UCITS ETF 1C, ISIN IE00BLNMYC90. Launched 10 June 2014. Whole fund US$16.42bn. Full physical replication. [DWS factsheet](https://etf.dws.com/download/asset/11deac23-e08a-4a4d-9a51-329abdf37d51).
+- All four are accumulating (dividends reinvested, not paid out) and not currency-hedged. The prospectus lists each SGX line under the same ISIN as its London and Xetra lines.
 
-<div class="sx-door"><b>The SGX default has another option.</b> The S&P 500 fund most Singapore investors bought on this exchange sits inside the estate rule. The same exchange now lists an S&P 500 fund outside it.</div>
+</details>
 
-In plain English: the fix used to need a second broker, a second currency and cash. Now it sits on SGX, in the same account you already use.
+## Three S&P 500 funds on one basis
 
-## What it costs, like for like
+The comparison adds two costs: the fund's annual fee, and the part of US dividends lost to US tax. A US fund's ordinary dividend distributions to a Singapore holder generally lose 30%, and S27 pays its dividends out after deducting its fees. An Irish fund loses 15% of its US dividends under the US–Ireland tax treaty, inside the fund. With the S&P 500 yielding 1.04% (22 September 2026), the estimates are:
 
-A fund's price tag understates what it costs to own. The US also keeps part of the dividends, and how much depends on where the fund is domiciled. A US fund paying a Singapore holder loses **30%**, because Singapore has no US tax treaty. An Irish fund loses **15%** under the US–Ireland treaty. With the S&P 500 yielding about 1.04%, the full running cost a year is:
+| Fund (legal home; where it trades) | Fee + dividend tax a year | On S$100,000 a year | US estate tax on S$100,000 |
+|---|---|---|---|
+| S27 (US; SGX, in US$) | 0.38% | S$378 | about S$6,071 |
+| CSPX (Ireland; London, in US$) | 0.23% | S$226 | none |
+| Xtrackers S&P 500 4C (Ireland; SGX, in S$) | 0.19% | S$186 | none |
 
-- **S27, US trust on SGX:** 0.0945% charge + 0.31% dividend tax = **0.41%**
-- **CSPX, Irish fund in London:** 0.07% + 0.16% = **0.23%**
-- **Xtrackers S&P 500, Irish fund on SGX:** 0.03% + 0.16% = **0.19%**
+<p class="sx-quiet">Estimates under stated assumptions, not measured performance. They leave out tracking difference, securities-lending income, and platform, custody and dealing costs. The estate column assumes a holder who is neither a US citizen nor US-domiciled, with this as their only US-situated asset, at S$1.2775 per US dollar (18 September 2026).</p>
 
-On S$100,000, that is about S$406 a year against S$186. The estate side is larger. Held until death as someone's only US-situated asset, S$300,000 of S27 leaves about **S$67,600** of US estate tax. The same amount in either Irish fund leaves none.
+Against S27, the gap is about 0.19 percentage points a year: S$192 on S$100,000, before dealing costs. A lower fee does not guarantee an equal difference in returns; how closely each fund tracks the index decides that. The estate figure is the larger number, and it rises faster than the holding does.
+
+The calculator uses the same basis and adds one-off dealing costs you can change. Its exchange rate refreshes when the site is built, so its figures can differ slightly from the fixed examples above.
 
 <SP500RoutesTool />
 
-In plain English: against the US trust, the Irish line on SGX is cheaper every year and removes the estate bill. Against the London fund, the difference is small, and the real gain is convenience, plus access for SRS money.
+## If you already hold an Irish fund overseas
 
-## If you already hold the London fund
+You already have the domicile treatment. The SGX line does not improve it.
 
-The London fund already does what the new line does on estate tax and dividend tax. The only saving is the charge: 0.07% against 0.03%, or **0.04 points a year**.
+The fee saving depends on what you hold. Against CSPX it is 0.04 percentage points a year, or S$40 on S$100,000. Against the same Xtrackers share class in London, it is nothing: same fund, same fee.
 
-Switching costs money. You sell one line and buy another, paying commissions and two spreads. A switch that costs 0.2% in total takes about **five years** to repay; one costing 0.4% takes ten. The new line mostly helps with the next dollar you invest, not the last one.
+A switch is a sale and a purchase, each with a commission and a spread, and possibly a currency conversion. If those came to 0.2% of the holding, a 0.04-point saving would take about five years to recover; at 0.4%, about ten. That assumes both funds track the index equally well. Their reported tracking differences show whether they do.
 
-## What it does not fix
+## What the listing does not change
 
-<div class="sx-beat"><b>1. A Singapore-dollar price, US-dollar assets.</b> The prospectus says plainly that the share class is not currency-hedged. The fund owns US shares priced in US dollars. If the US dollar falls 10% against the Singapore dollar, your holding falls by about the same in Singapore dollars. The London fund and S27 carry exactly the same exposure.</div>
+<div class="sx-beat"><b>Currency.</b> The SGX lines are quoted in Singapore dollars but hold US-dollar assets, and they are not hedged. If the US dollar falls against the Singapore dollar, the holding falls with it, as S27 and CSPX do.</div>
 
-<div class="sx-beat"><b>2. The first weeks cost more to trade.</b> A new counter starts with few buyers and sellers. The market maker, Flow Traders, quotes a spread nobody can observe before 13 October. Against S27, even a 0.40% spread is repaid within a year by the running-cost gap. Against the London fund, it takes five years. A limit order caps what you pay; a market order in a thin counter does not.</div>
+<div class="sx-beat"><b>Dealing costs, until trading starts.</b> The spread is the gap between the price to buy and the price to sell. Nobody can see it before 13 October. As an illustration only: a 0.40% spread means paying about 0.20% above the midpoint to buy. If that were 0.20% more than buying the alternative, the fee-and-tax gap would recover it in about a year against S27, and about five years against CSPX.</div>
 
-<div class="sx-beat"><b>3. Dividend tax is halved, not removed.</b> The 15% is still paid inside the fund. You never see a bill; it shows up as a slightly lower fund value.</div>
+<div class="sx-beat"><b>Dividend tax is reduced, not removed.</b> The 15% is paid inside the fund, so you never see a bill. It applies to US dividends; the MSCI World fund's other dividends face other countries' rates.</div>
 
-<div class="sx-beat"><b>4. CPF money cannot buy it.</b> None of the four is on CPF Board's list of included ETFs, last updated 17 September 2025. The list's criteria favour three years of SGX trading history, so inclusion soon is unlikely.</div>
+<div class="sx-beat"><b>Single US shares.</b> EU fund rules forbid a fund that holds one company. Shares of a US company held directly stay US-situated, whatever else you own.</div>
 
-<div class="sx-beat"><b>5. Single US shares have no Irish twin.</b> UCITS rules, the EU fund rules these funds are built under, forbid a fund that holds one company. Nvidia held directly stays US-situated, whatever else you own.</div>
+## Tax on death: what the fund's legal home settles
 
-## Then does Ireland tax my estate?
+Two conditions matter. If the holder is neither a US citizen nor US-domiciled, US estate tax reaches only US-situated assets, and the Irish unit is not one. If neither the holder nor the heir is domiciled or ordinarily resident in Ireland, each tested at their own relevant date, Ireland's inheritance tax exempts units in Irish funds. Singapore removed estate duty for deaths from 15 February 2008. Under those conditions, no estate or inheritance tax falls on the unit itself.
 
-It is the obvious next question, and the answer is on the record. Ireland has its own inheritance tax. But units in Irish investment funds are exempt when neither the person who died nor the heir is domiciled or ordinarily resident in Ireland. Irish Revenue sets this out in its guidance on section 75 of the Capital Acquisitions Tax Consolidation Act 2003. Singapore abolished estate duty in 2008.
+**SRS is different.** When an SRS account holder dies, the whole balance is treated as withdrawn on that date. Up to S$400,000 is exempt, less if withdrawals had begun, and half of the rest is taxed as the holder's income. That is income tax, not estate duty, and it applies whatever the account holds.
 
-There is a second difference, in the paperwork. The [IRS transfer certificate](/us-estate-tax-singapore-investors/), which the IRS says takes 12 to 18 months, concerns property located in the US. An Irish fund unit is not located in the US.
+The paperwork is also separate from the tax. The IRS transfer certificate, a clearance that US assets can pass, asks for a list of every US asset the person held, whatever its tax status. An Irish fund takes the holding out of the US tax; it does not settle every document a custodian may ask the family for.
 
-In plain English: for a Singapore-based holder leaving these units to a Singapore-based family, none of the three countries involved taxes the unit on death.
+In plain English: the fund's legal home settles the estate-tax question. It does not settle the SRS income tax or the paperwork.
 
-## A cheap check, this week
+## A check for this week
 
-1. **Find the ISIN of every fund you hold.** It is on the fund's factsheet and usually in your broker's app. One starting with **US** is US-situated. One starting with **IE** is not.
-2. **Add up the US-situated side across every account, cash and SRS.** The threshold counts all of it together, against US$60,000.
-3. **If an SRS account holds S27, an Irish S&P 500 line now trades on the same exchange.** Whether and when to change is your decision. Inside SRS, a switch is a sale and a purchase: commissions and spreads, and no Singapore tax.
-4. **Tell someone where the accounts are.** It is still the cheapest estate plan there is.
+1. **Find each fund's legal home.** It is on the fund's factsheet. A fund's ISIN, its international security code, usually starts with that country: US for S27, IE for the Irish funds.
+2. **Add up your US-situated holdings across every account, cash and SRS,** against the US$60,000 threshold. The threshold counts all of them together.
+3. **Price any change before making it.** Commissions, spreads and currency conversion, set against the fee difference.
+4. **Tell someone where the accounts are.** A list of accounts is the cheapest part of an estate plan.
 
-The rule has not moved. The question it asks is what happens to this holding on the day you are no longer here to manage it. From 13 October, SGX offers a cheaper answer than it did before.
+The rule has not changed. What changed on 13 October is which accounts can reach a fund on the other side of it.
 
 ---
 
 <details class="src-details">
-<summary><b>Sources and verification</b>: primary where it matters, checked 23 September 2026. Every load-bearing figure, one line each.</summary>
+<summary><b>Method and assumptions</b>: what the estimates include and leave out.</summary>
 
-- **Listing terms** (Irish domicile, UCITS, SGX listing from 13 October 2026 in SGD, board lot of one, market maker Flow Traders Asia, share classes "not subject to currency hedging", no dividend payments, excluded investment products): the [Singapore prospectus registered by MAS on 14 September 2026](https://eservices.mas.gov.sg/opera/Public/CIS/ViewProsDetail.aspx?prosID=5c8dae5fcf93411ca6450577f39038df) and its four product highlights sheets of the same date ([S&P 500](https://eservices.mas.gov.sg/opera/bcd49b38-c3a4-4e67-ac8b-81a5b5c2fbad.publishresource), [Nasdaq-100](https://eservices.mas.gov.sg/opera/112fd751-b2d7-4c93-a44e-f8fbd1793932.publishresource), [MSCI World](https://eservices.mas.gov.sg/opera/bf09f6f0-0d23-4a94-866c-8ab552287e8c.publishresource), [S&P 500 Equal Weight](https://eservices.mas.gov.sg/opera/f01d6c67-6c30-46f2-9df1-9bda45fafea5.publishresource)).
-- **Charges and fund sizes** (0.03% / 0.20% / 0.12% / 0.15% all-in fees; US$4.15bn / 2.56bn / 30.87bn / 16.42bn): DWS factsheets at 31 August 2026, charges matching each fund's key information document. The Singapore highlights sheets show higher expense ratios for calendar 2025 (0.05% / 0.20% / 0.15% / 0.20%), because three of the four cut their fees during that year. Fund sizes are DWS whole-fund figures; justETF reports the S&P 500 4C share class alone at €2.4bn (29 July 2026), a different basis.
-- **Share classes and dates:** S&P 500, ISIN IE000Z9SJA06, class 4C; the fund launched 27 February 2015, and this share class on 8 June 2022. Nasdaq-100 IE00BMFKG444 (2021), MSCI World IE00BJ0KDQ92 (2014, optimised rather than full replication), S&P 500 Equal Weight IE00BLNMYC90 (2014). The prospectus lists the SGX line against the same ISIN as the London and Xetra lines.
-- **Comparators:** [CSPX factsheet](https://www.ishares.com/uk/individual/en/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf) (iShares, TER 0.07%, 31 August 2026); [S27 fund page](https://www.ssga.com/sg/en/intermediary/etfs/spdr-sp-500-etf-trust-s27) (SSGA, gross expense ratio 0.0945%, 22 September 2026; trades in US dollars on SGX).
-- **Dividend tax rates:** 15% on US dividends paid to Irish residents, [IRS Tax Treaty Table 1](https://www.irs.gov/pub/irs-lbi/tax-treaty-table-1.pdf) (rev. May 2023); 30% statutory rate for a non-resident with no treaty, [IRS Publication 515](https://www.irs.gov/publications/p515).
-- **S&P 500 dividend yield** 1.04% at the close on 22 September 2026: [multpl.com](https://www.multpl.com/s-p-500-dividend-yield). Cross-checked against SPY's own distributions over the twelve months to 18 September 2026 (US$7.58 on a US$769 price: 0.99% after its fee, about 1.08% before). Across that range the 0.22-point gap moves by under 0.01. The tool lets you replace it.
-- **Estate rule, threshold, credit and situs** ("all other corporate stock is property located outside the United States"): [IRS Instructions for Form 706-NA](https://www.irs.gov/instructions/i706na) (rev. 09/2025); rate schedule per the [Form 706 instructions](https://www.irs.gov/instructions/i706). Transfer certificate timing: [IRS, transfer certificate filing requirements](https://www.irs.gov/businesses/small-businesses-self-employed/transfer-certificate-filing-requirements-for-the-estates-of-nonresidents-not-citizens-of-the-united-states).
-- **Irish inheritance-tax exemption for fund units:** [Irish Revenue, CAT Manual Part 9](https://www.revenue.ie/en/tax-professionals/tdm/capital-acquisitions-tax/cat-manual/part-09-exemptions/part-9-exemptions.pdf), section 5, on section 75 CATCA 2003 (updated February 2026).
-- **SRS:** "SRS account holders can invest in any ETFs that are listed on SGX", and S27 second among ETFs held by SRS investors (data as of 31 October 2025): [SGX, *Build your SRS account with SGX-listed ETFs*](https://www.sgx.com/campaign/etf-investing-srs). Permitted SRS investments: [MOF](https://www.mof.gov.sg/news-resources/supplementary-retirement-scheme/) (updated 15 April 2026).
-- **CPF status:** [CPF Board, List A of included ETFs](https://www.cpf.gov.sg/content/dam/web/member/business-partners/documents/RCSETF_ListA.pdf) (updated 17 September 2025).
-- **Exchange rate:** S$1.2775 per US dollar, [Federal Reserve H.10 via FRED](https://fred.stlouisfed.org/series/DEXSIUS), 18 September 2026. The tool uses the rate refreshed at each site build and prints it.
-- **Every computed figure** (running costs, the S$220 gap, the S$67,600 estate figure, the repayment years) is reproduced by [the script behind this piece](/data/sgx-irish-etfs.py).
+- **Fee plus dividend tax.** Irish funds: fee + 15% × index dividend yield. S27: fee + 30% × (index dividend yield − fee), because S27 distributes dividends net of its fees and expenses; if the yield is at or below the fee, the dividend tax is taken as zero. At 1.04%: S27 0.0945% + 0.284% = 0.378%; CSPX 0.07% + 0.156% = 0.226%; Xtrackers 0.03% + 0.156% = 0.186%.
+- **The 30% rate** is the general US rate on ordinary dividends a US fund pays a holder with no tax treaty. IRS Publication 515 and the fund's prospectus describe exceptions, such as distributions paid out of US interest or short-term capital gains; the estimate ignores them.
+- **The 15% rate** applies to US-source dividends received by an Irish fund. It says nothing about the non-US dividends of the MSCI World fund.
+- **Left out:** tracking difference, securities-lending income, platform and custody fees, and dealing costs (the calculator adds the last as inputs).
+- **Estate figures** apply the published US rate schedule less the US$13,000 credit, to a holder who is neither a US citizen nor US-domiciled, with no other US-situated assets. Holding in S$ is converted to US$, taxed in US$ and converted back. Body examples use S$1.2775 per US dollar (18 September 2026); the calculator uses the rate refreshed at each site build.
+- **Spreads.** Buying at the offer costs half the quoted spread against the midpoint between buy and sell prices, not necessarily against the fund's net asset value. Recovery years = extra one-off cost ÷ annual gap: 0.20 ÷ 0.192 ≈ 1.0 year against S27; 0.20 ÷ 0.04 = 5 years against CSPX.
+- **Transfer certificate.** The IRS says it takes 12 to 18 months to process a request made without a Form 706-NA return, counted from when it has every document. That is a processing time, not a timetable for settling an estate or releasing assets.
 
 </details>
 
 <details class="src-details">
-<summary><b>Soft spots</b>: what we could not confirm, stated plainly.</summary>
+<summary><b>Sources and verification</b>: primary where it matters, checked 23 September 2026.</summary>
 
-- **Three of the four SGX codes.** The prospectus prints XND's code; XUS, XWR and EUS come from the appointed distributor's official announcement of 21 September 2026, which also gives the listing date the prospectus confirms. None was yet on SGX's securities list on 23 September.
-- **The opening spread.** An estimate of 0.15–0.40% at listing is in circulation and attributed to DWS; we could not find it in any DWS document. The piece therefore uses 0.40% only as a stress case.
-- **The unit-trust road for SRS.** Singapore-domiciled S&P 500 index unit trusts feeding Irish funds exist and are sold for SRS money; their full running costs vary by platform and are not compared here.
-- **Securities lending.** All four funds may lend their holdings. Two DWS documents disagree on how lending revenue is split (70/15/15 in the Irish supplement; 82/9/9 in the 2026 key information documents). The factsheets show the revenue as a very small share of assets.
+- **Listing terms** (Irish domicile, UCITS, SGX listing from 13 October 2026 in SGD, market maker Flow Traders Asia, share classes not currency-hedged, no dividend payments): the [Singapore prospectus registered by MAS on 14 September 2026](https://eservices.mas.gov.sg/opera/Public/CIS/ViewProsDetail.aspx?prosID=5c8dae5fcf93411ca6450577f39038df) ([document](https://eservices.mas.gov.sg/opera/cf88dc3b-ae02-4f2d-b3ed-7f63cafa8a75.publishresource)) and its product highlights sheets of the same date ([S&P 500](https://eservices.mas.gov.sg/opera/bcd49b38-c3a4-4e67-ac8b-81a5b5c2fbad.publishresource), [Nasdaq-100](https://eservices.mas.gov.sg/opera/112fd751-b2d7-4c93-a44e-f8fbd1793932.publishresource), [MSCI World](https://eservices.mas.gov.sg/opera/bf09f6f0-0d23-4a94-866c-8ab552287e8c.publishresource), [S&P 500 Equal Weight](https://eservices.mas.gov.sg/opera/f01d6c67-6c30-46f2-9df1-9bda45fafea5.publishresource)).
+- **Fees and fund sizes:** DWS factsheets at 31 August 2026, linked in the fund details above. The Singapore highlights sheets show higher expense ratios for calendar 2025 (0.05% / 0.20% / 0.15% / 0.20%) and footnote a change in the all-in fee during 2025 for three of the four. Sizes are whole-fund figures across all listings, not SGX-line assets.
+- **Comparators:** [CSPX factsheet](https://www.ishares.com/uk/individual/en/literature/fact-sheet/cspx-ishares-core-s-p-500-ucits-etf-fund-fact-sheet-en-gb.pdf) (iShares, 0.07%, 31 August 2026); [S27 fund page](https://www.ssga.com/sg/en/intermediary/etfs/spdr-sp-500-etf-trust-s27) (SSGA, gross expense ratio 0.0945%, 22 September 2026). S27 distributions "net of fees and expenses": [SPDR S&P 500 ETF Trust prospectus](https://www.sec.gov/Archives/edgar/data/884394/000119312526022775/d77353d497.htm).
+- **Dividend tax rates:** 15% on US dividends paid to Irish residents, [IRS Tax Treaty Table 1](https://www.irs.gov/pub/irs-lbi/tax-treaty-table-1.pdf) (rev. May 2023); 30% general rate and its exceptions, [IRS Publication 515](https://www.irs.gov/publications/p515).
+- **S&P 500 dividend yield** 1.04% at the close on 22 September 2026: [multpl.com](https://www.multpl.com/s-p-500-dividend-yield), a secondary source. The calculator lets you replace it.
+- **US estate rule** (threshold, US$13,000 credit, and non-US corporate stock treated as located outside the US): [IRS Instructions for Form 706-NA](https://www.irs.gov/instructions/i706na) (rev. 09/2025); rate schedule per the [Form 706 instructions](https://www.irs.gov/instructions/i706). Transfer certificate: [IRS, transfer certificate filing requirements](https://www.irs.gov/businesses/small-businesses-self-employed/transfer-certificate-filing-requirements-for-the-estates-of-nonresidents-not-citizens-of-the-united-states).
+- **Irish exemption for fund units:** [Irish Revenue, CAT Manual Part 9](https://www.revenue.ie/en/tax-professionals/tdm/capital-acquisitions-tax/cat-manual/part-09-exemptions/part-9-exemptions.pdf), section 5, on section 75 of the Capital Acquisitions Tax Consolidation Act 2003 (updated February 2026).
+- **Singapore:** estate duty removed for deaths on and after 15 February 2008, [IRAS](https://www.iras.gov.sg/taxes/other-taxes/estate-duty/estate-duty); SRS balance deemed withdrawn on death, up to S$400,000 exempt and 50% of the remainder taxable, [IRAS, tax on SRS withdrawals](https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/special-tax-schemes/tax-on-srs-withdrawals).
+- **SRS and SGX:** "SRS account holders can invest in any ETFs that are listed on SGX", and the table of top ten ETFs held by SRS investors (as of October 2025): [SGX](https://www.sgx.com/campaign/etf-investing-srs).
+- **CPF:** [CPF Board, List A of included ETFs](https://www.cpf.gov.sg/content/dam/web/member/business-partners/documents/RCSETF_ListA.pdf) (updated 17 September 2025).
+- **Exchange rate:** S$1.2775 per US dollar, [Federal Reserve H.10 via FRED](https://fred.stlouisfed.org/series/DEXSIUS), 18 September 2026.
+- **Every computed figure** in the body and the calculator's default totals are reproduced by [the script behind this piece](/data/sgx-irish-etfs.py).
+
+</details>
+
+<details class="src-details">
+<summary><b>Soft spots</b>: what we could not confirm.</summary>
+
+- **Three SGX codes.** The prospectus prints XND's code. XUS, XWR and EUS come from the distributor's announcement of 21 September 2026 and were not on SGX's securities list on 23 September.
+- **Opening spreads,** and whether each SRS operator and broker enables these counters from the first day.
+- **The 1.04% dividend yield** is from one secondary source.
+- **Securities lending.** Two DWS documents give different splits of lending revenue (70/15/15 and 82/9/9).
+- **The SRS unit-trust alternative.** S&P 500 index unit trusts sold for SRS money exist; their costs vary by platform and share class and are not compared here.
 
 </details>
 
 <style>{`
 .post-content .sx-quiet{font-size:13px;color:var(--color-muted);margin:-6px 0 20px}
-.post-content .sx-door,.post-content .sx-beat{border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);padding:14px 16px;margin:0 0 12px;line-height:1.6}
-.post-content .sx-door b,.post-content .sx-beat b{color:var(--color-dark);display:block;margin-bottom:3px}
+.post-content .sx-beat{border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);padding:14px 16px;margin:0 0 12px;line-height:1.6}
+.post-content .sx-beat b{color:var(--color-dark);display:block;margin-bottom:3px}
 .post-content .src-details{border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);margin:26px 0 14px;font-size:13px;color:var(--color-muted)}
 .post-content .src-details summary{cursor:pointer;padding:12px 16px;font-size:13.5px;color:var(--color-body);list-style-position:inside}
 .post-content .src-details summary b{color:var(--color-dark)}
@@ -148,6 +170,6 @@ The rule has not moved. The question it asks is what happens to this holding on 
 .post-content .src-details li{margin-bottom:7px;line-height:1.55}
 `}</style>
 
-**Deliberately not claimed:** that anyone should buy, hold, sell or switch any fund named here. Every product is a checkable example of a route, not a pick. Any view on the direction of the S&P 500, the Nasdaq-100 or the US dollar. The treatment of jointly held accounts on death.
+**Deliberately not claimed:** that anyone should buy, hold, sell or switch any fund named here. The funds are named as checkable examples, in a fixed order that is not a ranking. No view on the direction of the S&P 500, the Nasdaq-100 or the US dollar. No view on jointly held accounts on death.
 
-General information and education only: this is not financial, tax or legal advice, and it takes no account of your objectives, situation or needs. Estate matters interact with wills, with domicile and residence, and with rules that change; a qualified adviser earns their fee here. Figures are computed from the sources above; verify the current position before relying on them.
+General information and education only: this is not financial, tax or legal advice, and it takes no account of your objectives, situation or needs. Estate matters depend on citizenship, domicile and residence, on wills, and on rules that change; a qualified adviser earns their fee here. Figures are computed from the sources above; verify the current position before relying on them.

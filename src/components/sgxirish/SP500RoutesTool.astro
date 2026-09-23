@@ -1,14 +1,12 @@
 ---
-// Three routes to the same S&P 500 exposure for a Singapore holder, priced side by
-// side: what it costs to run, what it costs to get in and out, and what the holding
-// would leave exposed to US estate tax. Costs and a statutory schedule only — no
-// return assumption, no verdict.
+// Three S&P 500 funds for a Singapore holder, on one stated basis: the estimated
+// annual fund fee and dividend tax, one-off dealing costs the reader enters, and the
+// US estate tax the holding would carry. An estimate under stated assumptions, not
+// measured performance, and no verdict: rows stay in a fixed order and share one
+// neutral colour.
 //
-// Published figures are prefilled with their as-at dates: the three fund charges,
-// the dividend-tax rate each domicile suffers, the S&P 500 dividend yield. The one-off
-// costs (FX conversion, spread, commission) are ILLUSTRATIVE — they depend on the
-// reader's broker and, for the new SGX line, on a spread nobody can observe before
-// 13 October 2026.
+// Dividend tax: Irish funds lose 15% of US dividends inside the fund; S27 distributes
+// dividends net of its fees, so its 30% applies to (yield - fee), floored at zero.
 //
 // public/data/sgx-irish-etfs.py reproduces the default outputs; if you change the
 // arithmetic here, change it there.
@@ -25,16 +23,9 @@ const fx = await getSgdPerUsd();
 
 <div class="sr" data-card="tool">
   <div class="sr-head">
-    <span class="sr-lbl">One index, three routes, priced</span>
+    <span class="sr-lbl">Three S&amp;P 500 funds, one basis</span>
     <span class="sr-lbl accent card-live">Interactive</span>
   </div>
-
-  <p class="sr-preset">Costs only: this assumes nothing about where the index goes. The fund
-  charges are the issuers&rsquo; published figures (S27 <b>0.0945%</b>, SSGA, 22 September 2026;
-  CSPX <b>0.07%</b> and the Xtrackers line <b>0.03%</b>, factsheets at 31 August 2026). The dividend
-  tax follows from where each fund is domiciled and is not an input. Going-in and coming-out
-  costs are <b>illustrative</b>: they depend on your broker, and the new SGX line&rsquo;s trading
-  spread cannot be seen until it lists. Replace them with your own.</p>
 
   <div class="sr-body">
     <div class="sr-top">
@@ -58,35 +49,35 @@ const fx = await getSgdPerUsd();
       <button type="button" class="sr-pill" id="sr-srs" role="radio" aria-checked="false">SRS money</button>
     </div>
 
-    <div class="sr-tblwrap">
-      <table class="sr-tbl">
-        <thead>
-          <tr><th>Route</th><th class="sr-fix">Fund charge</th><th class="sr-fix">Dividend tax lost</th><th>Going in %</th><th>Coming out %</th></tr>
-        </thead>
-        <tbody>
-          <tr id="sr-r1"><td>S27 on SGX<em>US trust &middot; trades in US$ &middot; FX, spread and commission illustrative</em></td>
-            <td class="num sr-fix">0.0945%</td><td class="num sr-fix">30%</td>
-            <td><input type="text" id="sr-e1" value="0.30" inputmode="decimal"></td>
-            <td><input type="text" id="sr-x1" value="0.30" inputmode="decimal"></td></tr>
-          <tr id="sr-r2"><td>CSPX in London<em>Irish fund &middot; trades in US$ &middot; FX, spread and commission illustrative</em></td>
-            <td class="num sr-fix">0.07%</td><td class="num sr-fix">15%</td>
-            <td><input type="text" id="sr-e2" value="0.30" inputmode="decimal"></td>
-            <td><input type="text" id="sr-x2" value="0.30" inputmode="decimal"></td></tr>
-          <tr id="sr-r3"><td>Xtrackers S&amp;P 500 on SGX<em>Irish fund &middot; trades in S$ &middot; spread unknown until it lists; illustrative</em></td>
-            <td class="num sr-fix">0.03%</td><td class="num sr-fix">15%</td>
-            <td><input type="text" id="sr-e3" value="0.25" inputmode="decimal"></td>
-            <td><input type="text" id="sr-x3" value="0.20" inputmode="decimal"></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="sr-hint">&ldquo;Dividend tax lost&rdquo; is the share of the index&rsquo;s US dividends the US
-    keeps: 30% of what a US fund pays a Singapore holder, 15% at the level of an Irish fund under
-    the US&ndash;Ireland treaty. Running cost a year = fund charge + that share of the dividend yield.</p>
+    <details class="sr-more">
+      <summary>Dealing costs: illustrative, change them to your broker&rsquo;s</summary>
+      <p class="sr-hint">One-off costs to buy and to sell, as a percentage of the holding: commission,
+      half the spread, and any currency conversion. The new SGX line&rsquo;s spread cannot be seen
+      until it lists on 13 October 2026.</p>
+      <div class="sr-tblwrap">
+        <table class="sr-tbl">
+          <thead>
+            <tr><th>Fund</th><th>Buying %</th><th>Selling %</th></tr>
+          </thead>
+          <tbody>
+            <tr id="sr-r1"><td>S27<em>US fund &middot; SGX, in US$</em></td>
+              <td><input type="text" id="sr-e1" value="0.30" inputmode="decimal" aria-label="S27 buying cost %"></td>
+              <td><input type="text" id="sr-x1" value="0.30" inputmode="decimal" aria-label="S27 selling cost %"></td></tr>
+            <tr id="sr-r2"><td>CSPX<em>Irish fund &middot; London, in US$</em></td>
+              <td><input type="text" id="sr-e2" value="0.30" inputmode="decimal" aria-label="CSPX buying cost %"></td>
+              <td><input type="text" id="sr-x2" value="0.30" inputmode="decimal" aria-label="CSPX selling cost %"></td></tr>
+            <tr id="sr-r3"><td>Xtrackers S&amp;P 500 4C<em>Irish fund &middot; SGX, in S$</em></td>
+              <td><input type="text" id="sr-e3" value="0.25" inputmode="decimal" aria-label="Xtrackers buying cost %"></td>
+              <td><input type="text" id="sr-x3" value="0.20" inputmode="decimal" aria-label="Xtrackers selling cost %"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
   </div>
 
   <div class="sr-bars-wrap">
     <div class="sr-bars-t" id="sr-bars-t">&mdash;</div>
-    <div class="sr-bars" id="sr-bars"><!-- rows injected --></div>
+    <div class="sr-bars" id="sr-bars"><!-- rows injected, fixed order --></div>
   </div>
 
   <div class="sr-out">
@@ -94,14 +85,21 @@ const fx = await getSgdPerUsd();
   </div>
 
   <div class="sr-notes">
-    <p><b>Estate figure.</b> The published US schedule less the US$13,000 credit, assuming this is
-    your only US-situated asset. Anything else you hold that is US-situated adds to the same total.
-    Converted at S$1 = US${(1 / fx.sgdPerUsd).toFixed(4)}, {fx.source}, as at {fx.asOf}.</p>
-    <p><b>What it leaves out.</b> Returns, in every direction; tracking differences between the
-    funds; currency moves, which reach all three routes equally because all three hold US
-    shares; platform and custody fees; and the treatment of a US estate that has to be settled.</p>
-    <p><b>What this is not.</b> Advice or a ranking. The cheaper route on your inputs is a fact
-    about fees and a tax schedule, not a recommendation to hold any of these funds.</p>
+    <details class="sr-more">
+      <summary>How this is calculated</summary>
+      <p><b>Fee and dividend tax.</b> Fund fee plus the US dividend tax: 15% of the index dividend
+      yield for the Irish funds, inside the fund; 30% of the yield after S27&rsquo;s fee, because S27
+      pays dividends out net of its fees. Fees: S27 0.0945% (SSGA, 22 September 2026); CSPX 0.07% and
+      Xtrackers 0.03% (factsheets, 31 August 2026). An estimate, not measured performance: it leaves out
+      tracking difference, securities-lending income, platform and custody fees, and the exceptions to
+      the 30% rate.</p>
+      <p><b>Estate figure.</b> The published US schedule less the US$13,000 credit, for a holder who is
+      neither a US citizen nor US-domiciled and has no other US-situated asset. Converted at
+      S$1 = US${(1 / fx.sgdPerUsd).toFixed(4)}, {fx.source}, as at {fx.asOf}. This rate refreshes when
+      the site is built; the article&rsquo;s fixed examples use 18 September 2026.</p>
+    </details>
+    <p><b>What this is not.</b> Advice or a ranking. The funds stay in a fixed order; the numbers are
+    facts about fees, a tax estimate and a tax schedule on your inputs.</p>
     <ToolBrand />
   </div>
 </div>
@@ -122,9 +120,6 @@ const fx = await getSgdPerUsd();
   display:flex;justify-content:space-between;align-items:center;gap:12px}
 .sr-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--sr-t3)}
 .sr-lbl.accent{color:var(--sr-g2)}
-.post-content .sr-preset{font-size:12.5px;color:var(--sr-t3);line-height:1.55;
-  margin:0;padding:12px 22px;border-bottom:1px dashed var(--sr-bd)}
-.sr-preset b{color:var(--sr-t2);font-weight:600}
 .sr-body{padding:16px 22px 8px}
 .sr-top{display:flex;gap:14px 34px;flex-wrap:wrap;margin-bottom:12px}
 .sr-f{display:flex;align-items:baseline;gap:10px;margin:0}
@@ -136,14 +131,17 @@ const fx = await getSgdPerUsd();
   width:4.5ch;padding:0 0 1px}
 .sr-in input.w-lg{width:9ch}
 .sr-in input:focus,.sr-tbl input:focus{outline:none;border-bottom:1px solid var(--sr-g);color:var(--sr-g2);box-shadow:none}
-.sr-acct{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+.sr-acct{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
 .sr-acct-l{font-size:14px;color:var(--sr-t2);margin-right:4px}
 .sr-pill{font-size:13px;font-weight:600;padding:5px 14px;border-radius:999px;cursor:pointer;
   border:1px solid var(--sr-bd2);background:#fff;color:var(--sr-t2)}
 .sr-pill[aria-checked="true"]{background:var(--sr-deep);border-color:var(--sr-deep);color:#fff}
 .sr-pill:focus-visible{outline:2px solid var(--sr-g);outline-offset:2px}
+.sr-more{margin:0 0 10px}
+.sr-more summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--sr-g2);padding:4px 0}
+.post-content .sr-hint{font-size:12.5px;color:var(--sr-t3);line-height:1.5;margin:6px 0 8px}
 .sr-tblwrap{overflow-x:auto}
-.post-content .sr-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:0;min-width:560px}
+.post-content .sr-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:0}
 /* Prose CSS paints table headers navy: light text on a dark field, as RouteCostTool. */
 .post-content .sr-tbl th{font-size:11px;text-transform:uppercase;letter-spacing:.7px;
   color:#C9D3E0;font-weight:700;text-align:right;padding:7px 8px;border-bottom:1px solid var(--sr-bd)}
@@ -154,23 +152,24 @@ const fx = await getSgdPerUsd();
 .sr-tbl tr.off td{opacity:.45}
 .sr-tbl input{font-family:var(--sr-mono);font-size:14px;font-weight:600;color:var(--sr-t1);
   background:none;border:none;border-bottom:1px dashed var(--sr-bd2);text-align:right;width:5ch;padding:0 0 1px}
-.post-content .sr-hint{font-size:12px;color:var(--sr-t3);line-height:1.5;margin:10px 0 6px}
 
-.sr-bars-wrap{padding:14px 22px 18px}
+.sr-bars-wrap{padding:14px 22px 18px;border-top:1px solid var(--sr-bd)}
 .sr-bars-t{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
   color:var(--sr-t3);margin-bottom:12px}
 .sr-bars-t b{color:#7A5A1D}
-.sr-bars{display:flex;flex-direction:column;gap:15px}
+.sr-bars{display:flex;flex-direction:column;gap:16px}
 .sr-bar-l{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:5px;flex-wrap:wrap}
 .sr-bar-l span{font-size:13.5px;color:var(--sr-t2)}
-.sr-bar-l small{display:block;font-family:var(--sr-mono);font-size:11.5px;color:var(--sr-t3);font-weight:400}
 .sr-bar-l b{font-family:var(--sr-mono);font-size:15px;font-weight:600;color:var(--sr-t1)}
 .sr-tc{font-style:normal;font-family:var(--font-body);font-size:11px;font-weight:600;color:var(--sr-t3);margin-left:4px}
+.sr-lines{font-family:var(--sr-mono);font-size:11.5px;color:var(--sr-t3);line-height:1.5;margin-bottom:5px}
+.sr-lines div b{color:var(--sr-t2);font-weight:600}
 .sr-track{height:10px;background:var(--color-surface-alt);border-radius:999px;overflow:hidden}
 .sr-fill{height:100%;border-radius:999px;transition:width .3s ease;min-width:2px;background:#9C7526}
 .sr-estate{font-size:12.5px;color:var(--sr-t2);margin-top:5px}
 .sr-estate b{font-family:var(--sr-mono);font-weight:600;color:var(--sr-t1)}
-.sr-bar.off .sr-bar-l span,.sr-bar.off .sr-estate{color:var(--sr-t3)}
+.sr-bar.off .sr-bar-l span{color:var(--sr-t3)}
+.sr-offnote{font-size:12.5px;color:var(--sr-t3)}
 
 .sr-out{background:var(--sr-deep);color:#fff;padding:17px 22px}
 .sr-out-s{font-size:15px;line-height:1.6;color:#D8DEE8}
@@ -180,8 +179,7 @@ const fx = await getSgdPerUsd();
 .post-content .sr-notes p{font-size:12.5px;line-height:1.55;color:var(--sr-t3);margin:0 0 7px}
 .post-content .sr-notes p:last-child{margin-bottom:0}
 .sr-notes b{color:var(--sr-t2)}
-@media(max-width:640px){ .post-content .sr-tbl{min-width:0} .post-content .sr-tbl .sr-fix{display:none} }
-@media(max-width:640px){ .sr-head,.sr-body,.sr-bars-wrap,.sr-out,.sr-notes,.post-content .sr-preset{padding-left:16px;padding-right:16px} }
+@media(max-width:640px){ .sr-head,.sr-body,.sr-bars-wrap,.sr-out,.sr-notes{padding-left:16px;padding-right:16px} }
 @media(prefers-reduced-motion:reduce){.sr *{transition:none!important}}
 </style>
 
@@ -194,38 +192,46 @@ const BRACKETS=[[0,10000,0,.18],[10000,20000,1800,.20],[20000,40000,3800,.22],
 [100000,150000,23800,.30],[150000,250000,38800,.32],[250000,500000,70800,.34],
 [500000,750000,155800,.37],[750000,1000000,248300,.39],[1000000,null,345800,.40]];
 const CREDIT=13000;
-const USD_PER_SGD = 1 / SGD_PER_USD;
 
+/* netOfFee: S27 distributes dividends after deducting its fees, so the 30% applies to
+   (yield - fee). Irish funds suffer 15% on the US dividends they receive. */
 const ROUTES = [
-  { key:1, label:'S27 on SGX',                 ter:0.0945, wht:0.30, usSitus:true,  srs:true  },
-  { key:2, label:'CSPX in London',             ter:0.07,   wht:0.15, usSitus:false, srs:false },
-  { key:3, label:'Xtrackers S&P 500 on SGX',   ter:0.03,   wht:0.15, usSitus:false, srs:true  },
+  { key:1, label:'S27 (US fund, SGX)',                 ter:0.0945, wht:0.30, netOfFee:true,  usSitus:true,  srs:true  },
+  { key:2, label:'CSPX (Irish fund, London)',          ter:0.07,   wht:0.15, netOfFee:false, usSitus:false, srs:false },
+  { key:3, label:'Xtrackers S&P 500 4C (Irish fund, SGX)', ter:0.03, wht:0.15, netOfFee:false, usSitus:false, srs:true  },
 ];
 
 const $ = id => document.getElementById(id);
 const numOf = el => { const n = parseFloat(String(el.value).replace(/[^\d.\-]/g,'')); return isFinite(n) && n >= 0 ? n : 0; };
 const sgd = n => 'S$' + Math.round(n).toLocaleString('en-SG');
 const pct = n => n.toFixed(2) + '%';
+const yrsT = n => n + (n === 1 ? ' year' : ' years');
 let acct = 'cash';
 
-function estateTaxUsd(usd){
-  for (const [lo,hi,base,rate] of BRACKETS){ if (hi===null || usd<=hi) return Math.max(0, base + rate*(usd-lo) - CREDIT); }
+/* The holding is in S$: convert to US$ (divide by S$ per US$), tax in US$, convert back. */
+function estateTaxSgd(sgdAmt){
+  const usd = sgdAmt / SGD_PER_USD;
+  for (const [lo,hi,base,rate] of BRACKETS){
+    if (hi===null || usd<=hi) return Math.max(0, base + rate*(usd-lo) - CREDIT) * SGD_PER_USD;
+  }
   return 0;
 }
 
-/* Mirrors public/data/sgx-irish-etfs.py.
-   running % a year = fund charge + (dividend tax lost x dividend yield);
-   total = A x (entry + running x N + exit), on a constant notional so that no
-   return assumption enters a cost comparison. */
+/* Mirrors public/data/sgx-irish-etfs.py. All percentages are % of the holding. */
+function annualPct(r, dy){
+  const base = r.netOfFee ? Math.max(0, dy - r.ter) : Math.max(0, dy);
+  return r.ter + r.wht * base;
+}
+
 function compute(A, N, dy){
   return ROUTES.map(r => {
     const e = numOf($('sr-e'+r.key))/100, x = numOf($('sr-x'+r.key))/100;
-    const runPct = r.ter + r.wht*dy;
-    const runCost = A*runPct/100*N;
+    const runPct = annualPct(r, dy);
+    const runCost = A * runPct / 100 * N;
     const total = A*e + runCost + A*x;
-    const estateSgd = r.usSitus ? estateTaxUsd(A*USD_PER_SGD) / USD_PER_SGD : 0;
-    const off = acct === 'srs' && !r.srs;
-    return { ...r, runPct, entry:A*e, runCost, exit:A*x, total, estateSgd, off };
+    return { ...r, runPct, entry:A*e, runCost, exit:A*x, total,
+             estateSgd: r.usSitus ? estateTaxSgd(A) : 0,
+             off: acct === 'srs' && !r.srs };
   });
 }
 
@@ -257,44 +263,42 @@ function paintAcct(){
 
 function update(fromUser){
   const A  = Math.max(0, numOf($('sr-amt')));
-  const N  = Math.min(40, Math.max(1, numOf($('sr-yrs'))));
+  const N  = Math.min(40, Math.max(1, Math.round(numOf($('sr-yrs')))));
   const dy = Math.min(10, numOf($('sr-dy')));
   paintAcct();
 
   if (A <= 0){
     $('sr-bars').innerHTML = ''; $('sr-bars-t').textContent = '—';
-    $('sr-say').textContent = 'Enter a holding above zero to price the routes.';
+    $('sr-say').textContent = 'Enter a holding above zero.';
     return;
   }
   const rows = compute(A, N, dy);
-  const live = rows.filter(r => !r.off);
-  const max = Math.max(...live.map(r => r.total), 1);
+  const max = Math.max(...rows.filter(r => !r.off).map(r => r.total), 1);
 
-  $('sr-bars-t').innerHTML = 'What ' + N + (N === 1 ? ' year' : ' years') + ' of holding <b>' + sgd(A)
-    + '</b> costs, route by route';
+  $('sr-bars-t').innerHTML = 'Holding <b>' + sgd(A) + '</b> for ' + yrsT(N) + ': estimated costs';
 
   $('sr-bars').innerHTML = rows.map(r => {
     if (r.off) return '<div class="sr-bar off"><div class="sr-bar-l"><span>' + r.label
-      + '<small>not available to SRS money: listed overseas</small></span></div></div>';
-    return '<div class="sr-bar"><div class="sr-bar-l"><span>' + r.label
-      + '<small>in ' + sgd(r.entry) + ' &middot; running ' + pct(r.runPct) + ' a year = ' + sgd(r.runCost)
-      + ' &middot; out ' + sgd(r.exit) + '</small></span><b class="num">' + sgd(r.total)
-      + '<i class="sr-tc">total cost</i></b></div><div class="sr-track"><div class="sr-fill" style="width:'
-      + Math.max(2, Math.min(100, r.total/max*100)) + '%"></div></div>'
+      + '</span></div><div class="sr-offnote">Not open to SRS money: listed overseas.</div></div>';
+    return '<div class="sr-bar"><div class="sr-bar-l"><span>' + r.label + '</span><b class="num">'
+      + sgd(r.total) + '<i class="sr-tc">total</i></b></div>'
+      + '<div class="sr-lines">'
+      + '<div>Fee + dividend tax: <b>' + pct(r.runPct) + '</b> a year &rarr; <b>' + sgd(r.runCost) + '</b> over ' + yrsT(N) + '</div>'
+      + '<div>Dealing: buying <b>' + sgd(r.entry) + '</b> &middot; selling <b>' + sgd(r.exit) + '</b></div>'
+      + '</div>'
+      + '<div class="sr-track"><div class="sr-fill" style="width:' + Math.max(2, Math.min(100, r.total/max*100)) + '%"></div></div>'
       + '<div class="sr-estate">US estate tax on this holding: <b>' + sgd(r.estateSgd) + '</b>'
-      + (r.usSitus ? '' : ' &middot; not US-situated') + '</div></div>';
+      + (r.usSitus ? '' : ' (not US-situated)') + '</div></div>';
   }).join('');
 
   const us = rows[0], sgx = rows[2];
-  const runGap = us.runCost - sgx.runCost;
-  let say = 'Over <b>' + N + (N === 1 ? ' year' : ' years') + '</b>, the running-cost difference between the '
-    + 'two SGX lines on <b>' + sgd(A) + '</b> is <b>' + sgd(runGap) + '</b>, before one-off costs. ';
+  let say = 'S27 against the Xtrackers line on SGX, over <b>' + yrsT(N) + '</b> on <b>' + sgd(A) + '</b>: '
+    + 'fee and dividend tax differ by <b>' + sgd(us.runCost - sgx.runCost) + '</b>; '
+    + 'with the dealing costs entered, the totals differ by <b>' + sgd(us.total - sgx.total) + '</b>. ';
   say += us.estateSgd > 0
-    ? 'The US trust also leaves <b>' + sgd(us.estateSgd) + '</b> of US estate tax on the holding if its owner dies holding it; the Irish lines leave <b>S$0</b>. '
-    : 'At this size the US trust sits under the US$60,000 threshold on its own &mdash; but the threshold counts every US-situated asset you own, not this holding alone. ';
-  say += acct === 'srs'
-    ? 'With SRS money, the London route is not open at all.'
-    : 'Spreads punish short holdings and running costs punish long ones, so move the years.';
+    ? 'The US fund also carries <b>' + sgd(us.estateSgd) + '</b> of US estate tax at this size; the Irish funds carry none. '
+    : 'At this size, S27 alone is under the US$60,000 threshold, but the threshold counts every US-situated asset you hold. ';
+  if (acct === 'srs') say += 'With SRS money, CSPX is not available.';
   $('sr-say').innerHTML = say;
 
   if (fromUser) writeLink(A, N, dy);

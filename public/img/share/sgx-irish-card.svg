@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" role="img" aria-label="Same S&amp;P 500, different registration. US estate tax if held at death, for a holder who is not a US citizen or US-domiciled. S27, registered in the US: about S$6,071 on S$100,000 (6%), S$67,639 on S$300,000 (23%), S$135,252 on S$500,000 (27%). Irish-registered S&amp;P 500 fund, on SGX from 13 October 2026: none at each size. Estimated fee and dividend tax: about 0.38% a year for S27 against 0.19% for the Irish fund on SGX. The tax follows where the fund is registered, not where you buy it.">
+  <!-- Share card for the SGX Irish-ETF piece: the estate table, the article's strongest
+       atom, as a 4:5 portrait for WhatsApp / Telegram forwards.
+
+       Glance grammar: percentages of the holding beside each S$ figure, and a meter
+       drawn to scale (380px = S$135,252). One neutral tint for every meter: the bar is a
+       magnitude, not a verdict (VOICE C10). The jade pin marks a condition (the listing
+       date), never a recommendation. Provenance and URL travel on the image. Figures are
+       reproduced by public/data/sgx-irish-etfs.py at S$1.2775 per US$ (18 Sep 2026). -->
+
+  <rect width="1080" height="1350" fill="#081627"/>
+  <rect width="1080" height="1350" fill="#0E2038" opacity="0.55"/>
+
+  <!-- kicker -->
+  <text x="540" y="92" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="26" letter-spacing="4" fill="#C89A3C" font-weight="700">S&amp;P 500 ETFS ON SGX</text>
+
+  <!-- headline -->
+  <text x="540" y="180" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="64" fill="#F6F4EF">Same S&amp;P 500.</text>
+  <text x="540" y="252" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="64" fill="#F6F4EF">Different registration.</text>
+
+  <text x="540" y="318" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="25" fill="#F6F4EF" opacity="0.75">US estate tax if held at death, for someone who is not a US person</text>
+
+  <!-- column headers -->
+  <text x="60" y="404" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="1.2" fill="#F6F4EF" opacity="0.7">HELD AT DEATH</text>
+
+  <text x="330" y="392" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#F6F4EF">S27</text>
+  <text x="330" y="422" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#F6F4EF" opacity="0.6">registered in the US</text>
+
+  <text x="760" y="392" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="1.2" fill="#F6F4EF">IRISH FUND</text>
+  <text x="760" y="422" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#F6F4EF" opacity="0.6">registered in Ireland</text>
+
+  <line x1="60" y1="448" x2="1020" y2="448" stroke="#1E3A5F" stroke-width="2"/>
+
+  <!-- row 1: S$100,000 -->
+  <text x="60" y="530" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#F6F4EF">S$100k</text>
+  <text x="330" y="520" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#F6F4EF">S$6,071<tspan font-size="28" font-weight="400" opacity="0.7" dx="10">· 6%</tspan></text>
+  <rect x="330" y="542" width="380" height="14" rx="7" fill="#1E3A5F"/>
+  <rect x="330" y="542" width="17" height="14" rx="7" fill="#C89A3C"/>
+  <text x="760" y="530" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#F6F4EF">none</text>
+
+  <line x1="60" y1="596" x2="1020" y2="596" stroke="#1E3A5F" stroke-width="1" opacity="0.7"/>
+
+  <!-- row 2: S$300,000 -->
+  <text x="60" y="678" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#F6F4EF">S$300k</text>
+  <text x="330" y="668" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#F6F4EF">S$67,639<tspan font-size="28" font-weight="400" opacity="0.7" dx="10">· 23%</tspan></text>
+  <rect x="330" y="690" width="380" height="14" rx="7" fill="#1E3A5F"/>
+  <rect x="330" y="690" width="190" height="14" rx="7" fill="#C89A3C"/>
+  <text x="760" y="678" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#F6F4EF">none</text>
+
+  <line x1="60" y1="744" x2="1020" y2="744" stroke="#1E3A5F" stroke-width="1" opacity="0.7"/>
+
+  <!-- row 3: S$500,000 -->
+  <text x="60" y="826" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#F6F4EF">S$500k</text>
+  <text x="330" y="816" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#F6F4EF">S$135,252<tspan font-size="28" font-weight="400" opacity="0.7" dx="10">· 27%</tspan></text>
+  <rect x="330" y="838" width="380" height="14" rx="7" fill="#1E3A5F"/>
+  <rect x="330" y="838" width="380" height="14" rx="7" fill="#C89A3C"/>
+  <text x="760" y="826" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#F6F4EF">none</text>
+
+  <line x1="60" y1="892" x2="1020" y2="892" stroke="#1E3A5F" stroke-width="2"/>
+
+  <!-- condition pin: the listing date -->
+  <rect x="760" y="908" width="260" height="40" rx="20" fill="none" stroke="#3FA989" stroke-width="2"/>
+  <text x="890" y="935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" letter-spacing="1.2" fill="#3FA989">ON SGX FROM 13 OCT</text>
+
+  <!-- the annual line: compared to what -->
+  <text x="60" y="1000" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="1.2" fill="#F6F4EF" opacity="0.7">EACH YEAR</text>
+  <text x="60" y="1030" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#F6F4EF" opacity="0.6">fee + dividend tax, est.</text>
+  <text x="330" y="1020" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#F6F4EF">0.38%</text>
+  <text x="760" y="1020" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#F6F4EF">0.19%</text>
+
+  <!-- killer line -->
+  <text x="540" y="1110" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#C89A3C">The tax follows where the fund is registered,</text>
+  <text x="540" y="1160" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#C89A3C">not where you buy it.</text>
+
+  <!-- provenance -->
+  <text x="540" y="1214" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#F6F4EF" opacity="0.55">Holder neither a US citizen nor US-domiciled; this their only US asset; S$1.2775 per US$ (18 Sep 2026)</text>
+  <text x="540" y="1244" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#F6F4EF" opacity="0.55">IRS Form 706-NA · SSGA, iShares, DWS factsheets · estimates, not advice · script on the article</text>
+
+  <!-- url + wordmark -->
+  <text x="540" y="1294" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#C89A3C">theenoughpoint.com/sgx-irish-etfs-us-estate-tax</text>
+  <text x="540" y="1330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="4.2" fill="#F6F4EF" opacity="0.6">THEENOUGHPOINT.COM</text>
+</svg>

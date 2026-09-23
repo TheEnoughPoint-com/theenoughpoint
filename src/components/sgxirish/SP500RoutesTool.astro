@@ -281,14 +281,10 @@ function update(fromUser){
     if (r.off) return '<div class="sr-bar off"><div class="sr-bar-l"><span>' + r.label
       + '</span></div><div class="sr-offnote">Not open to SRS money: listed overseas.</div></div>';
     return '<div class="sr-bar"><div class="sr-bar-l"><span>' + r.label + '</span><b class="num">'
-      + sgd(r.total) + '<i class="sr-tc">total</i></b></div>'
-      + '<div class="sr-lines">'
-      + '<div>Fee + dividend tax: <b>' + pct(r.runPct) + '</b> a year &rarr; <b>' + sgd(r.runCost) + '</b> over ' + yrsT(N) + '</div>'
-      + '<div>Dealing: buying <b>' + sgd(r.entry) + '</b> &middot; selling <b>' + sgd(r.exit) + '</b></div>'
-      + '</div>'
+      + sgd(r.total) + '<i class="sr-tc">cost over ' + yrsT(N) + '</i></b></div>'
       + '<div class="sr-track"><div class="sr-fill" style="width:' + Math.max(2, Math.min(100, r.total/max*100)) + '%"></div></div>'
-      + '<div class="sr-estate">US estate tax on this holding: <b>' + sgd(r.estateSgd) + '</b>'
-      + (r.usSitus ? '' : ' (not US-situated)') + '</div></div>';
+      + '<div class="sr-estate">' + pct(r.runPct) + ' a year, plus ' + sgd(r.entry + r.exit) + ' to buy and sell'
+      + ' &middot; US estate tax <b>' + (r.estateSgd > 0 ? sgd(r.estateSgd) : 'none') + '</b></div></div>';
   }).join('');
 
   const us = rows[0], sgx = rows[2];

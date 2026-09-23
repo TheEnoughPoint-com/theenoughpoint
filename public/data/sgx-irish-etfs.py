@@ -34,8 +34,8 @@ WHT = {
     "Xtrackers S&P 500 (SGX, Irish)": 0.15,
 }
 
-# S&P 500 trailing dividend yield, % — multpl.com, close 22 Sep 2026. SINGLE SOURCE.
-DIV_YIELD = 1.04
+# S&P 500 trailing dividend yield, % — multpl.com, close 22 Sep 2026.
+DIV_YIELD = 1.04  # cross-check: SPY 12m distributions to 18 Sep 2026 = 0.99% net of fee, ~1.08% gross
 
 # SGD per USD — FRED DEXSIUS (Federal Reserve H.10), 18 Sep 2026.
 SGD_PER_USD = 1.2775

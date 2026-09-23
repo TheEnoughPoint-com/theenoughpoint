@@ -1,5 +1,5 @@
 """
-Reproduction script for "Can I Now Hold the S&P 500 on SGX Without the US Estate Tax?"
+Reproduction script for "S&P 500 ETFs on SGX: Which Ones Avoid US Estate Tax?"
 theenoughpoint.com/sgx-irish-etfs-us-estate-tax
 
 Recomputes every derived figure in the article and the calculator's default output

@@ -164,7 +164,11 @@ const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
   margin:26px 0;padding:20px 22px 16px;background:var(--color-surface);
   border:1px solid var(--color-border);border-radius:12px;
 }
-@media (prefers-color-scheme: dark){ .uc{ --uc-dot:#B8842E; } }
+/* No dark-scheme colour swap. The card sets background:var(--color-surface)
+   unconditionally — cream, and the page behind it has no dark theme either —
+   so a dark-mode block that lightens the ink puts pale text on a cream card.
+   The #B8842E this replaced measured 3.00:1 there. #B45309 measures 4.57:1
+   against that cream and stays put. */
 .post-content .uc-cap{margin:0 0 18px;padding:0;text-align:left}
 .post-content .uc-cap h4{margin:0 0 3px;font-size:15.5px;font-weight:700;color:var(--color-dark);
   font-family:var(--font-body);letter-spacing:0}

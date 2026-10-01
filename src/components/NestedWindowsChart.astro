@@ -68,7 +68,10 @@ const ROWS = [
   margin:26px 0;padding:20px 22px 16px;background:#fff;
   border:1px solid var(--nw-rule);border-radius:12px
 }
-@media (prefers-color-scheme: dark){ .nw{ --nw-resale:#4E86DD; --nw-new:#B8842E; } }
+/* No dark-scheme colour swap. The card sets background:#fff unconditionally,
+   so a dark-mode block that lightens the ink puts pale text on a white card.
+   The pair this replaced measured 3.63:1 and 3.29:1 there. Every colour here
+   is measured against white — #2563EB 5.17:1, #B45309 5.02:1 — and stays put. */
 .post-content .nw-cap{margin:0 0 16px;padding:0;text-align:left}
 .post-content .nw-cap h4{margin:0 0 3px;font-size:15.5px;font-weight:700;color:var(--nw-ink);
   font-family:var(--font-body);letter-spacing:0}

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="The 15-month wait-out period falls to zero, replaced by a six-month disposal deadline">
+  <!-- Cover for the HDB wait-out article. Same house system as the estate-tax cover:
+       navy field, gold figure, forest/red accents. The motif is the substitution the
+       piece is actually about — a waiting period removed, a deadline installed.
+       Safe zone: square thumbnail crops to x 300-900, so all content sits inside it. -->
+  <defs>
+    <radialGradient id="bg2" cx="50%" cy="44%" r="76%">
+      <stop offset="0%" stop-color="#10233D"/>
+      <stop offset="100%" stop-color="#081627"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg2)"/>
+
+  <text x="600" y="150" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700"
+        letter-spacing="3.5" fill="#F6F4EF" opacity="0.6">PRIVATE PROPERTY &#8594; HDB RESALE</text>
+
+  <!-- the substitution: 15 struck through, 0 in gold -->
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="104" letter-spacing="-2">
+    <text x="472" y="312" text-anchor="middle" fill="#5C6B7E">15</text>
+    <line x1="398" y1="282" x2="546" y2="282" stroke="#C0392B" stroke-width="5" stroke-linecap="round"/>
+    <text x="600" y="312" text-anchor="middle" fill="#5C6B7E" font-size="52">&#8594;</text>
+    <text x="726" y="312" text-anchor="middle" fill="#C89A3C">0</text>
+  </g>
+  <text x="600" y="356" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="600"
+        letter-spacing="1.6" fill="#8FA0B5">MONTHS OF WAITING, REMOVED</text>
+
+  <!-- the replacement -->
+  <line x1="430" y1="410" x2="770" y2="410" stroke="#24384F" stroke-width="1"/>
+  <text x="600" y="462" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="27"
+        fill="#F6F4EF" opacity="0.82">and a six-month deadline installed</text>
+  <text x="600" y="500" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="0.4"
+        fill="#7DB79A">a deadline has teeth a waiting period never had</text>
+</svg>

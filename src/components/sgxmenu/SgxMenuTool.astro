@@ -14,6 +14,10 @@ import ToolBrand from '../ToolBrand.astro';
     <span class="sm-lbl accent card-live">Interactive</span>
   </div>
 
+  <div class="sm-body">
+    <p class="sm-hint"><b>Choose the market first, then the way to buy it.</b> The four direct Xtrackers listings have no extra Singapore fund layer. The four iFAST funds add a fund layer for local access to Japan, Korea, Taiwan or an AI theme. These are different investments, not cheaper and dearer versions of the same portfolio.</p>
+  </div>
+
   <div class="sm-tabs" role="tablist" aria-label="Choose a view">
     <button type="button" class="sm-tab" id="sm-tab-own" role="tab" aria-selected="true" aria-controls="sm-own">What you own</button>
     <button type="button" class="sm-tab" id="sm-tab-cost" role="tab" aria-selected="false" aria-controls="sm-cost">Fees and access</button>
@@ -23,10 +27,10 @@ import ToolBrand from '../ToolBrand.astro';
   <section id="sm-own" role="tabpanel" aria-labelledby="sm-tab-own">
     <div class="sm-body">
       <p class="sm-hint">Enter what you hold or plan to hold in each fund, in Singapore dollars. Equal
-      amounts are filled in as a hypothetical example, not a suggested portfolio. Leave a fund at 0 to exclude it. All four iFAST funds use published pre-launch TER figures, treated here as estimates. None is a guaranteed cap.</p>
+      amounts are filled in as a hypothetical example, not a suggested portfolio. Leave a fund at 0 to exclude it. For direct listings, the fee covers one fund. For iFAST, the published total expense ratio (TER) estimates cover both fund layers: do not add the overseas fee again. These estimates are not guaranteed caps.</p>
       <div class="sm-tblwrap">
         <table class="sm-tbl" id="sm-own-tbl">
-          <thead><tr><th>Fund</th><th>Fee a year</th><th>Amount S$</th></tr></thead>
+          <thead><tr><th>Fund</th><th>Fund fee a year</th><th>Amount S$</th></tr></thead>
           <tbody><!-- rows injected, fixed order --></tbody>
         </table>
       </div>
@@ -214,7 +218,7 @@ function showTab(which){
 /* ---------- What you own ---------- */
 function buildOwnTable(){
   $('sm-own-tbl').querySelector('tbody').innerHTML = FUNDS.map(f =>
-    '<tr><td>' + f.code + '<em>' + f.name + '</em></td>'
+    '<tr><td>' + f.code + '<em>' + f.name + '</em><em>' + (f.est ? 'iFAST: extra fund layer' : 'Direct listing: one fund') + '</em></td>'
     + '<td class="num">' + pct2(f.fee) + (f.est ? '<em>' + 'publisher estimate' + '</em>' : '') + '</td>'
     + '<td><input type="text" id="sm-a-' + f.code + '" value="1,000" inputmode="decimal" aria-label="Amount in ' + f.code + '"></td></tr>'
   ).join('');
@@ -260,7 +264,10 @@ function updateFees(){
     '<h3>' + f.name + '</h3>'
     + '<dl class="sm-fee-list"><div><dt>SGX listing: annual fund charge</dt><dd>' + pct2(f.fee) + '<small>' + localBasis + '</small></dd></div>'
     + '<div><dt>' + f.over.label + ': annual fund charge</dt><dd>' + pct2(f.over.fee) + '<small>Published fund fee</small></dd></div></dl>'
-    + '<p>' + structure + '</p>'
+    + '<p><b>' + (f.est ? 'Two fund layers; use the estimated total once.' : 'One fund; no extra Singapore fund fee.') + '</b> ' + structure + '</p>'
+    + '<p><b>What this means:</b> ' + (f.est
+      ? 'This adds local access to a specific country or theme. The extra fund layer may be useful when overseas access is unavailable or local account access matters. A lower-fee World or US fund buys a different portfolio.'
+      : 'This is a simpler fund structure with lower stated annual fees than the four iFAST funds in this article. It only fits the comparison if this is the market exposure you want; it does not replace a specific Japan, Korea, Taiwan or AI allocation.') + '</p>'
     + '<p><b>SGX access:</b> Singapore trading hours and payment in Singapore dollars. SRS access is subject to your operator enabling the counter. A separate broker conversion may be avoided, but currency risk and embedded dealing costs remain.</p>'
     + '<p><b>Overseas access:</b> requires access to that exchange and its trading hours, plus foreign-currency funding. Broker conversion and account charges vary. These overseas listings are not available with SRS money.</p>'
     + '<p><b>Compare before dealing:</b> the live buy/sell gap, order size, commission and minimum, exchange charges, currency terms and custody fees. Published fund fees alone do not identify the cheaper route.</p>';

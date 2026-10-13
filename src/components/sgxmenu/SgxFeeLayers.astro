@@ -1,41 +1,63 @@
 ---
-// Explainer: distinguish expenses within funds from a separate platform charge.
+// Explainer: one named ETF, separating the total estimate from component fee limits.
 ---
 <figure class="fee-map" data-card="figure" aria-labelledby="fee-map-title">
-  <figcaption id="fee-map-title"><strong>Inside the ETF, or paid to a platform?</strong></figcaption>
+  <figcaption id="fee-map-title"><strong>Korea ETF: the total estimate and the two fee layers</strong></figcaption>
+  <p class="fee-map-name">iFAST Xtrackers MSCI Korea UCITS Index ETF (SGX: KOR)</p>
+
+  <div class="fee-map-total">
+    <span class="fee-map-label">Published estimate · not a cap</span>
+    <b>0.67% a year</b>
+    <span>About S$67 a year on a constant S$10,000 holding</span>
+    <p>This is the estimated total expense ratio (TER). It is a total, not another charge to add to the fees below. Brokerage and currency conversion are extra.</p>
+    <p class="fee-map-source"><a href="https://fsm.global/sg/article/rcms397520">FSM Global, Table 1</a> · data at 29 September 2026 · publisher estimate, not an audited actual cost.</p>
+  </div>
+
+  <p><strong>The prospectus describes two layers.</strong> Their fee limits explain what can be charged; they are not a breakdown that adds up to the 0.67% estimate.</p>
   <div class="fee-map-grid">
-    <section aria-label="iFAST ETF expenses">
-      <h3>iFAST ETF</h3>
-      <div class="fee-map-box">
-        <b>iFAST fund</b>
-        <span>0.25% a year + running costs</span>
-        <p>Holds an overseas fund:</p>
-        <div class="fee-map-inner"><b>Xtrackers fund</b><span>Its own fund fee</span></div>
-      </div>
-      <p><strong>Both are fund expenses.</strong> They reduce the value of your investment. Use a total expense estimate once; there is no separate iFAST platform fee in these totals.</p>
+    <section aria-label="Singapore fund fees">
+      <h3>1. Singapore: the iFAST fund</h3>
+      <dl>
+        <div><dt>Management fee <span class="fee-map-label">Current charge</span></dt><dd>0.25% a year<span class="fee-map-label">Maximum: 0.90% a year for this fee only</span></dd></div>
+        <div><dt>Other running expenses <span class="fee-map-label">Combined amount not stated</span></dt><dd>Additional</dd></div>
+      </dl>
+      <p>Custodian, registrar and administrator fees may each reach or exceed 0.10% a year. That is not a combined 0.10% allowance or cap.</p>
     </section>
-    <section aria-label="Unit trust and platform charges">
-      <h3>Unit trust on a platform</h3>
-      <div class="fee-map-box"><b>Unit trust</b><span>Its own fund fee</span></div>
-      <p class="fee-map-plus" aria-label="plus">+</p>
-      <div class="fee-map-box"><b>Platform service</b><span>Separate charge: 0.35%–0.60% a year in the examples cited</span></div>
-      <p><strong>The platform fee is extra.</strong> It pays for the service through which you hold the unit trust. It is not the iFAST ETF charge shown alongside.</p>
+    <section aria-label="Underlying Xtrackers fund fees">
+      <h3>2. Overseas: the fund it holds</h3>
+      <p class="fee-map-fund">Xtrackers MSCI Korea UCITS ETF, Class 1C</p>
+      <dl>
+        <div><dt>Management company fee <span class="fee-map-label">Stated upper limit</span></dt><dd>Up to 0.25% a year</dd></div>
+        <div><dt>Fixed fee <span class="fee-map-label">Stated fixed charge</span></dt><dd>0.20% a year</dd></div>
+        <div class="fee-map-subtotal"><dt>Underlying all-in fee <span class="fee-map-label">Includes both rows above</span></dt><dd>Up to 0.45% a year</dd></div>
+      </dl>
+      <p>The 0.20% fixed fee belongs to this overseas fund. The 0.45% limit covers this layer, not the whole iFAST ETF.</p>
     </section>
   </div>
-  <p class="fee-map-source">Fee structure, not a comparison of total costs. iFAST prospectus registered 29 September 2026; FSM Global and Endowus platform schedules read 13 October 2026. Platform charges depend on the account and service. All four iFAST funds use FSM Global’s published pre-launch TER figures as estimates, not guaranteed caps: Japan/AI data at 30 September 2026; Korea/Taiwan at 29 September 2026. We found no overall TER cap in the prospectus; the 0.90% maximum covers Singapore management only. Sources and links are in the verification fold.</p>
+
+  <p class="fee-map-source"><a href="https://links.sgx.com/FileOpen/iFAST%20Global%20ETFs%20Select%20Series%20VCC%20-%20Amended%20Prospectus.ashx?App=IPO&amp;FileID=6796">iFAST prospectus</a>, registered 29 September 2026, Korea sections 6C–6D, printed pages 180–181. Each percentage uses the assets of the fund charging it.</p>
+  <p class="fee-map-caution"><strong>No overall TER cap found.</strong> The publisher does not explain how its 0.67% estimate reconciles with these components. We do not assume a rebate or subsidy. Actual total expenses may differ.</p>
+  <p><strong>These are fund expenses, not a separate iFAST platform bill.</strong> A unit-trust platform may charge a separate service fee on top of its fund’s expenses; that is a different arrangement.</p>
 </figure>
 <style>
   .fee-map{margin:24px 0;padding:20px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);color:var(--color-body)}
   .fee-map figcaption{font-size:18px;line-height:1.4;color:var(--color-dark)}
-  .fee-map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:18px}
-  .fee-map section{min-width:0}
-  .fee-map h3{font-size:16px;line-height:1.4;margin:0 0 12px;color:var(--color-dark)}
   .fee-map p{font-size:14px;line-height:1.55;margin:12px 0 0}
-  .fee-map-box{border:1px solid var(--color-muted);border-radius:6px;padding:12px}
-  .fee-map-box b,.fee-map-box span{display:block;font-size:14px;line-height:1.5}
-  .fee-map-box b{color:var(--color-dark)}
-  .fee-map-inner{margin-top:10px;border-left:3px solid var(--color-muted);padding-left:12px}
-  .fee-map .fee-map-plus{margin:4px 0;text-align:center;font-size:20px;color:var(--color-dark)}
-  .fee-map .fee-map-source{font-size:13px;color:var(--color-muted);margin-top:18px}
+  .fee-map .fee-map-name{margin-top:6px}
+  .fee-map-total{margin-top:18px;padding:16px;border:1px solid var(--color-muted);border-radius:6px}
+  .fee-map-total>b{display:block;font-size:28px;line-height:1.3;color:var(--color-dark);margin:5px 0}
+  .fee-map-total>span{display:block;font-size:14px;line-height:1.5}
+  .fee-map .fee-map-label{display:block;font-size:12px;font-weight:400;line-height:1.5;color:var(--color-body);margin-top:3px}
+  .fee-map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:20px}
+  .fee-map section{min-width:0}
+  .fee-map h3{font-size:16px;line-height:1.4;margin:0;color:var(--color-dark)}
+  .fee-map .fee-map-fund{margin-top:5px;font-size:13px}
+  .fee-map dl{margin:12px 0 0}
+  .fee-map dl>div{padding:10px 0;border-bottom:1px solid var(--color-border)}
+  .fee-map dt{font-size:14px;font-weight:600;line-height:1.5}
+  .fee-map dd{font-size:16px;line-height:1.5;font-weight:700;color:var(--color-dark);margin:4px 0 0}
+  .fee-map .fee-map-subtotal{border-top:2px solid var(--color-muted)}
+  .fee-map .fee-map-source{font-size:13px;color:var(--color-muted);margin-top:14px}
+  .fee-map .fee-map-caution{border-left:3px solid var(--color-muted);padding-left:12px;margin-top:18px}
   @media(max-width:640px){.fee-map-grid{grid-template-columns:1fr;gap:22px}}
 </style>

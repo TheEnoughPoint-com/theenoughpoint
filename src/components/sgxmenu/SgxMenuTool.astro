@@ -62,7 +62,7 @@ import ToolBrand from '../ToolBrand.astro';
         </label>
       </div>
       <div id="sm-fee-details" aria-live="polite"></div>
-      <p class="sm-hint">DWS fees: 30 September 2026. iFAST publisher TER figures: Japan/AI, 30 September 2026; Korea/Taiwan, 29 September 2026. These pre-launch TERs are estimates, not caps; their component reconciliation is not supplied. Links are in Sources and verification.</p>
+      <p class="sm-hint">DWS fees: 30 September 2026. iFAST publisher TER figures: Japan/AI, 30 September 2026; Korea/Taiwan, 29 September 2026. These pre-launch TERs are estimates, not caps; their component reconciliation is not supplied. Links open in a new tab. Dates identify the figures used here; issuer documents may subsequently be updated. Product highlights may show historical expense ratios or fee ceilings rather than the current factsheet fee.</p>
     </div>
   </section>
 
@@ -171,6 +171,9 @@ import ToolBrand from '../ToolBrand.astro';
 .sm-fee-list>div{padding:12px 0;border-bottom:1px solid var(--sm-bd)}
 .sm-fee-list dt{font-size:14px;line-height:1.5}
 .sm-fee-list dd{font-size:20px;font-weight:700;line-height:1.5;margin:4px 0 0}
+.sm-source{display:block;font-family:var(--font-body);font-size:12px;font-weight:400;line-height:1.5;margin-top:8px;white-space:normal;overflow-wrap:anywhere}
+.sm-source>span{display:block}
+.sm-source a{text-decoration:underline;text-underline-offset:3px}
 .sm-fee-list small{display:block;font-size:12px;font-weight:400;line-height:1.5}
 </style>
 
@@ -201,6 +204,25 @@ const FUNDS = [
   { code:'TWD', name:'MSCI Taiwan (held through iFAST)', fee:0.77, est:true, over:{ label:'Xtrackers MSCI Taiwan in London, in US$', fee:0.65 },
     h:{ 'TSMC':30.23, 'MediaTek':10.04, 'Delta Electronics':4.90, 'Hon Hai':4.05, 'ASE':3.08, 'UMC':2.29, 'Unimicron':2.11, 'Elite Material':1.91, 'Fubon Financial':1.66, 'Asia Vital Components':1.52 } },
 ];
+const SOURCES = {
+  XUS: { factsheet:'https://etf.dws.com/download/asset/5b5c4dfb-d37a-4ab8-b9d2-50fa5cc61d9c', phs:'https://eservices.mas.gov.sg/opera/bcd49b38-c3a4-4e67-ac8b-81a5b5c2fbad.publishresource' },
+  XND: { factsheet:'https://etf.dws.com/download/asset/778d6508-45e0-4068-900a-6342df6e5131', phs:'https://eservices.mas.gov.sg/opera/112fd751-b2d7-4c93-a44e-f8fbd1793932.publishresource' },
+  XWR: { factsheet:'https://etf.dws.com/download/asset/7479ae20-a6b8-4a30-82e5-639d29ab8ea4', phs:'https://eservices.mas.gov.sg/opera/bf09f6f0-0d23-4a94-866c-8ab552287e8c.publishresource' },
+  EUS: { factsheet:'https://etf.dws.com/download/asset/11deac23-e08a-4a4d-9a51-329abdf37d51', phs:'https://eservices.mas.gov.sg/opera/f01d6c67-6c30-46f2-9df1-9bda45fafea5.publishresource' },
+  XBG: { factsheet:'https://etf.dws.com/download/asset/1c67b6f7-fdfa-4e86-a68d-a477cf5adf09', estimate:'https://fsm.global/sg/article/rcms397262', date:'30 September 2026' },
+  JPY: { factsheet:'https://etf.dws.com/download/asset/3a538262-a319-47fb-b25f-57aaa36b46e9', estimate:'https://fsm.global/sg/article/rcms397041', date:'30 September 2026' },
+  KOR: { factsheet:'https://etf.dws.com/download/asset/64e8f9df-76d8-41d5-afaf-9a7078fa0aa2', estimate:'https://fsm.global/sg/article/rcms397520', date:'29 September 2026' },
+  TWD: { factsheet:'https://etf.dws.com/download/asset/a22eddb4-4f88-4228-9355-82c39bf19daa', estimate:'https://fsm.global/sg/article/rcms397520', date:'29 September 2026' },
+};
+const IFAST_PROSPECTUS = 'https://links.sgx.com/FileOpen/iFAST%20Global%20ETFs%20Select%20Series%20VCC%20-%20Amended%20Prospectus.ashx?App=IPO&FileID=6796';
+function sourceLink(url, label, date){
+  return '<span class="sm-source"><a href="' + url + '" target="_blank" rel="noopener noreferrer">' + label + '</a><span>' + date + '</span></span>';
+}
+function feeSource(f){
+  const s = SOURCES[f.code];
+  return f.est ? sourceLink(s.estimate, 'FSM Global: TER estimate', 'Data: ' + s.date)
+    : sourceLink(s.factsheet, 'DWS: issuer factsheet', 'Fee as at 30 September 2026');
+}
 const FIVE = ['Nvidia','Apple','Microsoft','Amazon','Alphabet'];
 const $ = id => document.getElementById(id);
 const numOf = el => { const n = parseFloat(String(el.value).replace(/[^\d.\-]/g,'')); return isFinite(n) && n >= 0 ? n : 0; };
@@ -219,7 +241,7 @@ function showTab(which){
 function buildOwnTable(){
   $('sm-own-tbl').querySelector('tbody').innerHTML = FUNDS.map(f =>
     '<tr><td>' + f.code + '<em>' + f.name + '</em><em>' + (f.est ? 'iFAST: extra fund layer' : 'Direct listing: one fund') + '</em></td>'
-    + '<td class="num">' + pct2(f.fee) + (f.est ? '<em>' + 'publisher estimate' + '</em>' : '') + '</td>'
+    + '<td class="num">' + pct2(f.fee) + (f.est ? '<em>' + 'publisher estimate' + '</em>' : '') + feeSource(f) + '</td>'
     + '<td><input type="text" id="sm-a-' + f.code + '" value="1,000" inputmode="decimal" aria-label="Amount in ' + f.code + '"></td></tr>'
   ).join('');
 }
@@ -262,8 +284,8 @@ function updateFees(){
     : 'These are listings of the same fund share class. The portfolio and internal fund costs are shared; the exchange listing changes how you trade it.';
   $('sm-fee-details').innerHTML =
     '<h3>' + f.name + '</h3>'
-    + '<dl class="sm-fee-list"><div><dt>SGX listing: annual fund charge</dt><dd>' + pct2(f.fee) + '<small>' + localBasis + '</small></dd></div>'
-    + '<div><dt>' + f.over.label + ': annual fund charge</dt><dd>' + pct2(f.over.fee) + '<small>Published fund fee</small></dd></div></dl>'
+    + '<dl class="sm-fee-list"><div><dt>SGX listing: annual fund charge</dt><dd>' + pct2(f.fee) + '<small>' + localBasis + '</small>' + feeSource(f) + sourceLink(f.est ? IFAST_PROSPECTUS : SOURCES[f.code].phs, f.est ? 'iFAST: Singapore prospectus' : 'DWS: Singapore product highlights', f.est ? 'Registered 29 September 2026' : 'Dated 14 September 2026') + '</dd></div>'
+    + '<div><dt>' + f.over.label + ': annual fund charge</dt><dd>' + pct2(f.over.fee) + '<small>Published fund fee</small>' + sourceLink(SOURCES[f.code].factsheet, f.est ? 'DWS: underlying fund factsheet' : 'DWS: same share-class factsheet', 'Fee as at 30 September 2026') + '</dd></div></dl>'
     + '<p><b>' + (f.est ? 'Two fund layers; use the estimated total once.' : 'One fund; no extra Singapore fund fee.') + '</b> ' + structure + '</p>'
     + '<p><b>What this means:</b> ' + (f.est
       ? 'This adds local access to a specific country or theme. The extra fund layer may be useful when overseas access is unavailable or local account access matters. A lower-fee World or US fund buys a different portfolio.'

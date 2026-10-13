@@ -13,12 +13,12 @@ tags:
 readTime: 8
 authorId: "fi"
 inlineShare: true
-figuresAsOf: "Holdings and fund fees per DWS factsheets of 30 September 2026; iFAST fees and dates per its prospectus registered 29 September 2026; SGX market figures at June 2026; broker and platform fee schedules, and the day-one quotes, read on 13 October 2026"
+figuresAsOf: "Holdings and fund fees per DWS factsheets of 30 September 2026; iFAST fee structure per its prospectus registered 29 September 2026 and Korea/Taiwan TER estimates per FSM Global, data at 29 September 2026; SGX market figures at June 2026; broker and platform fee schedules, and the day-one quotes, read on 13 October 2026"
 takeaways:
   - "<strong>More ways to invest, not always more variety.</strong> The new funds bring Singapore-dollar trading, SRS access and more country choices."
   - "Across four funds, <strong>22% to 32%</strong> is the same group of American companies. Different labels can repeat what you already own."
   - "<strong>The fund fee stays the same</strong> on SGX and overseas. Currency conversion, dividend tax and platform charges can matter more."
-  - "The extra iFAST fund charges <strong>0.25% a year plus running expenses</strong>. Its total expenses are not yet published. Our cost examples assume an amount for those expenses."
+  - "iFAST publishes estimated annual totals of <strong>0.67% for Korea and 0.77% for Taiwan</strong>. These are estimates, not guaranteed fee caps."
 excerpt: |
   Four index funds from Xtrackers began trading on SGX on 13 October 2026, and four more, issued by iFAST, follow on 22 October. What the menu gained, how much of the eight is the same five companies, and what each route to the same fund costs: SGX in Singapore dollars, London in US dollars, a US-registered fund, or a unit trust.
 ---
@@ -37,7 +37,7 @@ import AffiliateDisclosureBox from '@src/components/AffiliateDisclosureBox.astro
 
 [The earlier piece](/sgx-irish-etfs-us-estate-tax/) covers the US estate-tax mechanics. Here, the questions are simpler: what would you own, and what would it cost? SRS means the Supplementary Retirement Scheme, whose savings can buy these SGX-listed ETFs.
 
-<AffiliateDisclosureBox title="Disclosure" text="This article is not sponsored and carries no affiliate or partner links. The partner-link note in the sidebar is a site-wide statement and applies to no link on this page. Some launch coverage in circulation is sponsored by the funds' distributors; none of it is a source here. Every fund, broker and platform named is a checkable example, not a recommendation." />
+<AffiliateDisclosureBox title="Disclosure" text="This article is not sponsored and carries no affiliate or partner links. The partner-link note in the sidebar is a site-wide statement and applies to no link on this page. iFAST’s own material is used for its published fee estimates, with its commercial interest identified. Every fund, broker and platform named is a checkable example, not a recommendation." />
 
 ## What can you buy that was missing?
 
@@ -98,7 +98,7 @@ TSMC is 54.0% of the full MSCI Taiwan index (MSCI, September 2026). European fun
 
 ## Where does the money go?
 
-**Fees taken inside the fund.** The Xtrackers S&P 500 fund charges 0.03% a year whether bought in London or on SGX. iFAST ETFs have another layer: 0.25% a year plus running costs to hold a Xtrackers fund. Our illustrative ETF totals include both layers. They reduce the investment’s value, rather than arriving as a separate platform bill.
+**Fees taken inside the fund.** The Xtrackers S&P 500 fund charges 0.03% a year whether bought in London or on SGX. iFAST ETFs have another layer: 0.25% a year plus running costs to hold a Xtrackers fund. Published total estimates already account for fund expenses; do not add the underlying fee again. They reduce the investment’s value, rather than arriving as a separate platform bill.
 
 **Tax on dividends.** Dividends are cash paid by companies to their shareholders. An Irish fund loses 15% of its US dividends to tax. A US-registered fund’s dividend payments to a Singapore holder lose 30%. These percentages apply to dividends, not your whole investment.
 
@@ -147,9 +147,18 @@ The 0.10% unit-trust fund fee is a dated platform figure from March 2023, not a 
 
 ## The iFAST funds: an extra fee for local access
 
-**The Singapore running expenses are not yet known.** Our example assumes 0.10% a year in total. The prospectus does not confirm that amount: several individual expenses may each reach or exceed 0.10%. Adding the 0.25% management fee gives an illustrative S$35 a year on S$10,000.
+**Total expense ratio (TER) means yearly fund running costs.** iFAST estimates:
 
-At bank conversion rates of 0.50% each way, buying overseas adds about S$91 upfront on S$10,000. Under our expense assumption, annual savings recover that extra cost after about 2.6 years. Different expenses change that timing. At specialist conversion rates, overseas is cheaper from day one in this example. SRS cannot buy these funds overseas.
+| iFAST ETF | Estimated TER per year | On S$10,000 for one year |
+|---|---:|---:|
+| Korea | 0.67% | About S$67 |
+| Taiwan | 0.77% | About S$77 |
+
+<p class="sx-quiet">Source: <a href="https://fsm.global/sg/article/rcms397520">FSM Global, iFAST’s platform</a>, data at 29 September 2026. Single-source publisher estimates, not audited actual costs or caps. Amounts assume a constant S$10,000 holding. Brokerage and currency conversion are extra.</p>
+
+**We found no overall TER cap in the prospectus.** Its 0.90% ceiling covers only Singapore’s management fee, currently 0.25%. Other expenses still apply.
+
+No breakdown explains the difference from the prospectus components. Overseas fees must still be weighed against conversion costs. SRS cannot buy these funds overseas.
 
 **The tool separates what you own from what you pay.** “What you own” shows repeated companies across any mix you enter. “What it costs” compares ways to buy the same market using your amount and trading costs. The starting mix is an illustration, not a suggested portfolio.
 
@@ -233,13 +242,13 @@ Using iFAST moves the local listing cost, marketing and risk of little trading o
 | XND | Xtrackers NASDAQ 100 UCITS ETF 1C | Ireland | Nasdaq-100 | 0.20% | itself |
 | XWR | Xtrackers MSCI World UCITS ETF 1C | Ireland | MSCI World | 0.12% | itself |
 | EUS | Xtrackers S&P 500 Equal Weight UCITS ETF 1C | Ireland | S&P 500 Equal Weight | 0.15% | itself |
-| XBG | iFAST Xtrackers Artificial Intelligence & Big Data UCITS Index ETF | Singapore | Nasdaq Global AI and Big Data | 0.25% + costs + 0.35% | Xtrackers AI & Big Data 1C, Ireland |
-| JPY | iFAST Xtrackers Nikkei 225 UCITS Index ETF | Singapore | Nikkei 225 | 0.25% + costs + 0.09% | Xtrackers Nikkei 225, Luxembourg |
-| KOR | iFAST Xtrackers MSCI Korea UCITS Index ETF | Singapore | MSCI Korea 20/35 | 0.25% + costs + 0.45% | Xtrackers MSCI Korea 1C, Luxembourg |
-| TWD | iFAST Xtrackers MSCI Taiwan UCITS Index ETF | Singapore | MSCI Taiwan 20/35 | 0.25% + costs + 0.65% | Xtrackers MSCI Taiwan 1C, Luxembourg |
+| XBG | iFAST Xtrackers Artificial Intelligence & Big Data UCITS Index ETF | Singapore | Nasdaq Global AI and Big Data | 0.25% + costs + up to 0.35% | Xtrackers AI & Big Data 1C, Ireland |
+| JPY | iFAST Xtrackers Nikkei 225 UCITS Index ETF | Singapore | Nikkei 225 | 0.25% + costs + up to 0.09% | Xtrackers Nikkei 225, Luxembourg |
+| KOR | iFAST Xtrackers MSCI Korea UCITS Index ETF | Singapore | MSCI Korea 20/35 | Published estimated TER: 0.67%; breakdown below | Xtrackers MSCI Korea 1C, Luxembourg |
+| TWD | iFAST Xtrackers MSCI Taiwan UCITS Index ETF | Singapore | MSCI Taiwan 20/35 | Published estimated TER: 0.77%; breakdown below | Xtrackers MSCI Taiwan 1C, Luxembourg |
 
 - All eight accumulate: dividends are reinvested, not paid out. None is currency-hedged.
-- iFAST lines: offer at S$1.00 a share from 1 October to 12:00 on 14 October 2026; listing 22 October 2026; board lot one share. "Costs" means other fees that the prospectus says may each amount to or exceed 0.10% a year; each feeder's own expense ratio is published only after it has operated, so the article's 0.44% to 1.00% totals are estimates.
+- iFAST lines: offer at S$1.00 a share from 1 October to 12:00 on 14 October 2026; listing 22 October 2026; board lot one share. "Costs" means other fees that the prospectus says may each amount to or exceed 0.10% a year; audited actual expense ratios are not yet available. FSM Global publishes estimated TERs for Korea and Taiwan; Japan’s 0.44% and AI’s 0.70% remain our illustrative scenarios, assuming 0.10% combined Singapore running expenses.
 - DWS lines: same ISIN as the London and Frankfurt listings; listing 13 October 2026.
 
 </details>
@@ -250,8 +259,10 @@ Using iFAST moves the local listing cost, marketing and risk of little trading o
 - **Five-company share** = the sum of the fund's published weights in Nvidia, Apple, Microsoft, Amazon and Alphabet (both share classes added), from each fund's top-ten holdings at 30 September 2026. All five are in the top ten of each of the four US-heavy funds, so the figure is exact for those funds. For the equal-weight fund, which holds about 500 companies at roughly 0.2% each, the figure is five times 0.2%, approximate.
 - **Biggest company** and **ten biggest together** are the issuer's published top-ten figures at the same date, summed.
 - **Route costs** = running cost + one-off costs. Running = (fund fee + dividend tax) × holding × years, where dividend tax is 15% × yield for the Irish fund and 30% × (yield − fee) for the US funds, which distribute net of fees. One-off, paid to buy and again to sell = max(commission × holding, S$10) + SGX clearing and access fees of 0.0436% on SGX routes + half the spread × holding + currency conversion on non-S$ routes (0.50% × holding, or max(0.002% × holding, S$2.56) at specialist rates). Unit trust = (0.10% + 0.35% + 15% × yield) × holding × years.
-- **iFAST expense assumption:** 0.10% a year for the combined Singapore running expenses is an illustrative input, not a prospectus total or cap. The prospectus says individual expenses may each reach or exceed 0.10%. The tool and script therefore show scenarios, not confirmed expense ratios. For Korea, 0.80% assumes 0.25% Singapore management + 0.10% Singapore expenses + 0.45% underlying fund expenses. The underlying fund’s up-to-0.45% already includes its up-to-0.25% management fee and 0.20% fixed fee (prospectus, Appendix IV, sections 6C–6D). The fixed fee does not belong to the Singapore layer.
-- **Wrapper against conversion, under that assumption** = (two conversions at 0.50% less two SGX fee charges) ÷ the wrapper's 0.35% a year: S$91 ÷ S$35 = 2.6 years on S$10,000.
+- **iFAST costs:** the tool and reproduction script use FSM Global’s published estimated TERs of 0.67% for Korea and 0.77% for Taiwan (data at 29 September 2026). These are single-source estimates, not audited actual charges or contractual caps. They are entered as totals; the underlying fund fee is not added again. The source does not provide a component reconciliation, so no rebate or subsidy is assumed.
+- **Prospectus components:** Korea lists 0.25% current Singapore management, other Singapore expenses, and an underlying all-in fee of up to 0.45%. Taiwan lists the same Singapore management fee and an underlying all-in fee of up to 0.65%. Korea’s underlying up-to-0.45% includes up-to-0.25% management and a 0.20% fixed fee. That fixed fee belongs to the underlying fund. The 0.90% Singapore management maximum is not an overall TER cap; we found no overall cap in the prospectus.
+- **Other iFAST scenarios:** Japan at 0.44% and AI at 0.70% assume 0.25% Singapore management plus 0.10% combined Singapore running expenses plus the underlying fee. The prospectus does not confirm that 0.10% total: individual expenses may each reach or exceed 0.10%.
+- **Overseas cost comparison:** using the published estimates and the stated overseas fees gives annual differences of 0.22 percentage points for Korea and 0.12 for Taiwan. These are comparisons of the inputs, not identified Singapore-layer charges. At the illustrative bank conversion rate, the overseas route costs about S$91 more to buy and sell S$10,000; dividing by annual savings gives conditional break-even periods of about 4.1 and 7.6 years. Actual charges could change them.
 - **Day-one gap** = (buy − sell) ÷ midpoint. S$73 = 1.46% ÷ 2 × S$10,000.
 - **Menu counts**: SGX's categories (Singapore 7 + 7, China 13 + 2, regional and global 16 + 8 = 53), plus eight.
 - Every computed figure is reproduced by [the script behind this piece](/data/sgx-etf-menu.py).
@@ -262,6 +273,7 @@ Using iFAST moves the local listing cost, marketing and risk of little trading o
 <summary><b>Sources and verification</b>: primary where it matters, checked 13 October 2026.</summary>
 
 - **SGX market figures, categories and SRS statement:** SGX, *ETF Market Highlights 1H2026* (July 2026, data June 2026): 53 ETFs and L&I products, S$20.5 billion, retail 42%, "All SGX listed ETFs are SRS-eligible", the category lists. A public SGX publication, distributed as a PDF.
+- **Published Korea and Taiwan TER estimates:** [FSM Global, Korea and Taiwan arrive on SGX](https://fsm.global/sg/article/rcms397520), Table 1, data at 29 September 2026: 0.67% and 0.77% a year respectively. This is iFAST’s own platform, a single commercially interested source; the estimates are not independently corroborated. No component breakdown or overall TER cap is given.
 - **iFAST structure, fees, dates, codes, SRS and CPF:** [iFAST Global ETFs Select Series VCC, amended prospectus registered 29 September 2026](https://links.sgx.com/FileOpen/iFAST%20Global%20ETFs%20Select%20Series%20VCC%20-%20Amended%20Prospectus.ashx?App=IPO&FileID=6796): feeder structure, Class 1C of each underlying, management fee 0.25% (maximum 0.90%), other fees "may each amount to or exceed 0.10%", underlying all-in fees, listing 22 October 2026, offer S$1.00, "paid for with cash or SRS monies", "currently not included under the CPF Investment Scheme", market makers North Point Global and iFAST Financial, SGX clearing fee 0.0325% and access fee 0.0075%, and the underlying funds' one-year returns to 30 June 2026.
 - **DWS lines:** the Singapore prospectus registered by MAS on 14 September 2026, as cited in [the earlier piece](/sgx-irish-etfs-us-estate-tax/).
 - **Holdings and fund fees at 30 September 2026:** DWS factsheets for the eight Xtrackers classes ([S&P 500 4C](https://etf.dws.com/download/asset/5b5c4dfb-d37a-4ab8-b9d2-50fa5cc61d9c), [Nasdaq 100 1C](https://etf.dws.com/download/asset/778d6508-45e0-4068-900a-6342df6e5131), [MSCI World 1C](https://etf.dws.com/download/asset/7479ae20-a6b8-4a30-82e5-639d29ab8ea4), [S&P 500 Equal Weight 1C](https://etf.dws.com/download/asset/11deac23-e08a-4a4d-9a51-329abdf37d51), [AI & Big Data 1C](https://etf.dws.com/download/asset/1c67b6f7-fdfa-4e86-a68d-a477cf5adf09), [Nikkei 225 1D](https://etf.dws.com/download/asset/3a538262-a319-47fb-b25f-57aaa36b46e9), [MSCI Korea 1C](https://etf.dws.com/download/asset/64e8f9df-76d8-41d5-afaf-9a7078fa0aa2), [MSCI Taiwan 1C](https://etf.dws.com/download/asset/a22eddb4-4f88-4228-9355-82c39bf19daa)).
@@ -281,7 +293,7 @@ Using iFAST moves the local listing cost, marketing and risk of little trading o
 <details class="src-details">
 <summary><b>Soft spots</b>: what we could not confirm.</summary>
 
-- **The iFAST fees.** Each feeder's expense ratio is "not available" until it has operated; the figures here are built from the prospectus fee tables. One launch commentary quotes 0.43% to 0.77% without a source; the difference is the running-cost line.
+- **The iFAST fees.** Korea and Taiwan use iFAST’s published estimates, not audited actual costs. We could not reconcile them to the prospectus component tables or verify an overall TER cap. Japan and AI retain explicit cost assumptions. We do not infer rebates, subsidies or a fixed Singapore-layer cost from the published totals.
 - **The menu count.** "About 60" is 53 at June 2026 plus eight. Any listing or delisting between July and October 2026 would change it; SGX's product page could not be read by our tools on 13 October.
 - **"No Korea or Taiwan index fund since 2020"** rests on the 2020 delisting notice and SGX's June 2026 category list. A line listed and removed in between would not show.
 - **Dealing assumptions** are illustrative. Commissions, minimums and conversion spreads differ by broker and by account size; the tool takes your own.

@@ -55,11 +55,14 @@ HOLDINGS = {
 
 # iFAST wrapper: management fee "currently 0.25%" plus other fees that "may each amount to or
 # exceed 0.10%" (prospectus registered 29 Sep 2026). Each feeder's own expense ratio is
-# "not available" until it has operated; the all-in figures below are estimates.
+# "not available" until it has operated. Japan/AI below remain cost scenarios.
+# Korea/Taiwan: publisher TER estimates, FSM Global Table 1, data at 29 Sep 2026.
+# https://fsm.global/sg/article/rcms397520 -- no component reconciliation or cap supplied.
+PUBLISHED_TER = {"KOR": 0.67, "TWD": 0.77}
 WRAPPER = 0.25 + 0.10
 for code, f in HOLDINGS.items():
     if f["fee"] is None:
-        f["fee"] = round(WRAPPER + f["underlying_fee"], 2)
+        f["fee"] = PUBLISHED_TER.get(code, round(WRAPPER + f["underlying_fee"], 2))
 
 FIVE = ["Nvidia", "Apple", "Microsoft", "Amazon", "Alphabet"]
 EW_PER_NAME = 0.2   # about 500 names at ~0.2% each: approximate
@@ -147,7 +150,7 @@ for code in sorted(HOLDINGS, key=lambda c: largest(c)[1], reverse=True):
 print("\nC. Annual fund-level charge on S$10,000")
 for code in sorted(HOLDINGS, key=lambda c: HOLDINGS[c]["fee"]):
     f = HOLDINGS[code]
-    est = "  estimate: 0.25% + ~0.10% wrapper + underlying " + pct(f["underlying_fee"]) if "underlying_fee" in f else ""
+    est = "  publisher TER estimate, not a cap" if code in PUBLISHED_TER else ("  cost scenario: 0.25% + assumed 0.10% expenses + underlying " + f"{f['underlying_fee']:.2f}%" if "underlying_fee" in f else "")
     print(f"  {code}  {f['fee']:.2f}%  = {sgd(f['fee'] / 100 * 10_000)} a year{est}")
 print("  Typical unit trust (MoneySense TER 1.0% to 2.5%) = S$100 to S$250 a year")
 
@@ -164,13 +167,15 @@ for A in (10_000, 100_000):
         print(f"    {'Index unit trust on a platform':<36} running {sgd(unit_trust_cost(A, N)):>9}  dealing {sgd(0):>7}  total {sgd(unit_trust_cost(A, N)):>9}   SRS depends on platform  US estate no")
 
 print("\nE. iFAST feeder on SGX against the same Xtrackers fund overseas: years until the overseas")
-print("   route is cheaper = extra one-off cost of going overseas / the wrapper's yearly cost")
+print("   route is cheaper = extra one-off cost of going overseas / the annual fee difference (conditional on the inputs)")
 for code in ("TWD", "KOR", "XBG", "JPY"):
     for fx, lbl in ((FX_BANK, "bank FX"), (FX_SPECIALIST, "specialist FX")):
         A = 10_000
         extra_oneoff = 2 * max(fx / 100 * A, FX_SPEC_MIN_SGD if fx == FX_SPECIALIST else 0) - 2 * SGX_FEES / 100 * A
-        years = extra_oneoff / (WRAPPER / 100 * A)
-        print(f"  {code} {lbl:<14} extra one-off {sgd(extra_oneoff):>6} vs wrapper {sgd(WRAPPER / 100 * A)}/yr -> {years:.1f} years")
+        fee_difference = HOLDINGS[code]["fee"] - HOLDINGS[code]["underlying_fee"]
+        years = extra_oneoff / (fee_difference / 100 * A)
+        timing = f"{years:.1f} years" if years > 0 else "overseas cheaper from day one"
+        print(f"  {code} {lbl:<14} extra one-off {sgd(extra_oneoff):>6} vs fee difference {sgd(fee_difference / 100 * A)}/yr -> {timing}")
 
 print("\nF. Measured quotes on day one, 13 Oct 2026 (Yahoo Finance delayed quotes, SGT)")
 QUOTES = [("XUS", "09:57", 19.56, 19.57, 29_576), ("XND", "10:10", 91.79, 91.82, 2_040),
@@ -189,7 +194,7 @@ print(f"  Singapore {sg}, China {cn}, regional and global {rg}, total {sg + cn +
 assert abs(five_share("XND") - 31.68) < 0.01 and abs(five_share("XUS") - 30.59) < 0.01
 assert abs(five_share("XBG") - 23.89) < 0.01 and abs(five_share("XWR") - 21.74) < 0.01
 assert largest("TWD") == ("TSMC", 30.23) and largest("KOR")[1] == 28.26
-assert HOLDINGS["TWD"]["fee"] == 1.00 and HOLDINGS["KOR"]["fee"] == 0.80
+assert HOLDINGS["TWD"]["fee"] == 0.77 and HOLDINGS["KOR"]["fee"] == 0.67
 assert HOLDINGS["XBG"]["fee"] == 0.70 and HOLDINGS["JPY"]["fee"] == 0.44
 assert abs(SGX_FEES - 0.0436) < 0.0001
 r1 = route_cost(100_000, 10, ROUTES_SP500[0], FX_BANK)[2]

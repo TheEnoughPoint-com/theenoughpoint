@@ -1,0 +1,40 @@
+---
+// Argument: different fund names can hold the same companies.
+// DWS factsheets, 30 September 2026; reproduced by public/data/sgx-etf-menu.py.
+const funds = [
+  ['Nasdaq-100 (XND)', 31.7],
+  ['S&P 500 (XUS)', 30.6],
+  ['AI & Big Data (XBG)', 23.9],
+  ['MSCI World (XWR)', 21.7],
+  ['S&P 500 Equal Weight (EUS)', 1],
+  ['Nikkei 225 (JPY)', 0],
+  ['MSCI Korea (KOR)', 0],
+  ['MSCI Taiwan (TWD)', 0],
+] as const;
+---
+
+<figure class="overlap" data-card="figure" aria-labelledby="overlap-title">
+  <figcaption id="overlap-title"><strong>Four funds put about a fifth to a third in the same five companies</strong></figcaption>
+  <p>Nvidia, Apple, Microsoft, Amazon and Alphabet, as a percentage of each fund.</p>
+  <ol>
+    {funds.map(([name, value]) => <li>
+      <div class="overlap-label"><span>{name}</span><strong>{value === 1 ? 'about 1%' : value === 0 ? '0%' : `${value}%`}</strong></div>
+      <div class="overlap-track" aria-hidden="true"><div class="overlap-fill" style={`width:${value / 40 * 100}%`}></div></div>
+    </li>)}
+  </ol>
+  <p class="overlap-source">DWS factsheets, 30 September 2026. All bars use the same 0 to 40% scale. Equal weight is approximate: about 0.2% per company. Ordered by the figure shown, not a ranking of merit.</p>
+</figure>
+
+<style>
+  .overlap{margin:24px 0;padding:20px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);color:var(--color-body)}
+  .overlap figcaption{font-size:18px;color:var(--color-dark);line-height:1.4}
+  .overlap p{font-size:14px;line-height:1.55;margin:10px 0 18px}
+  .overlap ol{list-style:none;margin:0;padding:0}
+  .overlap li{padding:0;margin:0 0 14px}
+  .overlap li::before,.overlap li::marker{content:none}
+  .overlap-label{display:flex;justify-content:space-between;gap:14px;font-size:14px;line-height:1.5;margin-bottom:5px}
+  .overlap-label strong{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--color-dark)}
+  .overlap-track{height:8px;background:var(--color-border)}
+  .overlap-fill{height:100%;background:var(--color-muted)}
+  .overlap .overlap-source{font-size:13px;color:var(--color-muted);margin:18px 0 0}
+</style>

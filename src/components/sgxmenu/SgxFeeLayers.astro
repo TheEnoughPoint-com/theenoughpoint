@@ -1,0 +1,54 @@
+---
+// Explainer: compare the fee build-up, component ceilings and publisher estimate.
+---
+<figure class="fee-map" data-card="figure" aria-labelledby="fee-map-title">
+  <figcaption id="fee-map-title"><strong>Korea ETF: how the three fee figures compare</strong></figcaption>
+  <p>iFAST Xtrackers MSCI Korea UCITS Index ETF (SGX: KOR). Annual fee disclosures and arithmetic, not all-in ownership costs. Brokerage, trading and currency friction are not fully captured.</p>
+
+  <section class="fee-case" aria-label="Current-fee build-up">
+    <div><h3>Current-fee build-up</h3><span class="fee-label">Stated fees · incomplete total</span></div>
+    <div><p class="fee-equation"><b>0.25%</b> Singapore management<br />+ <b>0.45%</b> underlying fund<br />+ Singapore running expenses</p><p class="fee-basis">Uses the underlying fund’s stated 0.45% fee. No rebate or subsidy assumed.</p></div>
+    <div class="fee-result"><b>0.70% + expenses</b><span>S$70 + expenses<br />per S$10,000</span></div>
+  </section>
+
+  <section class="fee-case" aria-label="At the disclosed fee ceilings">
+    <div><h3>At the fee ceilings</h3><span class="fee-label">Component limits · not a total cap</span></div>
+    <div><p class="fee-equation"><b>0.90%</b> Singapore management maximum<br />+ <b>0.45%</b> underlying all-in limit<br />+ Singapore running expenses</p><p class="fee-basis">The running expenses have no combined ceiling stated in the fee table.</p></div>
+    <div class="fee-result"><b>1.35% + expenses</b><span>S$135 + expenses<br />per S$10,000</span></div>
+  </section>
+
+  <section class="fee-case" aria-label="Publisher estimated total">
+    <div><h3>iFAST’s estimate</h3><span class="fee-label">Published total · not a guarantee</span></div>
+    <div><p class="fee-equation">The publisher gives a total, but <b>does not provide the breakdown</b>.</p><p class="fee-basis">This is the figure used in our calculator. Do not add the fees above to it.</p></div>
+    <div class="fee-result"><b>0.67% total</b><span>About S$67<br />per S$10,000</span></div>
+  </section>
+
+  <p class="fee-verdict"><strong>The missing piece:</strong> the 0.67% estimate is below the 0.70% fee build-up even before Singapore running expenses. The sources do not explain why. We cannot turn these disclosures into a confirmed total expense ratio or an overall capped total.</p>
+  <details>
+    <summary>What is included, and where the figures come from</summary>
+    <p><strong>Underlying 0.45%:</strong> up to 0.25% management + 0.20% fixed fee. These are already inside the 0.45%; do not add them again. The fixed fee belongs to the overseas Xtrackers MSCI Korea UCITS ETF, Class 1C.</p>
+    <p><strong>Singapore expenses:</strong> custodian, registrar and administrator fees may each reach or exceed 0.10%. That is neither a combined estimate nor a cap. The 0.90% maximum replaces the current 0.25% management charge in the ceiling case; it is not added to it.</p>
+    <p><strong>Basis:</strong> simplified fee build-ups assume full investment in the underlying fund and a constant S$10,000 holding. Each fee is charged on its own fund’s assets. These are fund expenses, not a separate iFAST platform bill.</p>
+    <p class="fee-source">Components: <a href="https://links.sgx.com/FileOpen/iFAST%20Global%20ETFs%20Select%20Series%20VCC%20-%20Amended%20Prospectus.ashx?App=IPO&amp;FileID=6796">prospectus</a>, registered 29 September 2026, Korea sections 6C–6D; underlying fee: <a href="https://etf.dws.com/download/asset/64e8f9df-76d8-41d5-afaf-9a7078fa0aa2">DWS factsheet</a>, 30 September 2026. Total estimate: <a href="https://fsm.global/sg/article/rcms397520">FSM Global, Table 1</a>, data at 29 September 2026; single publisher source, not audited actual costs.</p>
+  </details>
+  <p class="fee-source">Fee build-ups: prospectus, 29 September 2026; DWS, 30 September 2026. Publisher estimate: FSM Global, data at 29 September 2026. Linked sources and assumptions above.</p>
+</figure>
+<style>
+  .fee-map{margin:24px 0;padding:20px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);color:var(--color-body)}
+  .fee-map figcaption{font-size:18px;line-height:1.4;color:var(--color-dark)}
+  .fee-map p{font-size:14px;line-height:1.55;margin:12px 0 0}
+  .fee-case{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:18px;border-top:1px solid var(--color-border);padding:18px 0}
+  .fee-case:first-of-type{margin-top:18px}
+  .fee-case>div{min-width:0}
+  .fee-map h3{font-size:15px;line-height:1.4;margin:0;color:var(--color-dark)}
+  .fee-label{display:block;font-size:12px;line-height:1.5;margin-top:6px}
+  .fee-map .fee-equation{margin:0}
+  .fee-map .fee-basis{font-size:12px;margin-top:8px}
+  .fee-result b{display:block;font-size:18px;line-height:1.4;color:var(--color-dark)}
+  .fee-result span{display:block;font-size:13px;line-height:1.5;margin-top:6px}
+  .fee-map .fee-verdict{border-left:3px solid var(--color-muted);padding-left:12px;margin-top:0}
+  .fee-map details{margin-top:16px;border-top:1px solid var(--color-border)}
+  .fee-map summary{font-size:14px;line-height:1.5;min-height:44px;padding:12px 0;cursor:pointer;color:var(--color-dark)}
+  .fee-map .fee-source{font-size:12px;color:var(--color-muted);margin-top:14px}
+  @media(max-width:640px){.fee-case{grid-template-columns:1fr;gap:10px}.fee-result{border-left:2px solid var(--color-muted);padding-left:12px}}
+</style>

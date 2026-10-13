@@ -102,7 +102,7 @@ function tagSlug(t: string) {
     modified: updated ? new Date(updated).toISOString() : undefined,
     authorName: author.name,
     authorUrl: author.href,
-    image: cover,
+    image: post.data.socialImage ?? cover,
     section: category,
     sectionUrl: `/${categorySlug}`,
     tags,

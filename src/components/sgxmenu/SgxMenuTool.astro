@@ -1,0 +1,449 @@
+---
+// Two views of the eight index funds that reach SGX in October 2026.
+//
+//   What you own   — a look-through: the reader enters S$ amounts in any of the eight
+//                    lines and sees how much of the whole sits in each company, counting
+//                    only names in each fund's published top ten (DWS factsheets,
+//                    30 September 2026), so the true figures can be slightly higher.
+//   What it costs  — one exposure, several routes (the SGX line, the same fund overseas,
+//                    a US-registered fund where one exists, a unit trust on a platform),
+//                    bought once, held, sold once. Fund fee, dividend tax where it differs
+//                    between routes, and the dealing costs the reader enters.
+//
+// Estimates under stated assumptions, not measured performance, and no verdict: rows stay
+// in a fixed order and share one neutral colour. public/data/sgx-etf-menu.py reproduces the
+// default outputs; if the arithmetic changes here, change it there.
+import { Font } from 'astro:assets';
+import ToolBrand from '../ToolBrand.astro';
+import { getSgdPerUsd } from '@src/utils/fxRate';
+
+const fx = await getSgdPerUsd();
+---
+
+<Font cssVariable="--font-mono" />
+
+<div class="sm" data-card="tool">
+  <div class="sm-head">
+    <span class="sm-lbl">Eight new ETFs on SGX</span>
+    <span class="sm-lbl accent card-live">Interactive</span>
+  </div>
+
+  <div class="sm-tabs" role="tablist" aria-label="Choose a view">
+    <button type="button" class="sm-tab" id="sm-tab-own" role="tab" aria-selected="true" aria-controls="sm-own">What you own</button>
+    <button type="button" class="sm-tab" id="sm-tab-cost" role="tab" aria-selected="false" aria-controls="sm-cost">What it costs</button>
+  </div>
+
+  <!-- ============ What you own ============ -->
+  <section id="sm-own" role="tabpanel" aria-labelledby="sm-tab-own">
+    <div class="sm-body">
+      <p class="sm-hint">Enter what you hold or plan to hold in each line, in Singapore dollars. Equal
+      amounts are filled in to start, purely to show the overlap. Leave a line at 0 to exclude it.</p>
+      <div class="sm-tblwrap">
+        <table class="sm-tbl" id="sm-own-tbl">
+          <thead><tr><th>Line</th><th>Fee a year</th><th>Amount S$</th></tr></thead>
+          <tbody><!-- rows injected, fixed order --></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="sm-bars-wrap">
+      <div class="sm-bars-t" id="sm-own-t">&mdash;</div>
+      <div class="sm-bars" id="sm-own-bars"></div>
+    </div>
+    <div class="sm-out"><div class="sm-out-s" id="sm-own-say">&mdash;</div></div>
+  </section>
+
+  <!-- ============ What it costs ============ -->
+  <section id="sm-cost" role="tabpanel" aria-labelledby="sm-tab-cost" hidden>
+    <div class="sm-body">
+      <div class="sm-top">
+        <label class="sm-f">
+          <span>Exposure</span>
+          <select id="sm-exp" class="sm-sel" aria-label="Exposure">
+            <option value="XUS">S&amp;P 500</option>
+            <option value="XWR">MSCI World</option>
+            <option value="XND">Nasdaq-100</option>
+            <option value="EUS">S&amp;P 500 Equal Weight</option>
+            <option value="TWD">MSCI Taiwan</option>
+            <option value="KOR">MSCI Korea</option>
+            <option value="JPY">Nikkei 225</option>
+            <option value="XBG">AI &amp; Big Data</option>
+          </select>
+        </label>
+        <label class="sm-f">
+          <span>Holding</span>
+          <span class="sm-in"><i>S$</i><input type="text" id="sm-amt" value="10,000" inputmode="decimal" class="w-lg"></span>
+        </label>
+        <label class="sm-f">
+          <span>Held for</span>
+          <span class="sm-in"><input type="text" id="sm-yrs" value="10" inputmode="decimal"><i>yrs</i></span>
+        </label>
+        <label class="sm-f" id="sm-dy-f">
+          <span>Index dividend yield</span>
+          <span class="sm-in"><input type="text" id="sm-dy" value="1.04" inputmode="decimal"><i>%</i></span>
+        </label>
+      </div>
+
+      <div class="sm-acct" role="radiogroup" aria-label="Which money pays for it">
+        <span class="sm-acct-l">Paid with</span>
+        <button type="button" class="sm-pill" id="sm-cash" role="radio" aria-checked="true">Cash</button>
+        <button type="button" class="sm-pill" id="sm-srs" role="radio" aria-checked="false">SRS money</button>
+      </div>
+
+      <details class="sm-more">
+        <summary>Dealing costs: illustrative, change them to your broker&rsquo;s</summary>
+        <p class="sm-hint">One purchase and one sale. Commission applies to both exchanges; SGX trades also
+        carry the exchange&rsquo;s clearing and access fees (0.0436% with GST), added automatically.
+        Currency conversion is charged each way on any route not in Singapore dollars: about 0.5% at a
+        bank-linked broker, 0.002% with a US$2 minimum at a specialist broker. The spread is the full gap
+        between the buying and selling price; half of it is paid each way.</p>
+        <div class="sm-grid">
+          <label class="sm-f"><span>Commission</span><span class="sm-in"><input type="text" id="sm-comm" value="0.08" inputmode="decimal"><i>%</i></span></label>
+          <label class="sm-f"><span>Minimum</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cmin" value="10" inputmode="decimal"></span></label>
+          <label class="sm-f"><span>Currency conversion, each way</span><span class="sm-in"><input type="text" id="sm-fx" value="0.50" inputmode="decimal"><i>%</i></span></label>
+          <label class="sm-f"><span>Custody on overseas holdings</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cust" value="0" inputmode="decimal"><i>/yr</i></span></label>
+          <label class="sm-f"><span>Unit trust fund fee</span><span class="sm-in"><input type="text" id="sm-utf" value="0.10" inputmode="decimal"><i>%</i></span></label>
+          <label class="sm-f"><span>Platform fee</span><span class="sm-in"><input type="text" id="sm-utp" value="0.35" inputmode="decimal"><i>%</i></span></label>
+        </div>
+        <div class="sm-tblwrap">
+          <table class="sm-tbl" id="sm-spread-tbl">
+            <thead><tr><th>Route</th><th>Spread %</th></tr></thead>
+            <tbody><!-- rows injected per exposure --></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="sm-bars-wrap">
+      <div class="sm-bars-t" id="sm-cost-t">&mdash;</div>
+      <div class="sm-bars" id="sm-cost-bars"></div>
+    </div>
+    <div class="sm-out"><div class="sm-out-s" id="sm-cost-say">&mdash;</div></div>
+  </section>
+
+  <div class="sm-notes">
+    <details class="sm-more">
+      <summary>How this is calculated</summary>
+      <p><b>What you own.</b> Each company&rsquo;s share of your total = the sum over your lines of
+      (amount in the line &times; the company&rsquo;s weight in that fund) &divide; your total. Weights are the
+      funds&rsquo; published top-ten holdings at 30 September 2026 (DWS factsheets); a company outside a
+      fund&rsquo;s top ten counts as zero there, so true figures can be slightly higher. The equal-weight
+      fund holds about 500 names at roughly 0.2% each, taken as 0.2% for the US names shown. Samsung
+      Electronics includes its preference shares. The blended fee weights each line&rsquo;s annual fund
+      charge by amount; the iFAST lines&rsquo; charges are estimates from the prospectus fee tables.</p>
+      <p><b>What it costs.</b> Running cost a year = fund fee + dividend tax where the routes differ
+      (S&amp;P 500 only: 15% of the yield inside an Irish fund; 30% of the yield after fees on a US fund&rsquo;s
+      distributions). For every other exposure the dividend tax is the same on each route shown and is left
+      out. One-off = commission (or the minimum) + SGX fees on SGX routes + half the spread + currency
+      conversion on non-S$ routes, paid to buy and again to sell. Custody is charged yearly on overseas
+      holdings. The unit-trust row is fund fee + platform fee, with no dealing costs, and the same dividend
+      treatment as an Irish fund. US estate tax on the US funds applies the published US schedule less the
+      US$13,000 credit, for a holder who is neither a US citizen nor US-domiciled with no other US-situated
+      assets, at S$1 = US${(1 / fx.sgdPerUsd).toFixed(4)} ({fx.source}, {fx.asOf}).</p>
+    </details>
+    <p><b>What this is not.</b> Advice or a ranking. Lines and routes stay in a fixed order; the numbers are
+    facts about published holdings and fee schedules applied to your inputs.</p>
+    <ToolBrand />
+  </div>
+</div>
+
+<style is:global>
+.sm{
+  --sm-bg2:var(--color-surface); --sm-bd:var(--color-border); --sm-bd2:#D5CDBB;
+  --sm-t1:var(--color-dark); --sm-t2:var(--color-body); --sm-t3:var(--color-muted);
+  --sm-g:var(--color-brand-600); --sm-g2:var(--color-brand-700);
+  --sm-deep:var(--color-navy);
+  --sm-mono:var(--font-mono),'SF Mono',Menlo,Consolas,monospace;
+  background:#fff;border:1px solid var(--sm-bd);border-radius:12px;
+  box-shadow:0 4px 6px rgba(0,0,0,.05),0 2px 4px rgba(0,0,0,.04);
+  overflow:hidden;margin:26px 0;font-size:16px;line-height:1.6;color:var(--sm-t1)
+}
+.sm .num{font-family:var(--sm-mono);font-variant-numeric:tabular-nums}
+.sm-head{padding:14px 22px;background:var(--sm-bg2);border-bottom:1px solid var(--sm-bd);
+  display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sm-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--sm-t3)}
+.sm-lbl.accent{color:var(--sm-g2)}
+.sm-tabs{display:flex;gap:0;border-bottom:1px solid var(--sm-bd);background:#fff}
+.sm-tab{flex:1;font-size:14px;font-weight:700;padding:11px 10px;border:none;background:none;cursor:pointer;
+  color:var(--sm-t3);border-bottom:3px solid transparent}
+.sm-tab[aria-selected="true"]{color:var(--sm-deep);border-bottom-color:var(--sm-deep)}
+.sm-tab:focus-visible{outline:2px solid var(--sm-g);outline-offset:-2px}
+.sm-body{padding:16px 22px 8px}
+.post-content .sm-hint{font-size:12.5px;color:var(--sm-t3);line-height:1.5;margin:0 0 10px}
+.sm-top{display:flex;gap:14px 34px;flex-wrap:wrap;margin-bottom:12px}
+.sm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px 24px;margin:4px 0 12px}
+.sm-f{display:flex;align-items:baseline;gap:10px;margin:0;flex-wrap:wrap}
+.sm-f > span:first-child{font-size:14px;color:var(--sm-t2)}
+.sm-in{display:inline-flex;align-items:baseline;font-family:var(--sm-mono);font-size:15px;font-weight:600}
+.sm-in i{font-style:normal;color:var(--sm-t3);font-size:13px;margin:0 3px}
+.sm-in input{font-family:var(--sm-mono);font-size:15px;font-weight:600;color:var(--sm-t1);
+  background:none;border:none;border-bottom:1px dashed var(--sm-bd2);text-align:right;
+  width:5ch;padding:0 0 1px}
+.sm-in input.w-lg{width:9ch}
+.sm-sel{font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--sm-t1);background:#fff;
+  border:1px solid var(--sm-bd2);border-radius:8px;padding:4px 8px}
+.sm-in input:focus,.sm-tbl input:focus,.sm-sel:focus{outline:none;border-color:var(--sm-g);color:var(--sm-g2);box-shadow:none}
+.sm-acct{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
+.sm-acct-l{font-size:14px;color:var(--sm-t2);margin-right:4px}
+.sm-pill{font-size:13px;font-weight:600;padding:5px 14px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--sm-bd2);background:#fff;color:var(--sm-t2)}
+.sm-pill[aria-checked="true"]{background:var(--sm-deep);border-color:var(--sm-deep);color:#fff}
+.sm-pill:focus-visible{outline:2px solid var(--sm-g);outline-offset:2px}
+.sm-more{margin:0 0 10px}
+.sm-more summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--sm-g2);padding:4px 0}
+.sm-tblwrap{overflow-x:auto}
+.post-content .sm-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:0 0 8px}
+.post-content .sm-tbl th{font-size:11px;text-transform:uppercase;letter-spacing:.7px;
+  color:#C9D3E0;font-weight:700;text-align:right;padding:7px 8px;border-bottom:1px solid var(--sm-bd)}
+.post-content .sm-tbl th:first-child{text-align:left;color:#fff}
+.post-content .sm-tbl td{padding:8px;border-bottom:1px dashed var(--sm-bd);vertical-align:top;text-align:right}
+.post-content .sm-tbl td:first-child{text-align:left;color:var(--sm-t2);line-height:1.35}
+.sm-tbl td em{display:block;font-style:normal;font-size:11px;color:var(--sm-t3);margin-top:2px}
+.sm-tbl input{font-family:var(--sm-mono);font-size:14px;font-weight:600;color:var(--sm-t1);
+  background:none;border:none;border-bottom:1px dashed var(--sm-bd2);text-align:right;width:8ch;padding:0 0 1px}
+.sm-tbl input.w-sm{width:5ch}
+
+.sm-bars-wrap{padding:14px 22px 18px;border-top:1px solid var(--sm-bd)}
+.sm-bars-t{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--sm-t3);margin-bottom:12px}
+.sm-bars-t b{color:#7A5A1D}
+.sm-bars{display:flex;flex-direction:column;gap:14px}
+.sm-bar-l{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:5px;flex-wrap:wrap}
+.sm-bar-l span{font-size:13.5px;color:var(--sm-t2)}
+.sm-bar-l b{font-family:var(--sm-mono);font-size:15px;font-weight:600;color:var(--sm-t1)}
+.sm-tc{font-style:normal;font-family:var(--font-body);font-size:11px;font-weight:600;color:var(--sm-t3);margin-left:4px}
+.sm-track{height:10px;background:var(--color-surface-alt);border-radius:999px;overflow:hidden}
+.sm-fill{height:100%;border-radius:999px;transition:width .3s ease;min-width:2px;background:#9C7526}
+.sm-sub{font-size:12.5px;color:var(--sm-t2);margin-top:5px}
+.sm-sub b{font-family:var(--sm-mono);font-weight:600;color:var(--sm-t1)}
+.sm-bar.off .sm-bar-l span{color:var(--sm-t3)}
+.sm-offnote{font-size:12.5px;color:var(--sm-t3)}
+
+.sm-out{background:var(--sm-deep);color:#fff;padding:17px 22px}
+.sm-out-s{font-size:15px;line-height:1.6;color:#D8DEE8}
+.sm-out-s b{font-family:var(--sm-mono);font-weight:600;color:#fff}
+
+.sm-notes{padding:15px 22px 17px;border-top:1px solid var(--sm-bd);background:var(--sm-bg2)}
+.post-content .sm-notes p{font-size:12.5px;line-height:1.55;color:var(--sm-t3);margin:0 0 7px}
+.post-content .sm-notes p:last-child{margin-bottom:0}
+.sm-notes b{color:var(--sm-t2)}
+@media(max-width:640px){ .sm-head,.sm-body,.sm-bars-wrap,.sm-out,.sm-notes{padding-left:16px;padding-right:16px} }
+@media(prefers-reduced-motion:reduce){.sm *{transition:none!important}}
+</style>
+
+<script is:inline define:vars={{ SGD_PER_USD: fx.sgdPerUsd }}>
+(function(){
+/* ---------- data: DWS factsheets, 30 September 2026; iFAST prospectus, 29 September 2026 ---------- */
+/* fee = annual fund-level charge on the SGX line (% a year). For the iFAST feeders this is an
+   estimate: 0.25% management + ~0.10% other wrapper costs + the underlying fund's all-in fee.
+   over = the same fund bought overseas (the Xtrackers class itself) and its fee. */
+const FUNDS = [
+  { code:'XUS', name:'S&P 500', fee:0.03, est:false, over:{ label:'Same fund in London, in US$', fee:0.03 },
+    h:{ 'Nvidia':8.35, 'Apple':7.44, 'Microsoft':5.70, 'Amazon':3.64, 'Alphabet':5.46, 'Broadcom':2.51, 'Meta':2.38, 'Micron':1.79, 'Tesla':1.52 } },
+  { code:'XND', name:'Nasdaq-100', fee:0.20, est:false, over:{ label:'Same fund in London, in US$', fee:0.20 },
+    h:{ 'Nvidia':8.41, 'Apple':7.53, 'Microsoft':5.76, 'Micron':5.01, 'AMD':4.18, 'Amazon':4.05, 'Meta':3.24, 'Alphabet':5.93, 'Tesla':2.86 } },
+  { code:'XWR', name:'MSCI World', fee:0.12, est:false, over:{ label:'Same fund in London, in US$', fee:0.12 },
+    h:{ 'Nvidia':5.77, 'Apple':5.46, 'Microsoft':3.94, 'Amazon':2.62, 'Alphabet':3.95, 'Broadcom':1.73, 'Meta':1.73, 'Micron':1.31, 'Tesla':1.12 } },
+  { code:'EUS', name:'S&P 500 Equal Weight', fee:0.15, est:false, over:{ label:'Same fund in London, in US$', fee:0.15 }, approx:true,
+    h:{ 'Nvidia':0.2, 'Apple':0.2, 'Microsoft':0.2, 'Amazon':0.2, 'Alphabet':0.2, 'Meta':0.2, 'Micron':0.2, 'Broadcom':0.2, 'Tesla':0.2, 'AMD':0.2, 'Walmart':0.2, 'Moderna':0.30 } },
+  { code:'XBG', name:'AI & Big Data (iFAST feeder)', fee:0.70, est:true, over:{ label:'Xtrackers AI & Big Data in London, in US$', fee:0.35 },
+    h:{ 'Microsoft':5.75, 'Meta':5.35, 'Apple':4.93, 'Nvidia':4.82, 'AMD':4.41, 'Amazon':4.35, 'Walmart':4.04, 'Alphabet':4.04, 'Samsung Electronics':3.86, 'Micron':3.85 } },
+  { code:'JPY', name:'Nikkei 225 (iFAST feeder)', fee:0.44, est:true, over:{ label:'Xtrackers Nikkei 225 in Frankfurt, in euro', fee:0.09 },
+    h:{ 'Advantest':12.34, 'Tokyo Electron':8.59, 'Fast Retailing':8.28, 'SoftBank Group':7.62, 'Recruit':2.51, 'Ibiden':2.27, 'TDK':2.25, 'Kioxia':1.90, 'KDDI':1.82, 'Fujikura':1.51 } },
+  { code:'KOR', name:'MSCI Korea (iFAST feeder)', fee:0.80, est:true, over:{ label:'Xtrackers MSCI Korea in London, in US$', fee:0.45 },
+    h:{ 'Samsung Electronics':31.98, 'SK hynix':17.90, 'SK Square':4.30, 'Samsung Electro-Mechanics':3.55, 'KB Financial':2.48, 'Hyundai Motor':2.00, 'Shinhan Financial':1.96, 'Doosan Enerbility':1.56, 'Hana Financial':1.53 } },
+  { code:'TWD', name:'MSCI Taiwan (iFAST feeder)', fee:1.00, est:true, over:{ label:'Xtrackers MSCI Taiwan in London, in US$', fee:0.65 },
+    h:{ 'TSMC':30.23, 'MediaTek':10.04, 'Delta Electronics':4.90, 'Hon Hai':4.05, 'ASE':3.08, 'UMC':2.29, 'Unimicron':2.11, 'Elite Material':1.91, 'Fubon Financial':1.66, 'Asia Vital Components':1.52 } },
+];
+const FIVE = ['Nvidia','Apple','Microsoft','Amazon','Alphabet'];
+const SGX_FEES = (0.0325 + 0.0075) * 1.09;   /* clearing + access, plus 9% GST: 0.0436% */
+/* US-registered funds, shown for the S&P 500 only: fee, 30% tax on distributions net of fee. */
+const US_ROUTES = {
+  XUS: [
+    { label:'S27 on SGX, in US$ (US fund)', fee:0.0945, sgx:true, fx:true, spread:0.20, srs:true, us:true },
+    { label:'VOO in New York, in US$ (US fund)', fee:0.03, sgx:false, fx:true, spread:0.02, srs:false, us:true },
+  ],
+};
+const SPREAD_DEFAULT = { sgx:0.10, over:0.10 };
+const BRACKETS=[[0,10000,0,.18],[10000,20000,1800,.20],[20000,40000,3800,.22],[40000,60000,8200,.24],
+[60000,80000,13000,.26],[80000,100000,18200,.28],[100000,150000,23800,.30],[150000,250000,38800,.32],
+[250000,500000,70800,.34],[500000,750000,155800,.37],[750000,1000000,248300,.39],[1000000,null,345800,.40]];
+const CREDIT=13000;
+
+const $ = id => document.getElementById(id);
+const numOf = el => { const n = parseFloat(String(el.value).replace(/[^\d.\-]/g,'')); return isFinite(n) && n >= 0 ? n : 0; };
+const sgd = n => 'S$' + Math.round(n).toLocaleString('en-SG');
+const pct2 = n => n.toFixed(2) + '%';
+const pct1 = n => n.toFixed(1) + '%';
+const yrsT = n => n + (n === 1 ? ' year' : ' years');
+let acct = 'cash';
+
+function estateTaxSgd(sgdAmt){
+  const usd = sgdAmt / SGD_PER_USD;
+  for (const [lo,hi,base,rate] of BRACKETS){
+    if (hi===null || usd<=hi) return Math.max(0, base + rate*(usd-lo) - CREDIT) * SGD_PER_USD;
+  }
+  return 0;
+}
+
+/* ---------- tabs ---------- */
+function showTab(which){
+  const own = which === 'own';
+  $('sm-tab-own').setAttribute('aria-selected', String(own));
+  $('sm-tab-cost').setAttribute('aria-selected', String(!own));
+  $('sm-own').hidden = !own; $('sm-cost').hidden = own;
+}
+
+/* ---------- What you own ---------- */
+function buildOwnTable(){
+  $('sm-own-tbl').querySelector('tbody').innerHTML = FUNDS.map(f =>
+    '<tr><td>' + f.code + '<em>' + f.name + '</em></td>'
+    + '<td class="num">' + pct2(f.fee) + (f.est ? '<em>estimate</em>' : '') + '</td>'
+    + '<td><input type="text" id="sm-a-' + f.code + '" value="1,000" inputmode="decimal" aria-label="Amount in ' + f.code + '"></td></tr>'
+  ).join('');
+}
+
+function updateOwn(){
+  const amts = FUNDS.map(f => numOf($('sm-a-' + f.code)));
+  const total = amts.reduce((a,b) => a+b, 0);
+  if (total <= 0){
+    $('sm-own-bars').innerHTML = ''; $('sm-own-t').textContent = '—';
+    $('sm-own-say').textContent = 'Enter an amount in at least one line.';
+    return;
+  }
+  const look = {};
+  FUNDS.forEach((f,i) => { for (const [c,w] of Object.entries(f.h)) look[c] = (look[c]||0) + amts[i]*w/100; });
+  const rows = Object.entries(look).map(([c,v]) => ({ c, v, p: v/total*100 }))
+    .filter(r => r.v > 0).sort((a,b) => b.v - a.v).slice(0, 10);
+  const five = FIVE.reduce((s,c) => s + (look[c]||0), 0);
+  const fee = FUNDS.reduce((s,f,i) => s + amts[i]*f.fee/100, 0);
+  const max = rows.length ? rows[0].p : 1;
+  const approxOn = amts[FUNDS.findIndex(f => f.code === 'EUS')] > 0;
+
+  $('sm-own-t').innerHTML = 'Your <b>' + sgd(total) + '</b> across ' + amts.filter(a => a>0).length + ' line' + (amts.filter(a=>a>0).length===1?'':'s') + ': the ten companies you hold most of';
+  $('sm-own-bars').innerHTML = rows.map(r =>
+    '<div class="sm-bar"><div class="sm-bar-l"><span>' + r.c + '</span><b class="num">' + pct1(r.p)
+    + '<i class="sm-tc">' + sgd(r.v) + '</i></b></div>'
+    + '<div class="sm-track"><div class="sm-fill" style="width:' + Math.max(2, Math.min(100, r.p/max*100)) + '%"></div></div></div>'
+  ).join('');
+  $('sm-own-say').innerHTML = 'Nvidia, Apple, Microsoft, Amazon and Alphabet together: <b>' + pct1(five/total*100) + '</b> of your total, or <b>' + sgd(five) + '</b>. '
+    + 'Blended fund charge: <b>' + pct2(fee/total*100) + '</b> a year, about <b>' + sgd(fee) + '</b>.'
+    + ' Only each fund&rsquo;s published top ten holdings are counted, so the true figures can be slightly higher.'
+    + (approxOn ? ' The equal-weight fund&rsquo;s US names are taken at about 0.2% each.' : '');
+}
+
+/* ---------- What it costs ---------- */
+function routesFor(code){
+  const f = FUNDS.find(x => x.code === code);
+  const r = [
+    { key:'sgx',  label:f.code + ' on SGX, in S$' + (f.est ? ' (iFAST feeder)' : ''), fee:f.fee, sgx:true,  fx:false, spread:SPREAD_DEFAULT.sgx,  srs:true,  us:false, est:f.est },
+    { key:'over', label:f.over.label, fee:f.over.fee, sgx:false, fx:true, spread:SPREAD_DEFAULT.over, srs:false, us:false, est:false },
+  ];
+  (US_ROUTES[code] || []).forEach((u,i) => r.push({ key:'us'+i, ...u }));
+  r.push({ key:'ut', label:'Unit trust on a platform', ut:true, sgx:false, fx:false, spread:0, srs:null, us:false });
+  return r;
+}
+
+function buildSpreadTable(code){
+  const tb = $('sm-spread-tbl').querySelector('tbody');
+  tb.innerHTML = routesFor(code).filter(r => !r.ut).map(r =>
+    '<tr><td>' + r.label + '</td><td><input type="text" class="w-sm" id="sm-sp-' + r.key + '" value="' + r.spread.toFixed(2) + '" inputmode="decimal" aria-label="Spread for ' + r.label + '"></td></tr>'
+  ).join('');
+  tb.querySelectorAll('input').forEach(el => el.addEventListener('input', () => updateCost(true)));
+}
+
+function updateCost(fromUser){
+  const code = $('sm-exp').value;
+  const f = FUNDS.find(x => x.code === code);
+  const A = Math.max(0, numOf($('sm-amt')));
+  const N = Math.min(40, Math.max(1, Math.round(numOf($('sm-yrs')))));
+  const dy = Math.min(10, numOf($('sm-dy')));
+  const comm = numOf($('sm-comm'))/100, cmin = numOf($('sm-cmin')), fxp = numOf($('sm-fx'))/100, cust = numOf($('sm-cust'));
+  const utf = numOf($('sm-utf'))/100, utp = numOf($('sm-utp'))/100;
+  const divDiffers = code === 'XUS';
+  $('sm-dy-f').style.display = divDiffers ? '' : 'none';
+  $('sm-cash').setAttribute('aria-checked', String(acct === 'cash'));
+  $('sm-srs').setAttribute('aria-checked', String(acct === 'srs'));
+
+  if (A <= 0){
+    $('sm-cost-bars').innerHTML = ''; $('sm-cost-t').textContent = '—';
+    $('sm-cost-say').textContent = 'Enter a holding above zero.';
+    return;
+  }
+  const rows = routesFor(code).map(r => {
+    let runPct, oneOff = 0;
+    if (r.ut){
+      runPct = (utf + utp) * 100 + (divDiffers ? 0.15 * dy : 0);
+    } else {
+      const spread = numOf($('sm-sp-' + r.key))/100;
+      const tax = !divDiffers ? 0 : (r.us ? 0.30 * Math.max(0, dy - r.fee) : 0.15 * dy);
+      runPct = r.fee + tax;
+      oneOff = Math.max(comm*A, cmin) + (r.sgx ? SGX_FEES/100*A : 0) + spread/2*A + (r.fx ? fxp*A : 0);
+    }
+    const running = runPct/100 * A * N;
+    const custody = (!r.ut && !r.sgx) ? cust * N : 0;
+    const total = running + 2*oneOff + custody;
+    const off = acct === 'srs' && r.srs === false;
+    return { ...r, runPct, running, oneOff, custody, total, off, estate: r.us ? estateTaxSgd(A) : 0 };
+  });
+  const max = Math.max(...rows.filter(r => !r.off).map(r => r.total), 1);
+
+  $('sm-cost-t').innerHTML = f.name + ': <b>' + sgd(A) + '</b> held ' + yrsT(N) + ', bought once and sold once';
+  $('sm-cost-bars').innerHTML = rows.map(r => {
+    if (r.off) return '<div class="sm-bar off"><div class="sm-bar-l"><span>' + r.label + '</span></div><div class="sm-offnote">Not open to SRS money: listed overseas.</div></div>';
+    const srsNote = r.srs === null ? 'SRS depends on the platform' : (r.srs ? 'open to SRS' : 'not open to SRS');
+    const estNote = r.us ? ' &middot; US estate tax if held at death <b>' + (r.estate > 0 ? sgd(r.estate) : 'none at this size') + '</b>' : '';
+    const detail = r.ut
+      ? pct2(r.runPct) + ' a year, no dealing costs &middot; ' + srsNote
+      : pct2(r.runPct) + ' a year' + (r.est ? ' (estimate)' : '') + ', plus ' + sgd(2*r.oneOff) + ' to buy and sell'
+        + (r.custody > 0 ? ' and ' + sgd(r.custody) + ' custody' : '') + ' &middot; ' + srsNote + estNote;
+    return '<div class="sm-bar"><div class="sm-bar-l"><span>' + r.label + '</span><b class="num">' + sgd(r.total)
+      + '<i class="sm-tc">over ' + yrsT(N) + '</i></b></div>'
+      + '<div class="sm-track"><div class="sm-fill" style="width:' + Math.max(2, Math.min(100, r.total/max*100)) + '%"></div></div>'
+      + '<div class="sm-sub">' + detail + '</div></div>';
+  }).join('');
+
+  const sgx = rows[0], over = rows[1];
+  let say = 'The SGX line costs <b>' + sgd(sgx.total) + '</b> over ' + yrsT(N) + ' on ' + sgd(A) + ', against <b>' + sgd(over.total)
+    + '</b> for the same fund bought overseas with the dealing costs entered: a difference of <b>' + sgd(Math.abs(sgx.total - over.total)) + '</b> '
+    + (sgx.total <= over.total ? 'in the SGX line&rsquo;s favour' : 'in the overseas route&rsquo;s favour') + '. ';
+  if (f.est) say += 'The iFAST wrapper adds ' + pct2(f.fee - f.over.fee) + ' a year; currency conversion and overseas dealing are what it buys you out of. ';
+  if (acct === 'srs') say += 'With SRS money, only SGX-listed lines are available.';
+  $('sm-cost-say').innerHTML = say;
+  if (fromUser) writeLink();
+}
+
+/* ---------- deep link: tab, exp, amt, yrs ---------- */
+function writeLink(){
+  try {
+    const p = new URLSearchParams(window.location.search);
+    p.set('tab', $('sm-own').hidden ? 'cost' : 'own');
+    p.set('exp', $('sm-exp').value); p.set('amt', String(Math.round(numOf($('sm-amt'))))); p.set('yrs', $('sm-yrs').value);
+    history.replaceState(null, '', window.location.pathname + '?' + p.toString() + window.location.hash);
+  } catch(err){}
+}
+function readLink(){
+  try {
+    const p = new URLSearchParams(window.location.search);
+    if (p.has('exp') && FUNDS.some(f => f.code === p.get('exp'))) $('sm-exp').value = p.get('exp');
+    if (p.has('amt')) $('sm-amt').value = p.get('amt');
+    if (p.has('yrs')) $('sm-yrs').value = p.get('yrs');
+    if (p.get('tab') === 'cost') showTab('cost');
+  } catch(err){}
+}
+
+function init(){
+  buildOwnTable();
+  FUNDS.forEach(f => $('sm-a-' + f.code).addEventListener('input', () => updateOwn()));
+  buildSpreadTable($('sm-exp').value);
+  readLink();
+  $('sm-tab-own').addEventListener('click', () => { showTab('own'); writeLink(); });
+  $('sm-tab-cost').addEventListener('click', () => { showTab('cost'); writeLink(); });
+  $('sm-exp').addEventListener('change', () => { buildSpreadTable($('sm-exp').value); updateCost(true); });
+  ['sm-amt','sm-yrs','sm-dy','sm-comm','sm-cmin','sm-fx','sm-cust','sm-utf','sm-utp'].forEach(id => $(id).addEventListener('input', () => updateCost(true)));
+  $('sm-cash').addEventListener('click', () => { acct = 'cash'; updateCost(true); });
+  $('sm-srs').addEventListener('click',  () => { acct = 'srs';  updateCost(true); });
+  updateOwn(); updateCost(false);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+})();
+</script>

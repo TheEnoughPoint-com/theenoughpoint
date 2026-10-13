@@ -37,7 +37,7 @@ const fx = await getSgdPerUsd();
   <section id="sm-own" role="tabpanel" aria-labelledby="sm-tab-own">
     <div class="sm-body">
       <p class="sm-hint">Enter what you hold or plan to hold in each fund, in Singapore dollars. Equal
-      amounts are filled in as a hypothetical example, not a suggested portfolio. Leave a fund at 0 to exclude it. Korea and Taiwan use iFAST’s published TER estimates; Japan and AI use our cost scenarios. None is a guaranteed cap.</p>
+      amounts are filled in as a hypothetical example, not a suggested portfolio. Leave a fund at 0 to exclude it. All four iFAST funds use published pre-launch TER figures, treated here as estimates. None is a guaranteed cap.</p>
       <div class="sm-tblwrap">
         <table class="sm-tbl" id="sm-own-tbl">
           <thead><tr><th>Fund</th><th>Fee a year</th><th>Amount S$</th></tr></thead>
@@ -55,7 +55,7 @@ const fx = await getSgdPerUsd();
   <!-- ============ What it costs ============ -->
   <section id="sm-cost" role="tabpanel" aria-labelledby="sm-tab-cost" hidden>
     <div class="sm-body">
-      <p class="sm-hint">Korea: 0.67%; Taiwan: 0.77% a year, per FSM Global (data at 29 September 2026). These single-source TER estimates have no published breakdown or guaranteed cap. Japan and AI assume 0.10% combined Singapore running expenses; actual costs may differ. Sources and assumptions are below.</p>
+      <p class="sm-hint">Japan: 0.43%; AI: 0.63% a year (FSM Global, data at 30 September 2026). Korea: 0.67%; Taiwan: 0.77% (same publisher, data at 29 September 2026). These pre-launch TER figures are estimates, not audited actual costs or guaranteed caps. Their breakdown is not supplied. Sources and assumptions are below.</p>
       <div class="sm-top">
         <label class="sm-f">
           <span>Market or theme</span>
@@ -130,7 +130,7 @@ const fx = await getSgdPerUsd();
       fund&rsquo;s top ten counts as zero there, so true figures can be slightly higher. The equal-weight
       fund holds about 500 names at roughly 0.2% each, taken as 0.2% for the US names shown. Samsung
       Electronics includes its preference shares. The combined fee weights each line&rsquo;s annual fund
-      charge by amount. Korea and Taiwan use FSM Global&rsquo;s published estimates (29 September 2026); Japan and AI assume 0.10% combined Singapore running expenses. Estimates and scenarios are not caps.</p>
+      charge by amount. All four iFAST funds use FSM Global&rsquo;s published pre-launch TER figures: Japan/AI at 30 September 2026 and Korea/Taiwan at 29 September 2026. These are estimates, not caps.</p>
       <p><b>What it costs.</b> Running cost a year = fund fee + dividend tax where the routes differ
       (S&amp;P 500 only: 15% of the yield inside an Irish fund; 30% of the yield after fees on a US fund&rsquo;s
       distributions). For every other exposure the dividend tax is the same on each route shown and is left
@@ -233,9 +233,11 @@ const fx = await getSgdPerUsd();
 <script is:inline define:vars={{ SGD_PER_USD: fx.sgdPerUsd }}>
 (function(){
 /* ---------- data: DWS factsheets, 30 September 2026; iFAST prospectus, 29 September 2026 ---------- */
-/* fee = annual fund-level charge on the SGX line (% a year). Korea and Taiwan use FSM Global published TER estimates, data at 29 September 2026:
+/* fee = annual fund-level charge on the SGX line (% a year). iFAST funds use FSM Global published pre-launch TER figures:
    https://fsm.global/sg/article/rcms397520 (no component reconciliation supplied).
-   Japan and AI retain scenarios: 0.25% management + assumed 0.10% expenses + underlying fee.
+   Korea/Taiwan data: 29 September 2026. Japan/AI data: 30 September 2026:
+   https://fsm.global/sg/article/rcms397041 and https://fsm.global/sg/article/rcms397262.
+   All treated as estimates; do not add the underlying fee again.
    over = the same fund bought overseas (the Xtrackers class itself) and its fee. */
 const FUNDS = [
   { code:'XUS', name:'S&P 500', fee:0.03, est:false, over:{ label:'Same fund in London, in US$', fee:0.03 },
@@ -246,13 +248,13 @@ const FUNDS = [
     h:{ 'Nvidia':5.77, 'Apple':5.46, 'Microsoft':3.94, 'Amazon':2.62, 'Alphabet':3.95, 'Broadcom':1.73, 'Meta':1.73, 'Micron':1.31, 'Tesla':1.12 } },
   { code:'EUS', name:'S&P 500 Equal Weight', fee:0.15, est:false, over:{ label:'Same fund in London, in US$', fee:0.15 }, approx:true,
     h:{ 'Nvidia':0.2, 'Apple':0.2, 'Microsoft':0.2, 'Amazon':0.2, 'Alphabet':0.2, 'Meta':0.2, 'Micron':0.2, 'Broadcom':0.2, 'Tesla':0.2, 'AMD':0.2, 'Walmart':0.2, 'Moderna':0.30 } },
-  { code:'XBG', name:'AI & Big Data (held through iFAST)', fee:0.70, est:true, over:{ label:'Xtrackers AI & Big Data in London, in US$', fee:0.35 },
+  { code:'XBG', name:'AI & Big Data (held through iFAST)', fee:0.63, est:true, over:{ label:'Xtrackers AI & Big Data in London, in US$', fee:0.35 },
     h:{ 'Microsoft':5.75, 'Meta':5.35, 'Apple':4.93, 'Nvidia':4.82, 'AMD':4.41, 'Amazon':4.35, 'Walmart':4.04, 'Alphabet':4.04, 'Samsung Electronics':3.86, 'Micron':3.85 } },
-  { code:'JPY', name:'Nikkei 225 (held through iFAST)', fee:0.44, est:true, over:{ label:'Xtrackers Nikkei 225 in Frankfurt, in euro', fee:0.09 },
+  { code:'JPY', name:'Nikkei 225 (held through iFAST)', fee:0.43, est:true, over:{ label:'Xtrackers Nikkei 225 in Frankfurt, in euro', fee:0.09 },
     h:{ 'Advantest':12.34, 'Tokyo Electron':8.59, 'Fast Retailing':8.28, 'SoftBank Group':7.62, 'Recruit':2.51, 'Ibiden':2.27, 'TDK':2.25, 'Kioxia':1.90, 'KDDI':1.82, 'Fujikura':1.51 } },
-  { code:'KOR', name:'MSCI Korea (held through iFAST)', fee:0.67, est:true, published:true, over:{ label:'Xtrackers MSCI Korea in London, in US$', fee:0.45 },
+  { code:'KOR', name:'MSCI Korea (held through iFAST)', fee:0.67, est:true, over:{ label:'Xtrackers MSCI Korea in London, in US$', fee:0.45 },
     h:{ 'Samsung Electronics':31.98, 'SK hynix':17.90, 'SK Square':4.30, 'Samsung Electro-Mechanics':3.55, 'KB Financial':2.48, 'Hyundai Motor':2.00, 'Shinhan Financial':1.96, 'Doosan Enerbility':1.56, 'Hana Financial':1.53 } },
-  { code:'TWD', name:'MSCI Taiwan (held through iFAST)', fee:0.77, est:true, published:true, over:{ label:'Xtrackers MSCI Taiwan in London, in US$', fee:0.65 },
+  { code:'TWD', name:'MSCI Taiwan (held through iFAST)', fee:0.77, est:true, over:{ label:'Xtrackers MSCI Taiwan in London, in US$', fee:0.65 },
     h:{ 'TSMC':30.23, 'MediaTek':10.04, 'Delta Electronics':4.90, 'Hon Hai':4.05, 'ASE':3.08, 'UMC':2.29, 'Unimicron':2.11, 'Elite Material':1.91, 'Fubon Financial':1.66, 'Asia Vital Components':1.52 } },
 ];
 const FIVE = ['Nvidia','Apple','Microsoft','Amazon','Alphabet'];
@@ -298,7 +300,7 @@ function showTab(which){
 function buildOwnTable(){
   $('sm-own-tbl').querySelector('tbody').innerHTML = FUNDS.map(f =>
     '<tr><td>' + f.code + '<em>' + f.name + '</em></td>'
-    + '<td class="num">' + pct2(f.fee) + (f.est ? '<em>' + (f.published ? 'publisher estimate' : 'cost scenario') + '</em>' : '') + '</td>'
+    + '<td class="num">' + pct2(f.fee) + (f.est ? '<em>' + 'publisher estimate' + '</em>' : '') + '</td>'
     + '<td><input type="text" id="sm-a-' + f.code + '" value="1,000" inputmode="decimal" aria-label="Amount in ' + f.code + '"></td></tr>'
   ).join('');
 }
@@ -336,7 +338,7 @@ function updateOwn(){
 function routesFor(code){
   const f = FUNDS.find(x => x.code === code);
   const r = [
-    { key:'sgx',  label:f.code + ' on SGX, in S$' + (f.est ? ' (held through iFAST)' : ''), fee:f.fee, sgx:true,  fx:false, spread:SPREAD_DEFAULT.sgx,  srs:true,  us:false, est:f.est, published:f.published },
+    { key:'sgx',  label:f.code + ' on SGX, in S$' + (f.est ? ' (held through iFAST)' : ''), fee:f.fee, sgx:true,  fx:false, spread:SPREAD_DEFAULT.sgx,  srs:true,  us:false, est:f.est },
     { key:'over', label:f.over.label, fee:f.over.fee, sgx:false, fx:true, spread:SPREAD_DEFAULT.over, srs:false, us:false, est:false },
   ];
   (US_ROUTES[code] || []).forEach((u,i) => r.push({ key:'us'+i, ...u }));
@@ -395,7 +397,7 @@ function updateCost(fromUser){
     const estNote = r.us ? ' &middot; US estate tax if held at death <b>' + (r.estate > 0 ? sgd(r.estate) : 'none at this size') + '</b>' : '';
     const detail = r.ut
       ? pct2(r.runPct) + ' a year, no dealing costs &middot; ' + srsNote
-      : pct2(r.runPct) + ' a year' + (r.est ? (r.published ? ' (publisher estimate)' : ' (cost scenario)') : '') + ', plus ' + sgd(2*r.oneOff) + ' to buy and sell'
+      : pct2(r.runPct) + ' a year' + (r.est ? ' (publisher estimate)' : '') + ', plus ' + sgd(2*r.oneOff) + ' to buy and sell'
         + (r.custody > 0 ? ' and ' + sgd(r.custody) + ' custody' : '') + ' &middot; ' + srsNote + estNote;
     return '<div class="sm-bar"><div class="sm-bar-l"><span>' + r.label + '</span><b class="num">' + sgd(r.total)
       + '<i class="sm-tc">over ' + yrsT(N) + '</i></b></div>'
@@ -407,7 +409,7 @@ function updateCost(fromUser){
   let say = 'The SGX line costs <b>' + sgd(sgx.total) + '</b> over ' + yrsT(N) + ' on ' + sgd(A) + ', against <b>' + sgd(over.total)
     + '</b> for the same fund bought overseas with the dealing costs entered: a difference of <b>' + sgd(Math.abs(sgx.total - over.total)) + '</b> '
     + (sgx.total <= over.total ? 'in the SGX line&rsquo;s favour' : 'in the overseas route&rsquo;s favour') + '. ';
-  if (f.est) say += 'The annual fee difference in this comparison is ' + pct2(f.fee - f.over.fee) + ' of the holding. ' + (f.published ? 'This uses iFAST’s published TER estimate, whose breakdown is not supplied; the difference is not a stated Singapore-layer fee. ' : 'This uses our assumed Singapore expenses. ') + 'Actual expenses could differ. ';
+  if (f.est) say += 'The annual fee difference in this comparison is ' + pct2(f.fee - f.over.fee) + ' of the holding. ' + 'This uses iFAST’s published TER figure as an estimate, whose breakdown is not supplied; the difference is not a stated Singapore-layer fee. ' + 'Actual expenses could differ. ';
   if (acct === 'srs') say += 'With SRS money, only SGX-listed lines are available.';
   $('sm-cost-say').innerHTML = say;
   if (fromUser) writeLink();

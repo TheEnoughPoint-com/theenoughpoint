@@ -1,5 +1,5 @@
 """
-Reproduction script for "SGX Just Listed Eight ETFs. How Many New Things Can You Actually Own?"
+Reproduction script for "8 New SGX ETFs: What Are You Really Buying?"
 theenoughpoint.com/sgx-etf-menu-eight-new-etfs
 
 Recomputes every derived figure in the article and the tool's default outputs from the
@@ -53,16 +53,15 @@ HOLDINGS = {
         ("Fubon Financial", 1.66), ("Asia Vital Components", 1.52)]},
 }
 
-# iFAST wrapper: management fee "currently 0.25%" plus other fees that "may each amount to or
-# exceed 0.10%" (prospectus registered 29 Sep 2026). Each feeder's own expense ratio is
-# "not available" until it has operated. Japan/AI below remain cost scenarios.
-# Korea/Taiwan: publisher TER estimates, FSM Global Table 1, data at 29 Sep 2026.
-# https://fsm.global/sg/article/rcms397520 -- no component reconciliation or cap supplied.
-PUBLISHED_TER = {"KOR": 0.67, "TWD": 0.77}
-WRAPPER = 0.25 + 0.10
+# Published pre-launch TER figures, treated as estimates, not caps or audited actuals.
+# FSM Global (iFAST), Table 1 in each article; no component reconciliation supplied.
+# Japan/AI, data at 30 Sep 2026: https://fsm.global/sg/article/rcms397041
+# and https://fsm.global/sg/article/rcms397262 (AI table labels this TER, not estimated TER).
+# Korea/Taiwan, data at 29 Sep 2026: https://fsm.global/sg/article/rcms397520
+PUBLISHED_TER = {"JPY": 0.43, "XBG": 0.63, "KOR": 0.67, "TWD": 0.77}
 for code, f in HOLDINGS.items():
     if f["fee"] is None:
-        f["fee"] = PUBLISHED_TER.get(code, round(WRAPPER + f["underlying_fee"], 2))
+        f["fee"] = PUBLISHED_TER[code]
 
 FIVE = ["Nvidia", "Apple", "Microsoft", "Amazon", "Alphabet"]
 EW_PER_NAME = 0.2   # about 500 names at ~0.2% each: approximate
@@ -150,7 +149,7 @@ for code in sorted(HOLDINGS, key=lambda c: largest(c)[1], reverse=True):
 print("\nC. Annual fund-level charge on S$10,000")
 for code in sorted(HOLDINGS, key=lambda c: HOLDINGS[c]["fee"]):
     f = HOLDINGS[code]
-    est = "  publisher TER estimate, not a cap" if code in PUBLISHED_TER else ("  cost scenario: 0.25% + assumed 0.10% expenses + underlying " + f"{f['underlying_fee']:.2f}%" if "underlying_fee" in f else "")
+    est = "  publisher TER figure treated as estimate, not a cap" if code in PUBLISHED_TER else ""
     print(f"  {code}  {f['fee']:.2f}%  = {sgd(f['fee'] / 100 * 10_000)} a year{est}")
 print("  Typical unit trust (MoneySense TER 1.0% to 2.5%) = S$100 to S$250 a year")
 
@@ -195,7 +194,7 @@ assert abs(five_share("XND") - 31.68) < 0.01 and abs(five_share("XUS") - 30.59) 
 assert abs(five_share("XBG") - 23.89) < 0.01 and abs(five_share("XWR") - 21.74) < 0.01
 assert largest("TWD") == ("TSMC", 30.23) and largest("KOR")[1] == 28.26
 assert HOLDINGS["TWD"]["fee"] == 0.77 and HOLDINGS["KOR"]["fee"] == 0.67
-assert HOLDINGS["XBG"]["fee"] == 0.70 and HOLDINGS["JPY"]["fee"] == 0.44
+assert HOLDINGS["XBG"]["fee"] == 0.63 and HOLDINGS["JPY"]["fee"] == 0.43
 assert abs(SGX_FEES - 0.0436) < 0.0001
 r1 = route_cost(100_000, 10, ROUTES_SP500[0], FX_BANK)[2]
 r2b = route_cost(100_000, 10, ROUTES_SP500[1], FX_BANK)[2]

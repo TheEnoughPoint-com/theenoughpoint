@@ -2,6 +2,7 @@
 title: "SGX Just Listed Eight ETFs. How Many New Things Can You Actually Own?"
 cover: "/img/brand/cover-sgx-etf-menu.svg"
 date: "2026-10-13"
+updated: "2026-10-13"
 category: "invest-better"
 tags:
   - Investing
@@ -14,24 +15,37 @@ authorId: "fi"
 inlineShare: true
 figuresAsOf: "Holdings and fund fees per DWS factsheets of 30 September 2026; iFAST fees and dates per its prospectus registered 29 September 2026; SGX market figures at June 2026; broker and platform fee schedules, and the day-one quotes, read on 13 October 2026"
 takeaways:
-  - "Eight index funds reach SGX this month, four from <strong>13 October</strong> and four from <strong>22 October</strong>. What is new is access: Singapore dollars, SRS money, and Korea and Taiwan on their own for the first time since 2020."
-  - "What is not new is what is inside. Four of the eight hold the same five American companies at <strong>22% to 32%</strong> of the fund."
-  - "On S$100,000 held ten years, the S&P 500 line on SGX costs about <strong>S$2,200</strong> all in. The same fund in London costs S$2,100 to S$3,100; the US-registered funds S$3,500 to S$5,200 before estate tax."
-  - "Only the SGX lines take SRS money. Four of them carry a second fee layer, the iFAST wrapper, which the overseas route avoids after about <strong>three years</strong> at bank currency rates."
+  - "The new listings add <strong>access</strong>: Singapore-dollar trading, SRS money, and separate country funds. They do not all add different companies."
+  - "Across four funds, <strong>22% to 32%</strong> is the same group of American companies. Different labels can repeat what you already own."
+  - "<strong>The fund fee stays the same</strong> on SGX and overseas. Currency conversion, dividend tax and platform charges can matter more."
+  - "The iFAST funds add an estimated <strong>0.35% a year</strong> for the Singapore fund holding the overseas fund. SRS access is part of what that pays for."
 excerpt: |
   Four index funds from Xtrackers began trading on SGX on 13 October 2026, and four more, issued by iFAST, follow on 22 October. What the menu gained, how much of the eight is the same five companies, and what each route to the same fund costs: SGX in Singapore dollars, London in US dollars, a US-registered fund, or a unit trust.
 ---
 
+import SgxMenuDetails from '@src/components/sgxmenu/SgxMenuDetails.astro';
+import SgxOverlap from '@src/components/sgxmenu/SgxOverlap.astro';
 import SgxMenuTool from '@src/components/sgxmenu/SgxMenuTool.astro';
 import AffiliateDisclosureBox from '@src/components/AffiliateDisclosureBox.astro';
 
-**Fewer than eight. Four of the new funds hold the same five American companies, at between a fifth and a third of each fund. What is new is the access: trading in Singapore dollars, SRS money, and the first Korea and Taiwan index funds on SGX since 2020. What is not new is most of what is inside, and the fund itself costs the same whichever exchange you buy it on. The difference is in the dealing, the currency and the wrapper.**
+**Fewer than eight new things. Four funds hold the same five American companies. If you already own a broad US fund, another label may buy you more of what you have.**
 
-**The timetable first.** Four index funds from DWS's Xtrackers range began trading on SGX on Tuesday 13 October. They track the S&P 500, the Nasdaq-100, MSCI World and the S&P 500 Equal Weight. Four more follow on Thursday 22 October, issued by iFAST and each holding one Xtrackers fund: Japan's Nikkei 225, MSCI Korea, MSCI Taiwan, and an artificial-intelligence theme. [The earlier piece](/sgx-irish-etfs-us-estate-tax/) covered what the first four mean for US estate tax. This one is about the menu and the bill.
+**The fund itself costs the same on SGX or overseas.** What changes is the bill for buying and holding it: currency conversion, dealing and any extra fund or platform fee.
+
+**The timetable.** Four Xtrackers funds began trading on Tuesday 13 October 2026: S&P 500, Nasdaq-100, MSCI World and S&P 500 Equal Weight. Four iFAST funds follow on Thursday 22 October: Nikkei 225, MSCI Korea, MSCI Taiwan, and AI & Big Data. Each iFAST fund holds one Xtrackers fund.
+
+[The earlier piece](/sgx-irish-etfs-us-estate-tax/) covers the US estate-tax mechanics. Here, the questions are simpler: what would you own, and what would it cost?
 
 <AffiliateDisclosureBox title="Disclosure" text="This article is not sponsored and carries no affiliate or partner links. The partner-link note in the sidebar is a site-wide statement and applies to no link on this page. Some launch coverage in circulation is sponsored by the funds' distributors; none of it is a source here. Every fund, broker and platform named is a checkable example, not a recommendation." />
 
 ## The menu, before and after
+
+**The useful additions fill gaps.** SGX gains a developed-world index fund, plus separate Japan, Korea and Taiwan index funds. The new US funds trade in Singapore dollars. The China, regional and Singapore ranges do not gain anything this round.
+
+The June 2026 SGX report counted 53 ETFs and leveraged products, including 15 focused on China and 14 on Singapore. Adding this month's listings puts the menu at about 60, subject to any other listings or removals since June. A longer list is not the same as more variety.
+
+<details class="src-details">
+<summary><b>The menu before and after</b>: the full category comparison.</summary>
 
 SGX counted 53 ETFs and leveraged products at the end of June 2026, holding S$20.5 billion, of which retail investors held 42%. Add this month's eight and the list is about 60 lines. Fifteen of the 53 are China-focused and 14 are Singapore-focused. By building block:
 
@@ -49,9 +63,20 @@ SGX counted 53 ETFs and leveraged products at the end of June 2026, holding S$20
 
 In plain English: the menu grew where it was thinnest. The developed world is now one line, and Japan, Korea and Taiwan stand on their own. Where the menu was already longest, it did not grow at all.
 
+</details>
+
 ## What is inside
 
-Nvidia, Apple, Microsoft, Amazon and Alphabet are the five largest holdings of the S&P 500 fund. Here is how much of each new fund those five companies are, and the single biggest company in each:
+**Different fund names can lead back to the same companies.** Nvidia, Apple, Microsoft, Amazon and Alphabet are the S&P 500 fund's five largest holdings. They also appear prominently in the Nasdaq-100, AI and developed-world funds.
+
+<SgxOverlap />
+
+**In plain English: more funds can mean more of the same shares.** These funds also own other companies; the overlap does not make them identical. Equal weight reduces the biggest companies' influence by giving each company roughly the same share of the fund.
+
+The country funds concentrate differently: TSMC is 30.2% of the Taiwan fund, while Samsung Electronics is 32.0% of the Korea fund including its non-voting preference shares. Those are shares of each fund at 30 September 2026, from DWS; a country label does not spread money evenly across its companies.
+
+<details class="src-details">
+<summary><b>Holdings detail</b>: the biggest companies and why the country funds concentrate.</summary>
 
 | Fund | In the same five companies | Biggest company | Ten biggest together |
 |---|---|---|---|
@@ -64,19 +89,44 @@ Nvidia, Apple, Microsoft, Amazon and Alphabet are the five largest holdings of t
 | MSCI Korea (KOR) | 0% | Samsung Electronics 28.3%, 32.0% with its preference shares | 67.3% |
 | MSCI Taiwan (TWD) | 0% | TSMC 30.2% | 61.8% |
 
-<p class="sx-quiet">DWS factsheets, holdings at 30 September 2026. The equal-weight figure is approximate: each of its 500 companies is about 0.2%. Ordered by the first column, not by merit.</p>
+<p class="sx-quiet">DWS factsheets, holdings at 30 September 2026. The equal-weight figure is approximate: each of its 500 companies is about 0.2%. Ordered by the figure shown, not a ranking of merit.</p>
 
-In plain English: buying the S&P 500 fund, the Nasdaq-100 fund and the AI fund is not three decisions about three different things. It is one decision about the same companies, made three times, at three different fees. That is not a flaw in the funds. It is what the indexes are, and the equal-weight fund exists precisely to switch it off.
+TSMC is 54.0% of the full MSCI Taiwan index (MSCI, September 2026). European fund rules cap any one company at 20% of a fund, or 35% in exceptional market conditions. The fund therefore tracks a capped version, MSCI Taiwan 20/35. The Nikkei 225 weights companies by share price rather than size, which is how chip-testing firm Advantest becomes its largest holding.
 
-The country funds concentrate the other way: one company inside each. A Taiwan fund is largely a TSMC fund, and still less TSMC than Taiwan. TSMC is 54.0% of the full MSCI Taiwan index (MSCI, September 2026). European fund rules cap any one company at 20% of a fund, or 35% in exceptional market conditions, so the fund tracks a capped version called MSCI Taiwan 20/35. The Nikkei 225 weights companies by share price rather than size, which is how a chip-testing firm, Advantest, comes to be its largest holding.
+</details>
 
 ## What it costs: the four layers
 
-**The fund's own fee** is the one in the adverts, and it is the same wherever you buy the fund: 0.03% a year for the S&P 500 line in London or on SGX. **Dividend tax** is paid inside the fund and differs only by where the fund is registered: an Irish fund loses 15% of its US dividends, a US-registered fund's distributions to a Singapore holder lose 30%. **Dealing** is what changes with the exchange: your broker's commission, SGX's clearing and access fees (0.0436% with GST, charged on every SGX trade and on no overseas trade), the gap between the buying and selling price, and currency conversion each way on anything not in Singapore dollars. **The wrapper or platform** is the fourth layer: iFAST's four lines charge 0.25% a year plus running costs for holding the Xtrackers fund on your behalf, and a unit trust platform charges 0.35% to 0.60% a year on top of the fund.
+**The fund fee.** The S&P 500 fund charges 0.03% a year whether bought in London or on SGX. A new trading venue does not change that fee.
+
+**Tax on dividends.** An Irish fund loses 15% of its US dividends to tax inside the fund. A US-registered fund's distributions to a Singapore holder lose 30%. These percentages apply to dividends, not the whole investment.
+
+**Buying and selling.** Your broker charges commission. SGX trades also carry clearing and access fees: 0.0436% with GST on each trade. The gap between buy and sell prices adds a cost too. Anything priced outside Singapore dollars may require currency conversion each way.
+
+**Another fund or a platform.** iFAST charges 0.25% a year plus running costs to hold the Xtrackers fund for you. A unit-trust platform can add 0.35% to 0.60% a year on top of its fund's fee. These charges keep running while you hold it.
+
+**In plain English: the advertised fee is only part of the bill.** Some costs come with trading; others repeat every year.
 
 ## Four routes to the S&P 500, on one basis
 
-Bought once, held, sold once. Commission 0.08% with a S$10 minimum on both exchanges. Currency conversion 0.50% each way at a bank-linked broker, or 0.002% with a US$2 minimum at a specialist broker. Spreads 0.10% on the new lines, 0.20% on S27, 0.02% on VOO. Dividend yield 1.04%.
+**The currency-conversion charge can change which exchange costs less.** Below, the same Irish fund costs almost the same on either exchange at specialist conversion rates. Bank-linked conversion makes the overseas route cost more.
+
+| Route | Cost on S$10,000 over ten years |
+|---|---|
+| XUS on SGX, in S$ | S$225 |
+| Same fund in London, in US$ | S$316; S$221 with specialist conversion |
+| S27 on SGX, in US$ (US fund) | S$527; S$432 with specialist conversion |
+| VOO in New York, in US$ (US fund) | S$455; S$360 with specialist conversion |
+| Index unit trust on a platform | S$606 |
+
+<p class="sx-quiet"><b>Estimated total costs, not returns or a ranking.</b> Bought once, held ten years, sold once. Fund fees per DWS (30 September 2026), SSGA and Vanguard; dealing schedules read 13 October 2026. The generic unit-trust example assumes a 0.10% fund fee from a platform's March 2023 figure, plus 0.35% a year for the platform. Full assumptions and the larger holding are below.</p>
+
+**Dividend tax explains much of the US funds' higher totals in this example.** Estate tax is separate and is not included in those totals. The platform charge explains much of the unit-trust bill: it repeats annually on the whole holding. None of these figures measures future performance.
+
+<details class="src-details">
+<summary><b>Cost assumptions and S$100,000 comparison</b>: eligibility, tax and both holding sizes.</summary>
+
+Bought once, held, sold once. Commission 0.08% with a S$10 minimum on both exchanges. Currency conversion 0.50% each way at a bank-linked broker, or 0.002% with a US$2 minimum at a specialist broker. Spreads (the full gap between buying and selling prices) 0.10% on the new lines, 0.20% on S27, 0.02% on VOO. Dividend yield 1.04%. Commission and spreads are illustrative assumptions; the yield is a single secondary-source figure dated 22 September 2026.
 
 | Route | S$10,000, ten years | S$100,000, ten years | SRS | US estate tax |
 |---|---|---|---|---|
@@ -88,19 +138,28 @@ Bought once, held, sold once. Commission 0.08% with a S$10 minimum on both excha
 
 <p class="sx-quiet">Estimates under the stated assumptions, not measured performance. Fund fees per DWS, SSGA and Vanguard; the unit-trust row assumes a 0.10% index fund and a 0.35% platform fee, no sales charge and no dealing costs. The US estate column applies above US$60,000 of US-situated assets held at death; on S$100,000 of S27 it would be about S$6,071. Every figure is reproduced by the script linked below.</p>
 
-Three things stand out. On the Irish fund, SGX and London are within S$100 of each other over ten years if your overseas broker converts currency at specialist rates; the SGX line is about S$900 cheaper on S$100,000 if the conversion runs through a bank-linked broker. The US-registered funds cost two to three times as much, almost all of it dividend tax, before any estate tax. And the index unit trust is the dearest route by a distance, because the platform fee runs every year on the whole holding.
+The 0.10% unit-trust fund fee is a dated platform figure from March 2023, not a verified current expense ratio. These are straight-line estimates with a constant holding and yield. The table and script include the specialist conversion minimum; the interactive uses the percentage entered and does not apply that minimum.
 
-In plain English: the fee you see is the smallest of the four layers. Dividend tax, currency conversion and the platform are where the money goes.
+</details>
 
-## The iFAST lines: wrapper against conversion
+## The iFAST funds: an extra fee for local access
 
-The four feeders cost 0.25% a year plus running costs more than the Xtrackers funds inside them, about S$35 a year on S$10,000. What that buys is a Singapore-dollar line that SRS money can hold, and no currency conversion. At bank conversion rates of 0.50% each way, the overseas route's extra one-off cost is about S$91 on S$10,000, so it becomes the cheaper route after about 2.6 years. At specialist rates the overseas route is cheaper from day one. The reverse holds for SRS money, which cannot reach London or Frankfurt at all.
+**The extra Singapore fund has a recurring cost.** Each iFAST fund holds an overseas Xtrackers fund for you, a structure called a feeder. Its extra fee and running costs are estimated at about S$35 a year on S$10,000. The eventual expense ratios have not yet been published.
+
+At bank conversion rates of 0.50% each way, buying overseas adds about S$91 in one-off costs on S$10,000 under these assumptions. Avoiding the extra annual charge makes that route cheaper after about 2.6 years. At specialist conversion rates it is cheaper from day one. That calculation does not open an overseas route to SRS money: SRS cannot buy these funds in London or Frankfurt.
+
+**The tool separates what you own from what you pay.** “What you own” shows repeated companies across any mix you enter. “What it costs” compares routes to the same market with your amount and dealing costs. The starting mix is an illustration, not a suggested portfolio.
 
 <SgxMenuTool />
 
-## Day one on SGX
+## The buy and sell prices matter too
 
-The spread is paid on the way in and the way out. In the first two hours of 13 October, from delayed quotes:
+**A low annual fee does not guarantee a cheap purchase.** Delayed Yahoo quotes on 13 October 2026 showed gaps from 0.03% on Nasdaq-100 to 1.46% on equal weight. These were different mid-morning times, from one source, not typical trading costs.
+
+The wider gap implies S$73 on a S$10,000 purchase at the quoted price, more than two years of that fund's fee. The table above assumes narrower gaps; the live quote is a separate part of the bill.
+
+<details class="src-details">
+<summary><b>The day-one quote snapshot</b>: prices, times and trading volumes.</summary>
 
 | Line | Time | Buy price | Sell price | Gap | Shares traded |
 |---|---|---|---|---|---|
@@ -111,17 +170,25 @@ The spread is paid on the way in and the way out. In the first two hours of 13 O
 
 <p class="sx-quiet">Yahoo Finance delayed quotes, Singapore time, 13 October 2026. Quotes on a new line change by the minute; these are a snapshot, not a measurement of a typical day.</p>
 
-The two US lines were quoted as tightly as established funds by mid-morning. The World and equal-weight lines were not. A 1.46% gap costs S$73 on a S$10,000 purchase at the quoted price, more than two years of the fund's fee.
+</details>
 
 ## What SGX gives you, and what it does not
 
-<div class="sx-beat"><b>It gives you</b> settlement in Singapore dollars with no conversion. It gives you access with SRS money, which no overseas line offers. It gives you dealing in local hours through a local broker, with the option of holding the shares in your own CDP account. On the iFAST lines it gives you a board lot of one share at an offer price of S$1.</div>
+<div class="sx-access">
+<div class="sx-beat"><b>What it gives you</b><ul><li>Singapore-dollar settlement, without converting your cash.</li><li>Access with SRS money, subject to your operator enabling the fund.</li><li>Local trading hours and a local broker, with the option of your own CDP account.</li><li>On iFAST's funds, one-share purchases at the S$1 offer price.</li></ul></div>
+<div class="sx-beat"><b>What it does not give you</b><ul><li>A lower fee from the underlying fund.</li><li>A guarantee of easy trading at a tight buy/sell gap.</li><li>Protection against moves in the currencies of the assets inside.</li><li>CPF access: none of the eight is on CPF Board's list of six ETFs.</li></ul></div>
+</div>
 
-<div class="sx-beat"><b>It does not give you</b> a cheaper fund. The fund fee is the same on every exchange. It does not give you a deeper market. The overseas lines have traded for years and the SGX lines started this month. It does not give you protection from currency. The funds still own dollar, yen, won and Taiwan-dollar assets. It does not give you CPF access. None of the eight is on CPF Board's list of six ETFs.</div>
+**Paying in Singapore dollars does not remove currency risk.** Your investment still owns assets priced in US dollars, yen, won or Taiwan dollars. The currency on the trading screen and the currencies of the investments are different things.
 
-## They arrive after the run
+SRS and CPF also have different rules beyond the investments they permit. [The CPF-versus-SRS comparison](/cpf-vs-srs-top-up/) covers access to the money; [the estate-tax explainer](/us-estate-tax-singapore-investors/) covers what can happen when holdings pass to family.
+
+<details class="src-details">
+<summary><b>They arrive after the run</b>: what launch research can and cannot tell us.</summary>
 
 The iFAST prospectus gives the underlying funds' one-year returns to 30 June 2026. Korea made +187.5% and Taiwan +102.3%, both in US dollars. The Nikkei 225 made +75.2% in yen and the AI fund +50.2% in US dollars. A 2023 study in the Review of Financial Studies looked at US exchange-traded funds from 1993 to 2019. It found that specialised funds, the ones built around a theme, were launched into attention, and over their first five years lost about 30% against the market after adjusting for risk. That describes theme funds such as the AI line, not whole-country index funds, and it is a tendency across hundreds of launches, not a forecast for any one of them. Nothing here is a view on where any of these markets goes next.
+
+</details>
 
 ## Three questions before buying anything new
 
@@ -129,7 +196,7 @@ The iFAST prospectus gives the underlying funds' one-year returns to 30 June 202
 2. **What does it cost a year on S$10,000, wrapper and platform included, and what is the gap between the buy and sell price today?**
 3. **Which money can reach it: cash, SRS or CPF?**
 
-The menu is longer. The number of different things to own grew by less than eight. One developed-world line, three countries, one theme. The rest is a second helping of companies most index investors already own, now reachable in Singapore dollars and with SRS money. Whether a second helping is what your portfolio lacks is the question only you can answer.
+The longer menu makes more markets reachable with local cash and SRS money. It does not answer the question inside your existing holdings: **am I adding something different, or paying another route to own the same companies?**
 
 ---
 
@@ -212,9 +279,16 @@ For the holder the difference is practical: the DWS lines carry one fee, the iFA
 
 </details>
 
+<SgxMenuDetails />
+
 <style>{`
 .post-content .sx-quiet{font-size:13px;color:var(--color-muted);margin:-6px 0 20px;max-width:none}
 .post-content .sx-beat{border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);padding:14px 16px;margin:0 0 12px;line-height:1.6}
+.post-content .sx-access{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}
+.post-content .sx-access .sx-beat{min-width:0;margin:0}
+.post-content .sx-access ul{padding-left:18px;margin:8px 0 0}
+.post-content .sx-access li{margin:8px 0}
+@media(max-width:640px){.post-content .sx-access{grid-template-columns:1fr}}
 .post-content .sx-beat b{color:var(--color-dark)}
 .post-content .src-details{border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);margin:26px 0 14px;font-size:13px;color:var(--color-muted)}
 .post-content .src-details summary{cursor:pointer;padding:12px 16px;font-size:13.5px;color:var(--color-body);list-style-position:inside}

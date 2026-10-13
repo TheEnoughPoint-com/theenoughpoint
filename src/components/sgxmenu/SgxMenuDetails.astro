@@ -1,0 +1,33 @@
+<!-- Keep the source tables intact; show labelled records on narrow screens. -->
+<script>
+  function labelTables() {
+    document.querySelectorAll<HTMLTableElement>('.post-content .src-details table').forEach(table => {
+      const headings = Array.from(table.querySelectorAll('thead th'), th => th.textContent?.trim() ?? '');
+      table.setAttribute('role', 'table');
+      table.querySelectorAll('thead, tbody').forEach(group => group.setAttribute('role', 'rowgroup'));
+      table.querySelectorAll('tr').forEach(row => row.setAttribute('role', 'row'));
+      table.querySelectorAll('th').forEach(th => th.setAttribute('role', 'columnheader'));
+      table.querySelectorAll('tbody tr').forEach(row => {
+        Array.from(row.children).forEach((cell, index) => {
+          cell.setAttribute('role', 'cell');
+          cell.setAttribute('data-column', headings[index]);
+        });
+      });
+      table.classList.add('sx-labelled-table');
+    });
+  }
+  labelTables();
+  document.addEventListener('astro:page-load', labelTables);
+</script>
+
+<style is:global>
+  @media(max-width:640px){
+    .post-content .src-details .sx-labelled-table{display:block;width:calc(100% - 32px);overflow:visible;border:0}
+    .post-content .sx-labelled-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+    .post-content .sx-labelled-table thead tr,.post-content .sx-labelled-table thead th{display:block;width:1px;height:1px;padding:0;border:0;overflow:hidden}
+    .post-content .sx-labelled-table tbody{display:block}
+    .post-content .sx-labelled-table tbody tr{display:block;margin:0 0 14px;border:1px solid var(--color-border);border-radius:6px}
+    .post-content .sx-labelled-table td{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;width:auto;padding:8px 10px;white-space:normal;text-align:left;overflow-wrap:anywhere;font-size:13px;line-height:1.5}
+    .post-content .sx-labelled-table td::before{content:attr(data-column);font-weight:600;color:var(--color-dark)}
+  }
+</style>

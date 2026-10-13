@@ -37,7 +37,7 @@ const fx = await getSgdPerUsd();
   <section id="sm-own" role="tabpanel" aria-labelledby="sm-tab-own">
     <div class="sm-body">
       <p class="sm-hint">Enter what you hold or plan to hold in each line, in Singapore dollars. Equal
-      amounts are filled in to start, purely to show the overlap. Leave a line at 0 to exclude it.</p>
+      amounts are filled in as a hypothetical example, not a suggested portfolio. Leave a line at 0 to exclude it.</p>
       <div class="sm-tblwrap">
         <table class="sm-tbl" id="sm-own-tbl">
           <thead><tr><th>Line</th><th>Fee a year</th><th>Amount S$</th></tr></thead>
@@ -57,8 +57,8 @@ const fx = await getSgdPerUsd();
     <div class="sm-body">
       <div class="sm-top">
         <label class="sm-f">
-          <span>Exposure</span>
-          <select id="sm-exp" class="sm-sel" aria-label="Exposure">
+          <span>Market or theme</span>
+          <select id="sm-exp" class="sm-sel" aria-label="Market or theme">
             <option value="XUS">S&amp;P 500</option>
             <option value="XWR">MSCI World</option>
             <option value="XND">Nasdaq-100</option>
@@ -95,18 +95,18 @@ const fx = await getSgdPerUsd();
         carry the exchange&rsquo;s clearing and access fees (0.0436% with GST), added automatically.
         Currency conversion is charged each way on any route not in Singapore dollars: about 0.5% at a
         bank-linked broker, 0.002% with a US$2 minimum at a specialist broker. The spread is the full gap
-        between the buying and selling price; half of it is paid each way.</p>
+        between the buying and selling price; half of it is paid each way. This tool applies the conversion percentage only, without a minimum charge; the article table includes the specialist minimum.</p>
         <div class="sm-grid">
           <label class="sm-f"><span>Commission</span><span class="sm-in"><input type="text" id="sm-comm" value="0.08" inputmode="decimal"><i>%</i></span></label>
           <label class="sm-f"><span>Minimum</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cmin" value="10" inputmode="decimal"></span></label>
           <label class="sm-f"><span>Currency conversion, each way</span><span class="sm-in"><input type="text" id="sm-fx" value="0.50" inputmode="decimal"><i>%</i></span></label>
-          <label class="sm-f"><span>Custody on overseas holdings</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cust" value="0" inputmode="decimal"><i>/yr</i></span></label>
+          <label class="sm-f"><span>Yearly account charge overseas</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cust" value="0" inputmode="decimal"><i>/yr</i></span></label>
           <label class="sm-f"><span>Unit trust fund fee</span><span class="sm-in"><input type="text" id="sm-utf" value="0.10" inputmode="decimal"><i>%</i></span></label>
           <label class="sm-f"><span>Platform fee</span><span class="sm-in"><input type="text" id="sm-utp" value="0.35" inputmode="decimal"><i>%</i></span></label>
         </div>
         <div class="sm-tblwrap">
           <table class="sm-tbl" id="sm-spread-tbl">
-            <thead><tr><th>Route</th><th>Spread %</th></tr></thead>
+            <thead><tr><th>Route</th><th>Buy/sell gap %</th></tr></thead>
             <tbody><!-- rows injected per exposure --></tbody>
           </table>
         </div>
@@ -128,7 +128,7 @@ const fx = await getSgdPerUsd();
       funds&rsquo; published top-ten holdings at 30 September 2026 (DWS factsheets); a company outside a
       fund&rsquo;s top ten counts as zero there, so true figures can be slightly higher. The equal-weight
       fund holds about 500 names at roughly 0.2% each, taken as 0.2% for the US names shown. Samsung
-      Electronics includes its preference shares. The blended fee weights each line&rsquo;s annual fund
+      Electronics includes its preference shares. The combined fee weights each line&rsquo;s annual fund
       charge by amount; the iFAST lines&rsquo; charges are estimates from the prospectus fee tables.</p>
       <p><b>What it costs.</b> Running cost a year = fund fee + dividend tax where the routes differ
       (S&amp;P 500 only: 15% of the yield inside an Irish fund; 30% of the yield after fees on a US fund&rsquo;s
@@ -244,13 +244,13 @@ const FUNDS = [
     h:{ 'Nvidia':5.77, 'Apple':5.46, 'Microsoft':3.94, 'Amazon':2.62, 'Alphabet':3.95, 'Broadcom':1.73, 'Meta':1.73, 'Micron':1.31, 'Tesla':1.12 } },
   { code:'EUS', name:'S&P 500 Equal Weight', fee:0.15, est:false, over:{ label:'Same fund in London, in US$', fee:0.15 }, approx:true,
     h:{ 'Nvidia':0.2, 'Apple':0.2, 'Microsoft':0.2, 'Amazon':0.2, 'Alphabet':0.2, 'Meta':0.2, 'Micron':0.2, 'Broadcom':0.2, 'Tesla':0.2, 'AMD':0.2, 'Walmart':0.2, 'Moderna':0.30 } },
-  { code:'XBG', name:'AI & Big Data (iFAST feeder)', fee:0.70, est:true, over:{ label:'Xtrackers AI & Big Data in London, in US$', fee:0.35 },
+  { code:'XBG', name:'AI & Big Data (held through iFAST)', fee:0.70, est:true, over:{ label:'Xtrackers AI & Big Data in London, in US$', fee:0.35 },
     h:{ 'Microsoft':5.75, 'Meta':5.35, 'Apple':4.93, 'Nvidia':4.82, 'AMD':4.41, 'Amazon':4.35, 'Walmart':4.04, 'Alphabet':4.04, 'Samsung Electronics':3.86, 'Micron':3.85 } },
-  { code:'JPY', name:'Nikkei 225 (iFAST feeder)', fee:0.44, est:true, over:{ label:'Xtrackers Nikkei 225 in Frankfurt, in euro', fee:0.09 },
+  { code:'JPY', name:'Nikkei 225 (held through iFAST)', fee:0.44, est:true, over:{ label:'Xtrackers Nikkei 225 in Frankfurt, in euro', fee:0.09 },
     h:{ 'Advantest':12.34, 'Tokyo Electron':8.59, 'Fast Retailing':8.28, 'SoftBank Group':7.62, 'Recruit':2.51, 'Ibiden':2.27, 'TDK':2.25, 'Kioxia':1.90, 'KDDI':1.82, 'Fujikura':1.51 } },
-  { code:'KOR', name:'MSCI Korea (iFAST feeder)', fee:0.80, est:true, over:{ label:'Xtrackers MSCI Korea in London, in US$', fee:0.45 },
+  { code:'KOR', name:'MSCI Korea (held through iFAST)', fee:0.80, est:true, over:{ label:'Xtrackers MSCI Korea in London, in US$', fee:0.45 },
     h:{ 'Samsung Electronics':31.98, 'SK hynix':17.90, 'SK Square':4.30, 'Samsung Electro-Mechanics':3.55, 'KB Financial':2.48, 'Hyundai Motor':2.00, 'Shinhan Financial':1.96, 'Doosan Enerbility':1.56, 'Hana Financial':1.53 } },
-  { code:'TWD', name:'MSCI Taiwan (iFAST feeder)', fee:1.00, est:true, over:{ label:'Xtrackers MSCI Taiwan in London, in US$', fee:0.65 },
+  { code:'TWD', name:'MSCI Taiwan (held through iFAST)', fee:1.00, est:true, over:{ label:'Xtrackers MSCI Taiwan in London, in US$', fee:0.65 },
     h:{ 'TSMC':30.23, 'MediaTek':10.04, 'Delta Electronics':4.90, 'Hon Hai':4.05, 'ASE':3.08, 'UMC':2.29, 'Unimicron':2.11, 'Elite Material':1.91, 'Fubon Financial':1.66, 'Asia Vital Components':1.52 } },
 ];
 const FIVE = ['Nvidia','Apple','Microsoft','Amazon','Alphabet'];
@@ -325,7 +325,7 @@ function updateOwn(){
     + '<div class="sm-track"><div class="sm-fill" style="width:' + Math.max(2, Math.min(100, r.p/max*100)) + '%"></div></div></div>'
   ).join('');
   $('sm-own-say').innerHTML = 'Nvidia, Apple, Microsoft, Amazon and Alphabet together: <b>' + pct1(five/total*100) + '</b> of your total, or <b>' + sgd(five) + '</b>. '
-    + 'Blended fund charge: <b>' + pct2(fee/total*100) + '</b> a year, about <b>' + sgd(fee) + '</b>.'
+    + 'Fund fees across your mix: <b>' + pct2(fee/total*100) + '</b> a year, about <b>' + sgd(fee) + '</b>.'
     + ' Only each fund&rsquo;s published top ten holdings are counted, so the true figures can be slightly higher.'
     + (approxOn ? ' The equal-weight fund&rsquo;s US names are taken at about 0.2% each.' : '');
 }
@@ -334,7 +334,7 @@ function updateOwn(){
 function routesFor(code){
   const f = FUNDS.find(x => x.code === code);
   const r = [
-    { key:'sgx',  label:f.code + ' on SGX, in S$' + (f.est ? ' (iFAST feeder)' : ''), fee:f.fee, sgx:true,  fx:false, spread:SPREAD_DEFAULT.sgx,  srs:true,  us:false, est:f.est },
+    { key:'sgx',  label:f.code + ' on SGX, in S$' + (f.est ? ' (held through iFAST)' : ''), fee:f.fee, sgx:true,  fx:false, spread:SPREAD_DEFAULT.sgx,  srs:true,  us:false, est:f.est },
     { key:'over', label:f.over.label, fee:f.over.fee, sgx:false, fx:true, spread:SPREAD_DEFAULT.over, srs:false, us:false, est:false },
   ];
   (US_ROUTES[code] || []).forEach((u,i) => r.push({ key:'us'+i, ...u }));
@@ -345,7 +345,7 @@ function routesFor(code){
 function buildSpreadTable(code){
   const tb = $('sm-spread-tbl').querySelector('tbody');
   tb.innerHTML = routesFor(code).filter(r => !r.ut).map(r =>
-    '<tr><td>' + r.label + '</td><td><input type="text" class="w-sm" id="sm-sp-' + r.key + '" value="' + r.spread.toFixed(2) + '" inputmode="decimal" aria-label="Spread for ' + r.label + '"></td></tr>'
+    '<tr><td>' + r.label + '</td><td><input type="text" class="w-sm" id="sm-sp-' + r.key + '" value="' + r.spread.toFixed(2) + '" inputmode="decimal" aria-label="Buy/sell gap for ' + r.label + '"></td></tr>'
   ).join('');
   tb.querySelectorAll('input').forEach(el => el.addEventListener('input', () => updateCost(true)));
 }
@@ -405,7 +405,7 @@ function updateCost(fromUser){
   let say = 'The SGX line costs <b>' + sgd(sgx.total) + '</b> over ' + yrsT(N) + ' on ' + sgd(A) + ', against <b>' + sgd(over.total)
     + '</b> for the same fund bought overseas with the dealing costs entered: a difference of <b>' + sgd(Math.abs(sgx.total - over.total)) + '</b> '
     + (sgx.total <= over.total ? 'in the SGX line&rsquo;s favour' : 'in the overseas route&rsquo;s favour') + '. ';
-  if (f.est) say += 'The iFAST wrapper adds ' + pct2(f.fee - f.over.fee) + ' a year; currency conversion and overseas dealing are what it buys you out of. ';
+  if (f.est) say += 'The extra iFAST fund adds an estimated ' + pct2(f.fee - f.over.fee) + ' a year; currency conversion and overseas dealing are what it buys you out of. ';
   if (acct === 'srs') say += 'With SRS money, only SGX-listed lines are available.';
   $('sm-cost-say').innerHTML = say;
   if (fromUser) writeLink();

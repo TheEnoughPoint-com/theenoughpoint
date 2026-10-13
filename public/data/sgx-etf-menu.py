@@ -2,13 +2,13 @@
 Reproduction script for "8 New SGX ETFs: What Are You Really Buying?"
 theenoughpoint.com/sgx-etf-menu-eight-new-etfs
 
-Recomputes every derived figure in the article and the tool's default outputs from the
-stated inputs, then runs self-checks. Standard library only.
+Recomputes holdings, published-fee illustrations and observed quote gaps in the article.
+No projection of all-in ownership costs or route break-even periods is made. Standard library only.
 
     python sgx-etf-menu.py
 
-Estimates under stated assumptions, not measured performance. They leave out tracking
-difference, securities-lending income and the exceptions to the 30% US dividend rate.
+Fee figures are not measures of the full drag on returns; transaction costs, currency
+friction, taxes and other factors can also affect performance.
 """
 
 # ---------------------------------------------------------------------------
@@ -85,45 +85,7 @@ def top10_sum(code):
     return sum(w for _, w in HOLDINGS[code]["top10"])
 
 
-# ---------------------------------------------------------------------------
-# 2. Route costs: buy once, hold N years, sell once. All % of the holding.
-# ---------------------------------------------------------------------------
-SGX_FEES = (0.0325 + 0.0075) * 1.09   # clearing 0.0325% + access 0.0075%, plus 9% GST = 0.0436%
-DIV_YIELD = 1.04                       # S&P 500 trailing yield, multpl.com, 22 Sep 2026 (secondary)
-
-# Illustrative dealing assumptions (the tool's defaults; readers replace them):
-COMM_PCT, COMM_MIN = 0.08, 10.0        # commission 0.08%, minimum S$10, both exchanges
-FX_BANK, FX_SPECIALIST = 0.50, 0.002   # currency conversion each way: bank-linked broker /
-                                       # specialist broker (IBKR 0.20bp, minimum US$2)
-FX_SPEC_MIN_SGD = 2.0 * 1.28           # US$2 minimum at about S$1.28 per US$
-
-# route: (label, fund fee %, dividend tax rate, tax base net of fee?, on SGX?, needs FX?,
-#         spread % (full), SRS?, US estate exposure?)
-ROUTES_SP500 = [
-    ("XUS on SGX, in S$",                 0.03,   0.15, False, True,  False, 0.10, True,  False),
-    ("Same fund in London, in US$",       0.03,   0.15, False, False, True,  0.10, False, False),
-    ("S27 on SGX, in US$ (US fund)",      0.0945, 0.30, True,  True,  True,  0.20, True,  True),
-    ("VOO in New York, in US$ (US fund)", 0.03,   0.30, True,  False, True,  0.02, False, True),
-]
-UT_FUND_FEE, UT_PLATFORM_FEE, UT_WHT = 0.10, 0.35, 0.15   # index unit trust on a platform
-
-
-def route_cost(A, N, r, fx_pct, fx_min=0.0, dy=DIV_YIELD):
-    label, ter, wht, net, sgx, fx, spread, srs, estate = r
-    base = max(0.0, dy - ter) if net else dy
-    running = (ter + wht * base) / 100 * A * N
-    one_way = max(COMM_PCT / 100 * A, COMM_MIN) + (SGX_FEES / 100 * A if sgx else 0) \
-        + spread / 2 / 100 * A + ((max(fx_pct / 100 * A, fx_min)) if fx else 0)
-    return running, 2 * one_way, running + 2 * one_way
-
-
-def unit_trust_cost(A, N, dy=DIV_YIELD):
-    return (UT_FUND_FEE + UT_PLATFORM_FEE + UT_WHT * dy) / 100 * A * N
-
-
-# ---------------------------------------------------------------------------
-# 3. Print
-# ---------------------------------------------------------------------------
+# Published holdings and fees only; no projected route-cost model.
 def pct(x):
     return f"{x:.1f}%"
 
@@ -151,30 +113,6 @@ for code in sorted(HOLDINGS, key=lambda c: HOLDINGS[c]["fee"]):
     f = HOLDINGS[code]
     est = "  publisher TER figure treated as estimate, not a cap" if code in PUBLISHED_TER else ""
     print(f"  {code}  {f['fee']:.2f}%  = {sgd(f['fee'] / 100 * 10_000)} a year{est}")
-print("  Typical unit trust (MoneySense TER 1.0% to 2.5%) = S$100 to S$250 a year")
-
-print("\nD. Four routes to the S&P 500, bought once and held, then sold (illustrative dealing costs)")
-for A in (10_000, 100_000):
-    for N in (10,):
-        print(f"  Holding {sgd(A)} for {N} years:")
-        for r in ROUTES_SP500:
-            run, deal_b, tot_b = route_cost(A, N, r, FX_BANK)
-            run2, deal_s, tot_s = route_cost(A, N, r, FX_SPECIALIST, FX_SPEC_MIN_SGD)
-            fxnote = f" | with specialist FX {sgd(tot_s)}" if r[5] else ""
-            print(f"    {r[0]:<36} running {sgd(run):>9}  dealing {sgd(deal_b):>7}  total {sgd(tot_b):>9}{fxnote}"
-                  f"   SRS {'yes' if r[7] else 'no '}  US estate {'yes' if r[8] else 'no'}")
-        print(f"    {'Index unit trust on a platform':<36} running {sgd(unit_trust_cost(A, N)):>9}  dealing {sgd(0):>7}  total {sgd(unit_trust_cost(A, N)):>9}   SRS depends on platform  US estate no")
-
-print("\nE. iFAST feeder on SGX against the same Xtrackers fund overseas: years until the overseas")
-print("   route is cheaper = extra one-off cost of going overseas / the annual fee difference (conditional on the inputs)")
-for code in ("TWD", "KOR", "XBG", "JPY"):
-    for fx, lbl in ((FX_BANK, "bank FX"), (FX_SPECIALIST, "specialist FX")):
-        A = 10_000
-        extra_oneoff = 2 * max(fx / 100 * A, FX_SPEC_MIN_SGD if fx == FX_SPECIALIST else 0) - 2 * SGX_FEES / 100 * A
-        fee_difference = HOLDINGS[code]["fee"] - HOLDINGS[code]["underlying_fee"]
-        years = extra_oneoff / (fee_difference / 100 * A)
-        timing = f"{years:.1f} years" if years > 0 else "overseas cheaper from day one"
-        print(f"  {code} {lbl:<14} extra one-off {sgd(extra_oneoff):>6} vs fee difference {sgd(fee_difference / 100 * A)}/yr -> {timing}")
 
 print("\nF. Measured quotes on day one, 13 Oct 2026 (Yahoo Finance delayed quotes, SGT)")
 QUOTES = [("XUS", "09:57", 19.56, 19.57, 29_576), ("XND", "10:10", 91.79, 91.82, 2_040),
@@ -201,9 +139,4 @@ assert abs(five_share("XBG") - 23.89) < 0.01 and abs(five_share("XWR") - 21.74) 
 assert largest("TWD") == ("TSMC", 30.23) and largest("KOR")[1] == 28.26
 assert HOLDINGS["TWD"]["fee"] == 0.77 and HOLDINGS["KOR"]["fee"] == 0.67
 assert HOLDINGS["XBG"]["fee"] == 0.63 and HOLDINGS["JPY"]["fee"] == 0.43
-assert abs(SGX_FEES - 0.0436) < 0.0001
-r1 = route_cost(100_000, 10, ROUTES_SP500[0], FX_BANK)[2]
-r2b = route_cost(100_000, 10, ROUTES_SP500[1], FX_BANK)[2]
-r2s = route_cost(100_000, 10, ROUTES_SP500[1], FX_SPECIALIST, FX_SPEC_MIN_SGD)[2]
-assert r2b > r1 > r2s, (r1, r2b, r2s)
 print("\nAll self-checks pass.")

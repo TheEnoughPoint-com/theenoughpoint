@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Eight new ETFs on SGX: four of them hold the same five American companies, at 22% to 32% of each fund">
+  <!-- Cover for the SGX ETF-menu article. Ivory comparison field with a 6px navy top rule;
+       one gold serif figure; four bars drawn to scale against the printed values
+       (31.7%, 30.6%, 23.9%, 21.7%: public/data/sgx-etf-menu.py, DWS factsheets
+       30 September 2026). All bars share one neutral tint: colour is identity, never
+       verdict (VOICE C10). Safe zone: content kept within x 300-900 for the square crop. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F6F4EF"/>
+      <stop offset="100%" stop-color="#E4DCCB"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <rect width="1200" height="6" fill="#10233D"/>
+
+  <text x="600" y="118" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700"
+        letter-spacing="3.5" fill="#10233D" opacity="0.66">EIGHT NEW ETFS ON SGX &#183; WHAT IS INSIDE</text>
+
+  <text x="600" y="250" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="104"
+        letter-spacing="-2" fill="#9C7526">22% &#8211; 32%</text>
+
+  <text x="600" y="302" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="24"
+        fill="#10233D" opacity="0.78">of four of the eight funds is the same five companies</text>
+
+  <!-- bars to scale: 580px = 31.7% -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="0.5" fill="#10233D">
+    <text x="310" y="352" opacity="0.8">Nasdaq-100</text>
+    <text x="890" y="352" text-anchor="end" opacity="0.8">31.7%</text>
+    <rect x="310" y="360" width="580" height="11" rx="5.5" fill="#10233D" opacity="0.72"/>
+
+    <text x="310" y="398" opacity="0.8">S&amp;P 500</text>
+    <text x="890" y="398" text-anchor="end" opacity="0.8">30.6%</text>
+    <rect x="310" y="406" width="560" height="11" rx="5.5" fill="#10233D" opacity="0.72"/>
+
+    <text x="310" y="444" opacity="0.8">AI &amp; Big Data</text>
+    <text x="890" y="444" text-anchor="end" opacity="0.8">23.9%</text>
+    <rect x="310" y="452" width="437" height="11" rx="5.5" fill="#10233D" opacity="0.72"/>
+
+    <text x="310" y="490" opacity="0.8">MSCI World</text>
+    <text x="890" y="490" text-anchor="end" opacity="0.8">21.7%</text>
+    <rect x="310" y="498" width="397" height="11" rx="5.5" fill="#10233D" opacity="0.72"/>
+  </g>
+
+  <text x="600" y="562" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700"
+        letter-spacing="2.6" fill="#9C7526" opacity="0.85">THEENOUGHPOINT.COM</text>
+</svg>

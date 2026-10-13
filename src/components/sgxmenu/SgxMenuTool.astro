@@ -36,11 +36,11 @@ const fx = await getSgdPerUsd();
   <!-- ============ What you own ============ -->
   <section id="sm-own" role="tabpanel" aria-labelledby="sm-tab-own">
     <div class="sm-body">
-      <p class="sm-hint">Enter what you hold or plan to hold in each line, in Singapore dollars. Equal
-      amounts are filled in as a hypothetical example, not a suggested portfolio. Leave a line at 0 to exclude it.</p>
+      <p class="sm-hint">Enter what you hold or plan to hold in each fund, in Singapore dollars. Equal
+      amounts are filled in as a hypothetical example, not a suggested portfolio. Leave a fund at 0 to exclude it. The iFAST fee estimates already include both funds’ expenses.</p>
       <div class="sm-tblwrap">
         <table class="sm-tbl" id="sm-own-tbl">
-          <thead><tr><th>Line</th><th>Fee a year</th><th>Amount S$</th></tr></thead>
+          <thead><tr><th>Fund</th><th>Fee a year</th><th>Amount S$</th></tr></thead>
           <tbody><!-- rows injected, fixed order --></tbody>
         </table>
       </div>
@@ -70,15 +70,15 @@ const fx = await getSgdPerUsd();
           </select>
         </label>
         <label class="sm-f">
-          <span>Holding</span>
+          <span>Amount invested</span>
           <span class="sm-in"><i>S$</i><input type="text" id="sm-amt" value="10,000" inputmode="decimal" class="w-lg"></span>
         </label>
         <label class="sm-f">
-          <span>Held for</span>
+          <span>Years invested</span>
           <span class="sm-in"><input type="text" id="sm-yrs" value="10" inputmode="decimal"><i>yrs</i></span>
         </label>
         <label class="sm-f" id="sm-dy-f">
-          <span>Index dividend yield</span>
+          <span>Index dividends (%)</span>
           <span class="sm-in"><input type="text" id="sm-dy" value="1.04" inputmode="decimal"><i>%</i></span>
         </label>
       </div>
@@ -90,23 +90,23 @@ const fx = await getSgdPerUsd();
       </div>
 
       <details class="sm-more">
-        <summary>Dealing costs: illustrative, change them to your broker&rsquo;s</summary>
-        <p class="sm-hint">One purchase and one sale. Commission applies to both exchanges; SGX trades also
+        <summary>Buying and selling costs: change these to your broker’s charges</summary>
+        <p class="sm-hint">One purchase and one sale. The dividend input is annual index dividends as a percentage of its value. Trading fees apply to both exchanges; SGX trades also
         carry the exchange&rsquo;s clearing and access fees (0.0436% with GST), added automatically.
         Currency conversion is charged each way on any route not in Singapore dollars: about 0.5% at a
         bank-linked broker, 0.002% with a US$2 minimum at a specialist broker. The spread is the full gap
         between the buying and selling price; half of it is paid each way. This tool applies the conversion percentage only, without a minimum charge; the article table includes the specialist minimum.</p>
         <div class="sm-grid">
-          <label class="sm-f"><span>Commission</span><span class="sm-in"><input type="text" id="sm-comm" value="0.08" inputmode="decimal"><i>%</i></span></label>
-          <label class="sm-f"><span>Minimum</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cmin" value="10" inputmode="decimal"></span></label>
+          <label class="sm-f"><span>Trading fee</span><span class="sm-in"><input type="text" id="sm-comm" value="0.08" inputmode="decimal"><i>%</i></span></label>
+          <label class="sm-f"><span>Minimum trading fee</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cmin" value="10" inputmode="decimal"></span></label>
           <label class="sm-f"><span>Currency conversion, each way</span><span class="sm-in"><input type="text" id="sm-fx" value="0.50" inputmode="decimal"><i>%</i></span></label>
           <label class="sm-f"><span>Yearly account charge overseas</span><span class="sm-in"><i>S$</i><input type="text" id="sm-cust" value="0" inputmode="decimal"><i>/yr</i></span></label>
           <label class="sm-f"><span>Unit trust fund fee</span><span class="sm-in"><input type="text" id="sm-utf" value="0.10" inputmode="decimal"><i>%</i></span></label>
-          <label class="sm-f"><span>Platform fee</span><span class="sm-in"><input type="text" id="sm-utp" value="0.35" inputmode="decimal"><i>%</i></span></label>
+          <label class="sm-f"><span>Unit trust platform fee</span><span class="sm-in"><input type="text" id="sm-utp" value="0.35" inputmode="decimal"><i>%</i></span></label>
         </div>
         <div class="sm-tblwrap">
           <table class="sm-tbl" id="sm-spread-tbl">
-            <thead><tr><th>Route</th><th>Buy/sell gap %</th></tr></thead>
+            <thead><tr><th>Way to buy</th><th>Buy/sell gap %</th></tr></thead>
             <tbody><!-- rows injected per exposure --></tbody>
           </table>
         </div>

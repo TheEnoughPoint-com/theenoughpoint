@@ -73,7 +73,7 @@ import ToolBrand from '../ToolBrand.astro';
       (amount in the line &times; the company&rsquo;s weight in that fund) &divide; your total. Weights are the
       funds&rsquo; published top-ten holdings at 30 September 2026 (DWS factsheets); a company outside a
       fund&rsquo;s top ten counts as zero there, so true figures can be slightly higher. The equal-weight
-      fund holds about 500 names at roughly 0.2% each, taken as 0.2% for the US names shown. Samsung
+      fund uses its published top-ten weights, plus a 0.2% estimate for other US companies shown. Samsung
       Electronics includes its preference shares. The combined fee weights each line&rsquo;s annual fund
       charge by amount. All four iFAST funds use FSM Global&rsquo;s published pre-launch TER figures: Japan/AI at 30 September 2026 and Korea/Taiwan at 29 September 2026. These are estimates, not caps.</p>
       <p><b>Fees and access.</b> Annual fee disclosures are shown separately for each legal fund. For iFAST, the published TER is used once; its underlying fund fee is not added again. The ownership view weights disclosed annual fees by your entered amounts. Neither view estimates all-in costs or future returns.</p>
@@ -194,7 +194,7 @@ const FUNDS = [
   { code:'XWR', name:'MSCI World', fee:0.12, est:false, over:{ label:'Same fund in London, in US$', fee:0.12 },
     h:{ 'Nvidia':5.77, 'Apple':5.46, 'Microsoft':3.94, 'Amazon':2.62, 'Alphabet':3.95, 'Broadcom':1.73, 'Meta':1.73, 'Micron':1.31, 'Tesla':1.12 } },
   { code:'EUS', name:'S&P 500 Equal Weight', fee:0.15, est:false, over:{ label:'Same fund in London, in US$', fee:0.15 }, approx:true,
-    h:{ 'Nvidia':0.2, 'Apple':0.2, 'Microsoft':0.2, 'Amazon':0.2, 'Alphabet':0.2, 'Meta':0.2, 'Micron':0.2, 'Broadcom':0.2, 'Tesla':0.2, 'AMD':0.2, 'Walmart':0.2, 'Moderna':0.30 } },
+    h:{ 'Nvidia':0.2, 'Apple':0.2, 'Microsoft':0.2, 'Amazon':0.2, 'Alphabet':0.2, 'Meta':0.2, 'Micron':0.2, 'Broadcom':0.2, 'Tesla':0.2, 'AMD':0.2, 'Walmart':0.2, 'Moderna':0.30, 'Everpure':0.27, 'Illumina':0.27, 'CrowdStrike':0.25, 'Revvity':0.25, 'Agilent':0.25, 'Mettler-Toledo':0.24, 'Datadog':0.24, 'Intuitive Surgical':0.24, 'Palo Alto Networks':0.24 } },
   { code:'XBG', name:'AI & Big Data (held through iFAST)', fee:0.63, est:true, over:{ label:'Xtrackers AI & Big Data in London, in US$', fee:0.35 },
     h:{ 'Microsoft':5.75, 'Meta':5.35, 'Apple':4.93, 'Nvidia':4.82, 'AMD':4.41, 'Amazon':4.35, 'Walmart':4.04, 'Alphabet':4.04, 'Samsung Electronics':3.86, 'Micron':3.85 } },
   { code:'JPY', name:'Nikkei 225 (held through iFAST)', fee:0.43, est:true, over:{ label:'Xtrackers Nikkei 225 in Frankfurt, in euro', fee:0.09 },
@@ -210,7 +210,7 @@ const SOURCES = {
   XWR: { factsheet:'https://etf.dws.com/download/asset/7479ae20-a6b8-4a30-82e5-639d29ab8ea4', phs:'https://eservices.mas.gov.sg/opera/bf09f6f0-0d23-4a94-866c-8ab552287e8c.publishresource' },
   EUS: { factsheet:'https://etf.dws.com/download/asset/11deac23-e08a-4a4d-9a51-329abdf37d51', phs:'https://eservices.mas.gov.sg/opera/f01d6c67-6c30-46f2-9df1-9bda45fafea5.publishresource' },
   XBG: { factsheet:'https://etf.dws.com/download/asset/1c67b6f7-fdfa-4e86-a68d-a477cf5adf09', estimate:'https://fsm.global/sg/article/rcms397262', date:'30 September 2026' },
-  JPY: { factsheet:'https://etf.dws.com/download/asset/3a538262-a319-47fb-b25f-57aaa36b46e9', estimate:'https://fsm.global/sg/article/rcms397041', date:'30 September 2026' },
+  JPY: { factsheet:'https://etf.dws.com/download/asset/de7c8fa3-c06f-43dc-8134-3639183d26fe', estimate:'https://fsm.global/sg/article/rcms397041', date:'30 September 2026' },
   KOR: { factsheet:'https://etf.dws.com/download/asset/64e8f9df-76d8-41d5-afaf-9a7078fa0aa2', estimate:'https://fsm.global/sg/article/rcms397520', date:'29 September 2026' },
   TWD: { factsheet:'https://etf.dws.com/download/asset/a22eddb4-4f88-4228-9355-82c39bf19daa', estimate:'https://fsm.global/sg/article/rcms397520', date:'29 September 2026' },
 };
@@ -263,7 +263,7 @@ function updateOwn(){
   const max = rows.length ? rows[0].p : 1;
   const approxOn = amts[FUNDS.findIndex(f => f.code === 'EUS')] > 0;
 
-  $('sm-own-t').innerHTML = 'Your <b>' + sgd(total) + '</b> across ' + amts.filter(a => a>0).length + ' line' + (amts.filter(a=>a>0).length===1?'':'s') + ': the ten companies you hold most of';
+  $('sm-own-t').innerHTML = 'Your <b>' + sgd(total) + '</b> across ' + amts.filter(a => a>0).length + ' line' + (amts.filter(a=>a>0).length===1?'':'s') + ': largest company exposures in the available holdings';
   $('sm-own-bars').innerHTML = rows.map(r =>
     '<div class="sm-bar"><div class="sm-bar-l"><span>' + r.c + '</span><b class="num">' + pct1(r.p)
     + '<i class="sm-tc">' + sgd(r.v) + '</i></b></div>'
@@ -271,8 +271,8 @@ function updateOwn(){
   ).join('');
   $('sm-own-say').innerHTML = 'Nvidia, Apple, Microsoft, Amazon and Alphabet together: <b>' + pct1(five/total*100) + '</b> of your total, or <b>' + sgd(five) + '</b>. '
     + 'Published annual fund-fee estimate across your mix: <b>' + pct2(fee/total*100) + '</b> a year, about <b>' + sgd(fee) + '</b>.'
-    + ' This excludes other costs and taxes. Only each fund&rsquo;s published top ten holdings are counted, so the true figures can be slightly higher.'
-    + (approxOn ? ' The equal-weight fund&rsquo;s US names are taken at about 0.2% each.' : '');
+    + ' This excludes other costs and taxes. The chart uses published top-ten holdings and the equal-weight estimates described below. It cannot establish your full portfolio ranking.'
+    + (approxOn ? ' For the equal-weight fund, published top-ten weights are used where available; other US names shown are estimated at 0.2% each.' : '');
 }
 
 /* ---------- Disclosed fees and practical access ---------- */

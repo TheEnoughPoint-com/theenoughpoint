@@ -187,6 +187,12 @@ print("\nG. SGX menu count (SGX ETF Market Highlights 1H2026, June 2026)")
 sg, cn, rg = 7 + 7, 13 + 2, 16 + 8
 print(f"  Singapore {sg}, China {cn}, regional and global {rg}, total {sg + cn + rg}; plus eight = {sg + cn + rg + 8}")
 
+print("\nH. Korea fee build-ups (full underlying investment; Singapore expenses remain unknown)")
+for label, management in (("Current Singapore management", 0.25), ("Singapore management ceiling", 0.90)):
+    subtotal = round(management + HOLDINGS["KOR"]["underlying_fee"], 2)
+    print(f"  {label}: {management:.2f}% + 0.45% = {subtotal:.2f}% plus Singapore expenses; {sgd(subtotal / 100 * 10_000)} plus expenses on S$10,000")
+print("  Published estimated total: 0.67%; component reconciliation not supplied; no overall cap established")
+
 # ---------------------------------------------------------------------------
 # 4. Self-checks (the figures quoted in the article)
 # ---------------------------------------------------------------------------

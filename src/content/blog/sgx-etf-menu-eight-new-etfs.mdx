@@ -18,7 +18,7 @@ takeaways:
   - "<strong>More ways to invest, not always more variety.</strong> The new funds bring Singapore-dollar trading, SRS access and more country choices."
   - "Across four funds, <strong>22% to 32%</strong> is the same group of American companies. Different labels can repeat what you already own."
   - "<strong>The fund fee stays the same</strong> on SGX and overseas. Currency conversion, dividend tax and platform charges can matter more."
-  - "The extra iFAST fund costs an estimated <strong>0.35% a year</strong>. This is included in our ETF fee estimates; a unit-trust platform fee is a different charge."
+  - "The extra iFAST fund charges <strong>0.25% a year plus running expenses</strong>. Its total expenses are not yet published. Our cost examples assume an amount for those expenses."
 excerpt: |
   Four index funds from Xtrackers began trading on SGX on 13 October 2026, and four more, issued by iFAST, follow on 22 October. What the menu gained, how much of the eight is the same five companies, and what each route to the same fund costs: SGX in Singapore dollars, London in US dollars, a US-registered fund, or a unit trust.
 ---
@@ -98,7 +98,7 @@ TSMC is 54.0% of the full MSCI Taiwan index (MSCI, September 2026). European fun
 
 ## Where does the money go?
 
-**Fees taken inside the fund.** The Xtrackers S&P 500 fund charges 0.03% a year whether bought in London or on SGX. iFAST ETFs have another layer: 0.25% a year plus running costs to hold a Xtrackers fund. Our estimated ETF fees include both layers. They reduce the investment’s value, rather than arriving as a separate platform bill.
+**Fees taken inside the fund.** The Xtrackers S&P 500 fund charges 0.03% a year whether bought in London or on SGX. iFAST ETFs have another layer: 0.25% a year plus running costs to hold a Xtrackers fund. Our illustrative ETF totals include both layers. They reduce the investment’s value, rather than arriving as a separate platform bill.
 
 **Tax on dividends.** Dividends are cash paid by companies to their shareholders. An Irish fund loses 15% of its US dividends to tax. A US-registered fund’s dividend payments to a Singapore holder lose 30%. These percentages apply to dividends, not your whole investment.
 
@@ -147,9 +147,9 @@ The 0.10% unit-trust fund fee is a dated platform figure from March 2023, not a 
 
 ## The iFAST funds: an extra fee for local access
 
-**The extra iFAST layer costs about S$35 a year on S$10,000.** That is an estimate from its fee schedule; its actual total annual expenses have not yet been published. It is already included in the tool’s ETF fees.
+**The Singapore running expenses are not yet known.** Our example assumes 0.10% a year in total. The prospectus does not confirm that amount: several individual expenses may each reach or exceed 0.10%. Adding the 0.25% management fee gives an illustrative S$35 a year on S$10,000.
 
-At bank conversion rates of 0.50% each way, buying overseas adds about S$91 in one-off costs on S$10,000 under these assumptions. After about 2.6 years, the saving on annual fund fees outweighs that extra cost. At specialist conversion rates it is cheaper from day one. SRS money cannot buy these funds in London or Frankfurt, regardless of the cost difference.
+At bank conversion rates of 0.50% each way, buying overseas adds about S$91 upfront on S$10,000. Under our expense assumption, annual savings recover that extra cost after about 2.6 years. Different expenses change that timing. At specialist conversion rates, overseas is cheaper from day one in this example. SRS cannot buy these funds overseas.
 
 **The tool separates what you own from what you pay.** “What you own” shows repeated companies across any mix you enter. “What it costs” compares ways to buy the same market using your amount and trading costs. The starting mix is an illustration, not a suggested portfolio.
 
@@ -250,7 +250,8 @@ Using iFAST moves the local listing cost, marketing and risk of little trading o
 - **Five-company share** = the sum of the fund's published weights in Nvidia, Apple, Microsoft, Amazon and Alphabet (both share classes added), from each fund's top-ten holdings at 30 September 2026. All five are in the top ten of each of the four US-heavy funds, so the figure is exact for those funds. For the equal-weight fund, which holds about 500 companies at roughly 0.2% each, the figure is five times 0.2%, approximate.
 - **Biggest company** and **ten biggest together** are the issuer's published top-ten figures at the same date, summed.
 - **Route costs** = running cost + one-off costs. Running = (fund fee + dividend tax) × holding × years, where dividend tax is 15% × yield for the Irish fund and 30% × (yield − fee) for the US funds, which distribute net of fees. One-off, paid to buy and again to sell = max(commission × holding, S$10) + SGX clearing and access fees of 0.0436% on SGX routes + half the spread × holding + currency conversion on non-S$ routes (0.50% × holding, or max(0.002% × holding, S$2.56) at specialist rates). Unit trust = (0.10% + 0.35% + 15% × yield) × holding × years.
-- **Wrapper against conversion** = (two conversions at 0.50% less two SGX fee charges) ÷ the wrapper's 0.35% a year: S$91 ÷ S$35 = 2.6 years on S$10,000.
+- **iFAST expense assumption:** 0.10% a year for the combined Singapore running expenses is an illustrative input, not a prospectus total or cap. The prospectus says individual expenses may each reach or exceed 0.10%. The tool and script therefore show scenarios, not confirmed expense ratios. For Korea, 0.80% assumes 0.25% Singapore management + 0.10% Singapore expenses + 0.45% underlying fund expenses. The underlying fund’s up-to-0.45% already includes its up-to-0.25% management fee and 0.20% fixed fee (prospectus, Appendix IV, sections 6C–6D). The fixed fee does not belong to the Singapore layer.
+- **Wrapper against conversion, under that assumption** = (two conversions at 0.50% less two SGX fee charges) ÷ the wrapper's 0.35% a year: S$91 ÷ S$35 = 2.6 years on S$10,000.
 - **Day-one gap** = (buy − sell) ÷ midpoint. S$73 = 1.46% ÷ 2 × S$10,000.
 - **Menu counts**: SGX's categories (Singapore 7 + 7, China 13 + 2, regional and global 16 + 8 = 53), plus eight.
 - Every computed figure is reproduced by [the script behind this piece](/data/sgx-etf-menu.py).

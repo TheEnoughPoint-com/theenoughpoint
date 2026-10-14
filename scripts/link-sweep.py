@@ -53,6 +53,10 @@ HAND_VERIFIED = {
         "intermittent 502s from their edge; loads in a browser (verified 22 Aug 2026)",
     "https://www.lionglobalinvestors.com/en/fund-lionglobal-singapore-physical-gold-etf.html":
         "cookie-wall redirect loop for scripted clients; loads in a browser (verified 22 Aug 2026)",
+    "https://www.bls.gov/news.release/cpi.nr0.htm":
+        "403 to scripted clients; loads in a browser (verified 2 Oct 2026)",
+    "https://www.sec.gov/Archives/edgar/data/884394/000119312526022775/d77353d497.htm":
+        "EDGAR 403s clients without a declared user agent; loads in a browser (verified 2 Oct 2026)",
 }
 
 href_re = re.compile(r'(?:href|src)="([^"]+)"')

@@ -80,7 +80,10 @@ const pct = (v: number) => (v / MAX) * 100;
   margin:26px 0;padding:20px 22px 16px;background:#fff;
   border:1px solid var(--mw-rule);border-radius:12px
 }
-@media (prefers-color-scheme: dark){ .mw{ --mw-min:#8FA9C9; } }
+/* No dark-scheme colour swap. The card sets background:#fff unconditionally,
+   so a dark-mode block that lightens the ink puts pale text on a white card.
+   The #8FA9C9 this replaced drove .mw-val.min to 2.42:1 there — the worst
+   reading on the site. #4A6C91 measures 5.46:1 on white and stays put. */
 .post-content .mw-cap{margin:0 0 14px;padding:0;text-align:left}
 .post-content .mw-cap h4{margin:0 0 3px;font-size:16px;font-weight:700;color:var(--mw-ink);
   font-family:var(--font-body);letter-spacing:0}

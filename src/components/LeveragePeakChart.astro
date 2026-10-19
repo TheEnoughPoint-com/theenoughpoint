@@ -90,9 +90,10 @@ const sign = (v: number) => (v > 0 ? '+' : '') + Math.round(v) + '%';
   margin:26px 0;padding:20px 22px 16px;background:#fff;
   border:1px solid var(--pk-rule);border-radius:12px
 }
-@media (prefers-color-scheme: dark){
-  .pk{ --pk-idx:#2FA87A; --pk-lev:#4E86DD; }
-}
+/* No dark-scheme colour swap. The card sets background:#fff unconditionally,
+   so a dark-mode block that lightens the ink puts pale text on a white card.
+   The pair this replaced measured 3.00:1 and 3.63:1 there. Every colour here
+   is measured against white — #1A8754 4.53:1, #2563EB 5.17:1 — and stays put. */
 .post-content .pk-cap{margin:0 0 12px;padding:0;text-align:left}
 .post-content .pk-cap h4{margin:0 0 3px;font-size:15.5px;font-weight:700;color:var(--pk-ink);
   font-family:var(--font-body);letter-spacing:0}
@@ -113,8 +114,9 @@ const sign = (v: number) => (v > 0 ? '+' : '') + Math.round(v) + '%';
 .pk-drop{stroke-width:1;stroke-dasharray:2 3;opacity:.5}
 .pk-drop.idx{stroke:var(--pk-idx)}
 .pk-drop.lev{stroke:var(--pk-lev)}
+/* The halo is white because the card is white. The navy override that sat here
+   drew a dark ring on that white card in dark mode, not against a dark one. */
 .pk-dot{stroke:#fff;stroke-width:2}
-@media (prefers-color-scheme: dark){ .pk-dot{stroke:#101E31} }
 .pk-dot.idx{fill:var(--pk-idx)}
 .pk-dot.lev{fill:var(--pk-lev)}
 .pk-peak{font-family:var(--font-body);font-size:11px;font-weight:600}

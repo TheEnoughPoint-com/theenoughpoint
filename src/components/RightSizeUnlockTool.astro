@@ -1,0 +1,346 @@
+---
+// Right-size unlock calculator — what actually reaches your bank account when you
+// move from private property to an HDB resale flat, and what the 6-month disposal
+// deadline puts at risk.
+//
+// All duty schedules come from src/utils/sgPropertyDuties.ts, where each rate
+// carries its IRAS/CPF source and verification date. Nothing is hardcoded here.
+import { Font } from 'astro:assets';
+import { BSD_BANDS, SSD_BANDS, ABSD, CPF_OA_RATE } from '@src/utils/sgPropertyDuties';
+
+const rates = { BSD_BANDS, SSD_BANDS, ABSD, CPF_OA_RATE };
+---
+
+<Font cssVariable="--font-mono" />
+
+<div class="rs">
+  <div class="rs-head">
+    <span class="rs-lbl">Your move, priced</span>
+    <span class="rs-lbl accent">Interactive</span>
+  </div>
+
+  <div class="rs-body">
+    <div class="rs-grid">
+      <div class="rs-col">
+        <p class="rs-legend">The home you would sell</p>
+
+        <label class="rs-f">
+          <span>What you think it would sell for</span>
+          <span class="rs-in"><i>S$</i><input type="text" id="rs-sale" value="1,700,000" inputmode="numeric"></span>
+        </label>
+
+        <label class="rs-f">
+          <span>Mortgage still owing</span>
+          <span class="rs-in"><i>S$</i><input type="text" id="rs-loan" value="0" inputmode="numeric"></span>
+        </label>
+
+        <label class="rs-f">
+          <span>CPF you have put into it</span>
+          <span class="rs-in"><i>S$</i><input type="text" id="rs-cpf" value="180,000" inputmode="numeric"></span>
+        </label>
+        <p class="rs-hint">Not sure? It is on your CPF statement, under the property — the total you
+        have withdrawn for this home. A rough figure is fine for now.</p>
+
+        <label class="rs-f">
+          <span>Years you have owned it</span>
+          <span class="rs-in"><input type="text" id="rs-years" value="12" inputmode="numeric" class="narrow"></span>
+        </label>
+        <p class="rs-hint" id="rs-ssd-hint">—</p>
+      </div>
+
+      <div class="rs-col">
+        <p class="rs-legend">The flat you would buy</p>
+
+        <label class="rs-f">
+          <span>Price of the flat</span>
+          <span class="rs-in"><i>S$</i><input type="text" id="rs-flat" value="650,000" inputmode="numeric"></span>
+        </label>
+
+        <label class="rs-f">
+          <span>You are buying as</span>
+          <span class="rs-in">
+            <select id="rs-profile">
+              <option value="sc" selected>Singapore Citizen</option>
+              <option value="spr">Singapore PR</option>
+            </select>
+          </span>
+        </label>
+
+        <label class="rs-f">
+          <span>Agent fees, selling and buying</span>
+          <span class="rs-in"><i>S$</i><input type="text" id="rs-agent" value="34,000" inputmode="numeric"></span>
+        </label>
+
+        <label class="rs-f">
+          <span>Lawyer and valuation fees</span>
+          <span class="rs-in"><i>S$</i><input type="text" id="rs-legal" value="6,000" inputmode="numeric"></span>
+        </label>
+        <p class="rs-hint">Agent and lawyer fees are negotiated, so these two are your own estimates.
+        The stamp duties below are the official rates, worked out for you.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="rs-out">
+    <div class="rs-out-row">
+      <div>
+        <div class="rs-out-l">Reaches your bank account</div>
+        <div class="rs-out-v num" id="rs-cash">—</div>
+      </div>
+      <div style="text-align:right">
+        <div class="rs-out-l">Returns to your CPF</div>
+        <div class="rs-out-v sm num" id="rs-cpf-out">—</div>
+      </div>
+    </div>
+    <div class="rs-out-s" id="rs-say">—</div>
+  </div>
+
+  <div class="rs-risk" id="rs-risk">
+    <div class="rs-risk-n num" id="rs-risk-v">—</div>
+    <div>
+      <h4>At risk if you miss the six-month deadline</h4>
+      <p id="rs-risk-p">—</p>
+    </div>
+  </div>
+
+  <div class="rs-ledger">
+    <div class="rs-ledger-head">
+      <h4>Where the money goes</h4>
+      <span id="rs-ledger-note">—</span>
+    </div>
+    <div class="rs-scroll">
+      <table>
+        <tbody id="rs-rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="rs-notes">
+    <p><b>Two things this calculator cannot check for you.</b></p>
+    <p><b>Whether you need an HDB loan.</b> The waiting rule was only dropped for people paying
+    with cash, CPF or a bank loan. If you need an HDB loan, or you are buying a new subsidised
+    flat, the old 30-month wait still applies to you and none of this changes.</p>
+    <p><b>How old the flat is.</b> You cannot use CPF at all on a flat with under 20 years left on
+    its lease, and to use CPF fully the lease has to last until the youngest buyer turns 95. In
+    between, you get a reduced amount worked out by a formula CPF does not publish — so this tool
+    does not guess at it. Check your flat on CPF's own calculator.</p>
+  </div>
+</div>
+
+<style is:global>
+.rs{
+  --rs-bg:#fff; --rs-bg2:var(--color-surface); --rs-bg3:var(--color-surface-alt);
+  --rs-bd:var(--color-border); --rs-bd2:#D5CDBB;
+  --rs-t1:var(--color-dark); --rs-t2:var(--color-body); --rs-t3:var(--color-muted);
+  --rs-g:var(--color-brand-600); --rs-g2:var(--color-brand-700);
+  --rs-g-bg:rgba(14,90,63,0.07); --rs-g-bg2:rgba(14,90,63,0.16);
+  --rs-r:#c0392b; --rs-r-text:#a93226; --rs-r-bg:rgba(192,57,43,0.07); --rs-r-bd:rgba(192,57,43,0.20);
+  --rs-a-text:#7A5A1D; --rs-a-bg:rgba(200,154,60,0.10); --rs-a-bd:rgba(156,117,38,0.25);
+  --rs-deep:var(--color-navy); --rs-on-deep:#8FA0B5;
+  --rs-mono:var(--font-mono),'SF Mono',Menlo,Consolas,monospace;
+  background:var(--rs-bg);border:1px solid var(--rs-bd);border-radius:12px;
+  box-shadow:0 4px 6px rgba(0,0,0,.05),0 2px 4px rgba(0,0,0,.04);
+  overflow:hidden;margin:26px 0;font-size:16px;line-height:1.6;color:var(--rs-t1)
+}
+.rs .num{font-family:var(--rs-mono);font-variant-numeric:tabular-nums}
+.rs-head{padding:14px 22px;background:var(--rs-bg2);border-bottom:1px solid var(--rs-bd);
+  display:flex;justify-content:space-between;align-items:center;gap:12px}
+.rs-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--rs-t3)}
+.rs-lbl.accent{color:var(--rs-g2)}
+.rs-body{padding:18px 22px 20px}
+.rs-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.rs-col{display:flex;flex-direction:column;gap:11px}
+.post-content .rs-legend{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;
+  color:var(--rs-g2);margin:0 0 3px;padding-bottom:7px;border-bottom:1px solid var(--rs-bd)}
+.rs-f{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0}
+.rs-f > span:first-child{font-size:13.5px;color:var(--rs-t2);line-height:1.35}
+.rs-in{display:inline-flex;align-items:baseline;font-family:var(--rs-mono);font-size:15px;font-weight:600}
+.rs-in i{font-style:normal;color:var(--rs-t3);margin-right:2px}
+.rs-in input{font-family:var(--rs-mono);font-size:15px;font-weight:600;color:var(--rs-t1);
+  background:none;border:none;border-bottom:1px dashed var(--rs-bd2);text-align:right;
+  width:9ch;padding:0 0 1px}
+.rs-in input.narrow{width:4ch}
+.rs-in input:focus{outline:none;border-bottom:1px solid var(--rs-g);color:var(--rs-g2);box-shadow:none}
+.rs-in select{font-family:inherit;font-size:13.5px;font-weight:600;color:var(--rs-t1);
+  background:var(--rs-bg2);border:1px solid var(--rs-bd);border-radius:5px;padding:3px 6px}
+.post-content .rs-hint{font-size:11.5px;color:var(--rs-t3);line-height:1.45;margin:2px 0 0}
+
+.rs-out{background:var(--rs-deep);color:#fff;padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.rs-out-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.rs-out-l{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--rs-on-deep)}
+.rs-out-v{font-family:var(--rs-mono);font-variant-numeric:tabular-nums;font-size:36px;font-weight:600;
+  line-height:1.05;letter-spacing:-1.4px;color:#fff}
+.rs-out-v.sm{font-size:21px;letter-spacing:-.7px}
+.rs-out-s{font-size:14px;line-height:1.55;color:#D8DEE8}
+.rs-out-s b{font-family:var(--rs-mono);font-weight:600;color:#fff}
+
+.rs-risk{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;
+  padding:16px 22px;background:var(--rs-r-bg);border-top:1px solid var(--rs-bd)}
+.rs-risk-n{font-size:26px;font-weight:700;color:var(--rs-r-text);white-space:nowrap;letter-spacing:-.5px}
+.post-content .rs-risk h4{font-size:13.5px;font-weight:700;color:var(--rs-t1);margin:0 0 3px;letter-spacing:0}
+.post-content .rs-risk p{font-size:13px;color:var(--rs-t2);line-height:1.5;margin:0}
+
+.rs-ledger{border-top:1px solid var(--rs-bd)}
+.rs-ledger-head{padding:13px 22px 11px;background:var(--rs-bg2);border-bottom:1px solid var(--rs-bd)}
+.post-content .rs-ledger-head h4{font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--rs-t1);margin:0;font-weight:700}
+.rs-ledger-head span{display:block;margin-top:3px;font-size:12px;color:var(--rs-t3)}
+.rs-scroll{overflow-x:auto}
+.post-content .rs table{width:100%;border-collapse:collapse;margin:0;font-size:14px}
+.post-content .rs td{padding:9px 22px;border-bottom:1px solid var(--rs-bd);background:none;color:var(--rs-t2)}
+.post-content .rs tr:last-child td{border-bottom:none}
+.post-content .rs td:last-child{text-align:right;font-family:var(--rs-mono);
+  font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}
+.post-content .rs tr.sub td{font-size:12.5px;color:var(--rs-t3);padding-top:0;border-bottom:none}
+.post-content .rs tr.total td{background:var(--rs-g-bg);font-weight:600;color:var(--rs-t1)}
+.rs-neg{color:var(--rs-r-text)}
+
+.rs-notes{padding:16px 22px 18px;background:var(--rs-a-bg);border-top:1px solid var(--rs-a-bd)}
+.post-content .rs-notes p{font-size:13px;line-height:1.55;color:var(--rs-t2);margin:0 0 8px}
+.post-content .rs-notes p:last-child{margin-bottom:0}
+.rs-notes b{color:var(--rs-a-text)}
+
+@media(max-width:640px){
+  .rs-grid{grid-template-columns:1fr;gap:20px}
+  .rs-out-v{font-size:30px}
+  .rs-risk{grid-template-columns:1fr;gap:8px}
+  .post-content .rs td{padding-left:16px;padding-right:16px}
+}
+@media(prefers-reduced-motion:reduce){.rs *{transition:none!important}}
+</style>
+
+<script is:inline define:vars={{ rates }}>
+(function(){
+const $ = id => document.getElementById(id);
+/* Sign sits outside the currency mark: −S$1,200, never S$-1,200. */
+const fmt = n => (n < 0 ? '−S$' : 'S$') + Math.round(Math.abs(n)).toLocaleString('en-US');
+const numOf = el => { const n = parseFloat(String(el.value).replace(/[^\d.]/g,'')); return isFinite(n) ? n : 0; };
+
+function bsd(price){
+  if (!(price > 0)) return 0;
+  let duty = 0, lower = 0;
+  for (const b of rates.BSD_BANDS){
+    const upper = b.upTo === null ? Infinity : b.upTo;
+    if (price > lower) duty += (Math.min(price, upper) - lower) * b.rate;
+    lower = upper;
+    if (price <= upper) break;
+  }
+  return Math.floor(duty);
+}
+function ssdRate(years){
+  for (const b of rates.SSD_BANDS){ if (years <= b.heldUpToYears) return b.rate; }
+  return 0;
+}
+function accrued(principal, years){
+  if (!(principal > 0) || !(years > 0)) return 0;
+  return Math.round(principal * (Math.pow(1 + rates.CPF_OA_RATE, years) - 1));
+}
+
+function update(){
+  const sale    = numOf($('rs-sale'));
+  const loan    = numOf($('rs-loan'));
+  const cpfP    = numOf($('rs-cpf'));
+  const years   = numOf($('rs-years'));
+  const flat    = numOf($('rs-flat'));
+  const agent   = numOf($('rs-agent'));
+  const legal   = numOf($('rs-legal'));
+  const profile = $('rs-profile').value === 'spr' ? 'spr' : 'sc';
+
+  // ── selling leg
+  const ssdR  = ssdRate(years);
+  const ssd   = Math.floor(sale * ssdR);
+  const ai    = accrued(cpfP, years);
+  const cpfRefund = cpfP + ai;
+  const proceeds  = sale - loan - ssd - agent - legal;      // before the CPF refund
+  const cpfBack   = Math.max(0, Math.min(cpfRefund, Math.max(0, proceeds)));
+  const cashAfterSale = proceeds - cpfBack;
+
+  // ── buying leg
+  const flatBsd = bsd(flat);
+  const table   = rates.ABSD[profile];
+  const absdNow = Math.floor(flat * table.first);
+  const absdRisk = Math.floor(flat * table.second) - absdNow;
+  const outlay  = flat + flatBsd + absdNow;
+
+  // CPF pays first where it can, cash covers the rest
+  const fromCpf  = Math.min(cpfBack, outlay);
+  const fromCash = outlay - fromCpf;
+  const cashLeft = cashAfterSale - fromCash;
+  const cpfLeft  = cpfBack - fromCpf;
+
+  const totalUnlocked = cashLeft + cpfLeft;
+  const blank = sale <= 0;
+  $('rs-cash').textContent = blank ? '—' : fmt(cashLeft);
+  $('rs-cpf-out').textContent = blank ? '—' : fmt(cpfLeft);
+
+  if (blank){
+    $('rs-say').textContent = 'Enter a sale price to see what the move frees up.';
+  } else if (cashLeft < 0){
+    $('rs-say').innerHTML = 'On these numbers the move does not fund itself — you would need '
+      + '<b>' + fmt(-cashLeft) + '</b> more in cash to complete it'
+      + (cpfLeft > 0 ? ', even though <b>' + fmt(cpfLeft) + '</b> sits unused in your CPF.' : '.');
+  } else if (cpfLeft <= 0){
+    $('rs-say').innerHTML = 'The move frees <b>' + fmt(cashLeft) + '</b>, all of it spendable — '
+      + 'the CPF refund of <b>' + fmt(cpfBack) + '</b> was absorbed in full by the flat and its duties.';
+  } else {
+    $('rs-say').innerHTML = 'The move frees <b>' + fmt(totalUnlocked) + '</b> in total — but only '
+      + '<b>' + fmt(cashLeft) + '</b> of it is money you can spend. The remaining '
+      + '<b>' + fmt(cpfLeft) + '</b> sits inside CPF, where its uses are set by CPF rules, not by you.';
+  }
+
+  // SSD hint
+  $('rs-ssd-hint').innerHTML = ssdR > 0
+    ? '<b style="color:var(--rs-r-text)">Selling this soon costs you ' + (ssdR*100).toFixed(0)
+      + '% in Seller’s Stamp Duty</b> — it applies for the first four years, and the six-month deadline could force the sale inside that window.'
+    : 'Owned more than four years, so no Seller’s Stamp Duty to pay.';
+
+  // risk panel
+  $('rs-risk-v').textContent = fmt(absdRisk);
+  $('rs-risk-p').innerHTML = absdRisk > 0
+    ? 'Because you are buying the flat before selling, the extra stamp duty on owning two homes is '
+      + 'waived from the start — but only if you sell within six months of getting the keys. '
+      + 'Miss that, and you owe this.'
+    : 'Nothing extra is at stake here once your current home is sold.';
+
+  // ledger
+  const rows = [
+    ['What the sale brings in', sale, false],
+    ['Paying off what you still owe', -loan, true],
+    ["Seller’s Stamp Duty" + (ssdR > 0 ? ' — sold within 4 years, at ' + (ssdR*100).toFixed(0) + '%' : ''), -ssd, true],
+    ['Agent fees', -agent, true],
+    ['Lawyer and valuation', -legal, true],
+    ['Back into your CPF — ' + fmt(cpfP) + ' you used, plus ' + fmt(ai) + ' interest', -cpfBack, true],
+    ['Buying the flat', -flat, true],
+    ['Stamp duty on the flat', -flatBsd, true],
+    ['Extra stamp duty due now', -absdNow, true],
+    ['CPF put towards the flat', fromCpf, false],
+  ];
+  $('rs-rows').innerHTML = rows.map(([label, val, neg]) =>
+    '<tr><td>' + label + '</td><td' + (neg && val !== 0 ? ' class="rs-neg"' : '') + '>'
+    + (val < 0 ? '−' + fmt(-val) : fmt(val)) + '</td></tr>'
+  ).join('')
+  + '<tr class="total"><td>Cash in hand at the end</td><td>' + fmt(cashLeft) + '</td></tr>'
+  + '<tr class="total"><td>Left inside CPF</td><td>' + fmt(cpfLeft) + '</td></tr>';
+
+  $('rs-ledger-note').textContent = 'The CPF interest is estimated at '
+    + (rates.CPF_OA_RATE*100).toFixed(1) + '% a year. Your CPF statement has the exact figure — '
+    + 'use that before making any real decision.';
+}
+
+function init(){
+  ['rs-sale','rs-loan','rs-cpf','rs-years','rs-flat','rs-agent','rs-legal'].forEach(id => {
+    const el = $(id);
+    el.addEventListener('input', update);
+    el.addEventListener('blur', () => {
+      const n = numOf(el);
+      el.value = id === 'rs-years' ? String(Math.round(n)) : n.toLocaleString('en-US');
+      update();
+    });
+  });
+  $('rs-profile').addEventListener('change', update);
+  update();
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+})();
+</script>

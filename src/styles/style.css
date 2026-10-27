@@ -631,3 +631,8 @@ h4.text-heading, h5.text-heading, h6.text-heading {
   .post-content .ck li { padding-left: 26px; }
   .post-content .ck li > span { font-size: 13px; }
 }
+/* Keep the supplied prospectus illustration legible in article and card crops. */
+img[src="/img/Published/anthropic-claude-ipo-part-2-cover.jpg"] {
+  object-fit: contain !important;
+  background: #f6f4ef;
+}

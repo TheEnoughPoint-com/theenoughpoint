@@ -19,6 +19,9 @@ const FUNDS = [
   { t: 'KORU', d: '3× Korea',          mult: 0.82, lev: 14.41, idx: 16.72 },
 ];
 const MAX = 7.6;
+// toFixed rounds the binary value, which printed 15.35 as 15.3; Intl rounds the
+// decimal as written, so the table matches the issuer's figure to one place.
+const one = new Intl.NumberFormat('en', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const pos = (v: number) => (v / MAX) * 100;
 ---
 
@@ -58,14 +61,14 @@ const pos = (v: number) => (v / MAX) * 100;
   <div class="sp-scroll">
     <table class="sp-table">
       <thead>
-        <tr><th>Average return per year, 10 years to 30 Jun 2026</th><th>The 3&times; fund</th><th>Its index</th></tr>
+        <tr><th>Average return per year, 10 years to 30 Jun 2026</th><th>The 3&times; fund</th><th>Its index fund</th></tr>
       </thead>
       <tbody>
         {FUNDS.map((f) => (
           <tr>
             <td>{f.t} — {f.d}</td>
-            <td>{f.lev.toFixed(1)}%</td>
-            <td>{f.idx.toFixed(1)}%</td>
+            <td>{one.format(f.lev)}%</td>
+            <td>{one.format(f.idx)}%</td>
           </tr>
         ))}
       </tbody>

@@ -1,0 +1,126 @@
+---
+// The scenario arithmetic, handed to the reader. One formula, at the point where the
+// largest age group (Oct 2027 to Sep 2028) fills the rolling year LTA's quota uses:
+//
+//   A+B certificates a month = 0.9 x ((1 - renew) x 83,984 + other exits - deduction) / 12 + 4
+//
+// 0.9: about 10% of replacement supply goes to the open category. Deduction: the
+// current yearly pace of certificates LTA already released early and now nets off.
+// +4: the current small monthly adjustment. With the article's inputs this returns
+// the three scenario values exactly (asserted in the data script). It computes a
+// supply level, never a price, a verdict or a date, so it does not steer a purchase.
+import './coe.css';
+import ToolBrand from '../ToolBrand.astro';
+import { COE } from './coeData';
+import { fmtN, round100 } from './chart';
+
+const T = COE.tool;
+const A = COE.announced;
+const PK = COE.pastPeaks;
+const monthName = (ym: string) => new Date(Number(ym.slice(0, 4)), Number(ym.slice(5, 7)) - 1, 1)
+  .toLocaleString('en-GB', { month: 'short', year: 'numeric' }); // JS months are 0-indexed: subtract 1
+const cfg = JSON.stringify({ cohort: T.cohortPeak, other: T.otherExits, net: T.netting, adj: T.adj, e: T.eShare,
+  ann: A.monthly, peaks: PK.map((p) => p.value) });
+const rMin = Math.round(T.rMin * 100), rMax = Math.round(T.rMax * 100);
+---
+
+<div class="coe coe-tool" data-card="tool" data-coe-tool data-cfg={cfg}>
+  <div class="coe-head row">
+    <span>
+      <span class="coe-lbl">Try your own renewal assumption</span>
+      <span class="coe-sub">Category A+B certificates a month when the largest age group feeds through, around Nov 2028&ndash;Jan 2029</span>
+    </span>
+    <span class="coe-live card-live">Interactive</span>
+  </div>
+
+  <div class="coe-body">
+    <label class="coe-ctl">
+      <span class="coe-ctl-l">Share of owners who renew at ten <b data-out="r">45%</b></span>
+      <input type="range" min="20" max="70" step="1" value="45" data-in="r" aria-label="Share of owners who renew at ten, per cent" />
+      <span class="coe-ticks" aria-hidden="true"><span>20%</span><span>past range {rMin}&ndash;{rMax}%</span><span>70%</span></span>
+    </label>
+
+    <label class="coe-ctl">
+      <span class="coe-ctl-l">Other cars leaving each year <b data-out="o">{round100(T.otherExits)}</b></span>
+      <input type="range" min="8000" max="34000" step="500" value={Math.round(T.otherExits / 500) * 500} data-in="o" aria-label="Other cars leaving each year" />
+      <span class="coe-ticks" aria-hidden="true"><span>8,000</span><span>past range {round100(T.oMin)}&ndash;{round100(T.oMax)}</span><span>34,000</span></span>
+    </label>
+
+    <label class="coe-chk">
+      <input type="checkbox" checked data-in="g" />
+      <span>Keep deducting certificates LTA already released early ({fmtN(T.netting)} a year at the current pace)</span>
+    </label>
+
+    <div class="coe-res" aria-live="polite">
+      <span class="coe-res-n" data-out="q">{round100(4725)}</span>
+      <span class="coe-res-l">certificates a month, Categories A and B together</span>
+    </div>
+
+    <ul class="coe-cmp">
+      <li><span class="nm">Announced now<br /><em>Nov 2026&ndash;Jan 2027</em></span><span class="tr"><i class="bar ann" data-bar="ann"></i><span class="v">{fmtN(A.monthly)}</span></span></li>
+      <li><span class="nm">Your assumption</span><span class="tr"><i class="bar you" data-bar="you"></i><span class="v" data-out="q2">{round100(4725)}</span></span></li>
+      <li><span class="nm">Peak, {monthName(PK[1].month)}</span><span class="tr"><i class="bar pk" data-bar="p1"></i><span class="v">{fmtN(PK[1].value)}</span></span></li>
+      <li><span class="nm">Peak, {monthName(PK[0].month)}</span><span class="tr"><i class="bar pk" data-bar="p0"></i><span class="v">{fmtN(PK[0].value)}</span></span></li>
+    </ul>
+  </div>
+
+  <div class="coe-notes">
+    <p>Formula: 90% of ((share not renewing &times; 83,984 cars) + other cars leaving &minus; that deduction),
+    divided by 12, plus 4. Defaults reproduce our 45% scenario. Past peaks are three-month averages of
+    certificates offered. This is supply arithmetic under your assumptions, not a forecast of supply or
+    prices. It leaves out any new LTA injections.</p>
+    <ToolBrand />
+  </div>
+</div>
+
+<style is:global>
+.coe-live{flex:none;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--color-brand-700);border:1px solid currentColor;border-radius:999px;padding:3px 9px;line-height:1.2}
+.coe-ctl{display:block;margin:0 0 16px}
+.coe-ctl-l{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;font-weight:600;color:var(--color-dark);margin-bottom:6px}
+.coe-ctl-l b{font-family:var(--font-mono),Menlo,Consolas,monospace;color:#1E62B5}
+.coe-ctl input[type=range]{width:100%;accent-color:#1E62B5;min-height:32px}
+.coe-ticks{display:flex;justify-content:space-between;gap:6px;font-size:11px;color:var(--color-muted)}
+.coe-chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:var(--color-body);margin:0 0 16px;cursor:pointer}
+.coe-chk input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:#1E62B5}
+.coe-res{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:12px 14px;border-radius:8px;
+  background:#EEF3FA;margin:0 0 14px}
+.coe-res-n{font-family:var(--font-mono),Menlo,Consolas,monospace;font-size:30px;font-weight:700;color:#1E62B5;line-height:1}
+.coe-res-l{font-size:13px;color:var(--color-body)}
+.coe-cmp{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.post-content .coe-cmp li{margin:0;padding:0;display:grid;grid-template-columns:minmax(0,8.5em) minmax(0,1fr);align-items:center;column-gap:10px}
+.coe-cmp .nm{font-size:12.5px;font-weight:600;color:var(--color-body);line-height:1.25}
+.coe-cmp .nm em{font-style:normal;font-weight:500;font-size:11px;color:var(--color-muted)}
+.coe-cmp .tr{display:flex;align-items:center;gap:8px;min-width:0}
+.coe-cmp .bar{height:18px;border-radius:3px;flex:none;display:inline-block}
+.coe-cmp .bar.ann{background:#0B1D33}
+.coe-cmp .bar.you{background:#1E62B5}
+.coe-cmp .bar.pk{background:#AAB3BE}
+.coe-cmp .v{font-family:var(--font-mono),Menlo,Consolas,monospace;font-size:12.5px;font-weight:700;color:var(--color-dark);white-space:nowrap}
+</style>
+
+<script is:inline>
+(function () {
+  document.querySelectorAll('[data-coe-tool]').forEach(function (root) {
+    var c = JSON.parse(root.getAttribute('data-cfg'));
+    var r = root.querySelector('[data-in="r"]'), o = root.querySelector('[data-in="o"]'), g = root.querySelector('[data-in="g"]');
+    var MAX = 9000;
+    var fmt = function (v) { return Math.round(v).toLocaleString('en-SG'); };
+    var h100 = function (v) { return (Math.round(v / 100) * 100).toLocaleString('en-SG'); };
+    var setBar = function (k, v) { var b = root.querySelector('[data-bar="' + k + '"]'); if (b) b.style.width = Math.max(0, Math.min(v / MAX, 1)) * 70 + '%'; };
+    function run() {
+      var share = Number(r.value) / 100, other = Number(o.value), net = g.checked ? c.net : 0;
+      var q = (1 - c.e) * ((1 - share) * c.cohort + other - net) / 12 + c.adj;
+      root.querySelector('[data-out="r"]').textContent = r.value + '%';
+      root.querySelector('[data-out="o"]').textContent = fmt(other);
+      root.querySelector('[data-out="q"]').textContent = h100(q);
+      root.querySelector('[data-out="q2"]').textContent = h100(q);
+      setBar('ann', c.ann); setBar('you', q); setBar('p1', c.peaks[1]); setBar('p0', c.peaks[0]);
+    }
+    // Default other-exit value is the 2023-2025 average, so the defaults return the 45% scenario.
+    o.value = String(Math.round(c.other / 500) * 500);
+    [r, o, g].forEach(function (el) { el.addEventListener('input', run); el.addEventListener('change', run); });
+    run();
+  });
+})();
+</script>

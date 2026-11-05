@@ -1,0 +1,56 @@
+---
+// How many cars reach the end of their first ten-year COE in each of the next five
+// twelve-month windows. Plain HTML bars, scaled to one shared maximum. The later two
+// groups are a lighter grey only to separate the two windows the text compares; the
+// colour marks a time window, not a judgement. Counts are LTA's monthly vehicle-age
+// table at 30 September 2026, generated into coeData.ts.
+import './coe.css';
+import ToolBrand from '../ToolBrand.astro';
+import { COE } from './coeData';
+import { fmtN } from './chart';
+
+const C = COE.cohorts;
+const MAX = 90000;
+// The track also holds the printed value, so the longest bar stops at 72% of it.
+const w = (v: number) => `${((v / MAX) * 72).toFixed(1)}%`;
+const first = COE.cohortAvg.first3, next = COE.cohortAvg.next2;
+const drop = Math.round(COE.cohortAvg.drop * 100);
+const label = (s: string) => s.replace(' - ', '–');
+---
+
+<div class="coe" data-card="figure">
+  <div class="coe-head">
+    <span class="coe-lbl">Cars reaching ten, by twelve-month window</span>
+    <span class="coe-sub">Cars on the road at 30 September 2026, counted by when they turn ten</span>
+  </div>
+
+  <div class="coe-body">
+    <div class="coe-group"><span>Next three years</span><span>average <b>{fmtN(first)}</b> a year</span></div>
+    <ul class="coe-bars" role="img"
+        aria-label={`Cars reaching age ten: ${C.map((c) => `${label(c.label)}, ${fmtN(c.cars)}`).join('; ')}. The first three windows average ${fmtN(first)} a year; the next two average ${fmtN(next)}, about ${drop}% fewer.`}>
+      {C.slice(0, 3).map((c) => (
+        <li><span class="nm">{label(c.label)}</span><span class="tr"><i class="bar" style={`width:${w(c.cars)}`}></i><span class="v">{fmtN(c.cars)}</span></span></li>
+      ))}
+    </ul>
+    <div class="coe-group"><span>The two years after</span><span>average <b>{fmtN(next)}</b> a year</span></div>
+    <ul class="coe-bars" aria-hidden="true">
+      {C.slice(3).map((c) => (
+        <li><span class="nm">{label(c.label)}</span><span class="tr"><i class="bar later" style={`width:${w(c.cars)}`}></i><span class="v">{fmtN(c.cars)}</span></span></li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="coe-out">
+    <p><b>About {drop}% fewer cars a year reach ten after September 2029.</b> These cars are where
+    most replacement COEs come from, but not every one becomes a certificate: owners renew, some
+    cars leave early, and LTA adjusts the quota.</p>
+  </div>
+
+  <div class="coe-notes">
+    <p>LTA monthly vehicle-age table at 30 September 2026, cars excluding tax-exempt and off-road
+    vehicles, all COE categories combined. Today&rsquo;s cars carried forward to age ten; cars that
+    leave before then are not removed. The table cannot separate Category A from Category B. This is
+    an age-group count, not a quota or price forecast.</p>
+    <ToolBrand />
+  </div>
+</div>

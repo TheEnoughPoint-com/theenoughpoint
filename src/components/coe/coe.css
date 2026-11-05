@@ -1,0 +1,151 @@
+/* Shared styles for the COE article's figures and tool.
+   House construction (as HikeFan): the SVG carries geometry only, stretched to its
+   box with non-scaling strokes, and every piece of text is HTML positioned by
+   percentages, so no label can scale below the 11px floor on a phone.
+   Colour is identity, never a verdict: Category A navy, Category B amber, the 45%
+   renewal reference a strong blue, the 30% and 60% alternatives grey. */
+.coe{
+  --coe-bd:var(--color-border); --coe-t1:var(--color-dark); --coe-t2:var(--color-body);
+  --coe-mut:var(--color-muted);
+  --coe-a:#0B1D33; --coe-b:#A5661A; --coe-ref:#1E62B5; --coe-alt:#6E7884;
+  --coe-hist:#55606E; --coe-grid:#E6E1D6; --coe-env:rgba(30,98,181,.13);
+  --coe-mono:var(--font-mono),'SF Mono',Menlo,Consolas,monospace;
+  background:#fff;border:1px solid var(--coe-bd);border-radius:12px;
+  box-shadow:0 4px 6px rgba(0,0,0,.05),0 2px 4px rgba(0,0,0,.04);
+  overflow:hidden;margin:26px 0;color:var(--coe-t1)
+}
+.coe-head{padding:14px 20px;background:var(--color-surface);border-bottom:1px solid var(--coe-bd)}
+.coe-head.row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.coe-lbl{display:block;font-size:15px;font-weight:700;letter-spacing:-.1px;color:var(--coe-t1);line-height:1.35}
+.coe-sub{display:block;margin-top:4px;font-size:12px;font-weight:600;line-height:1.45;color:var(--coe-t2)}
+.coe-key{display:flex;flex-wrap:wrap;gap:7px 16px;padding:11px 20px;border-bottom:1px dashed var(--coe-bd)}
+.coe-k{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--coe-t2);line-height:1.3}
+.coe-sw{width:20px;height:3px;border-radius:2px;flex:none;display:inline-block}
+.coe-sw.a{background:var(--coe-a)}
+.coe-sw.b{background:var(--coe-b)}
+.coe-sw.hist{background:var(--coe-hist)}
+.coe-sw.ann{background:var(--coe-a);height:5px}
+.coe-sw.ref{background:var(--coe-ref);height:4px}
+.coe-sw.alt{background:repeating-linear-gradient(90deg,var(--coe-alt) 0 4px,transparent 4px 7px);height:2px}
+.coe-sw.env{background:var(--coe-env);height:12px;border-radius:3px}
+.coe-sw.col{background:#E3EBF6;height:12px;width:12px;border-radius:2px;border:1px solid #C7D6EA}
+.coe-sw.peak{background:repeating-linear-gradient(90deg,#9AA3AD 0 2px,transparent 2px 5px);height:2px}
+.coe-body{padding:16px 20px 10px}
+.coe-panel + .coe-panel{margin-top:18px}
+.coe-ptitle{font-size:13px;font-weight:700;color:var(--coe-t1);margin:0 0 8px 48px;line-height:1.35}
+.coe-ptitle span{font-weight:500;color:var(--coe-t2)}
+.coe-chart{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;column-gap:6px}
+.coe-chart.rlab{grid-template-columns:44px minmax(0,1fr) 62px}
+.coe-ycol{grid-area:1/1;position:relative}
+.coe-ycol span{position:absolute;right:2px;transform:translateY(-50%);font-family:var(--coe-mono);
+  font-size:11px;color:var(--coe-mut);font-variant-numeric:tabular-nums;white-space:nowrap}
+.coe-plot{grid-area:1/2;position:relative;width:100%;aspect-ratio:16/9;min-height:190px;
+  background:linear-gradient(#FBFAF7,#fff);border:1px solid var(--coe-bd);border-radius:8px;overflow:hidden}
+.coe-plot.tall{aspect-ratio:4/3;min-height:260px}
+.coe-plot svg{position:absolute;inset:0;width:100%;height:100%}
+.coe-rcol{grid-area:1/3;position:relative}
+.coe-rcol span{position:absolute;left:6px;transform:translateY(-50%);font-size:11px;font-weight:700;
+  white-space:nowrap;line-height:1.1}
+.coe-x{grid-area:2/2;position:relative;height:18px;margin-top:4px}
+.coe-x span{position:absolute;transform:translateX(-50%);font-family:var(--coe-mono);font-size:11px;color:var(--coe-mut)}
+.coe-tag{position:absolute;font-size:11px;font-weight:600;line-height:1.25;color:var(--coe-t2);
+  background:rgba(255,255,255,.88);padding:1px 5px;border-radius:4px;white-space:nowrap}
+.coe-mark{position:absolute;top:4px;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;
+  background:var(--color-brand-700);color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center}
+.coe-events{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:5px}
+.post-content .coe-events li{margin:0;padding:0 0 0 26px;position:relative;font-size:12.5px;line-height:1.45;color:var(--coe-t2)}
+.coe-events li::before{content:attr(data-n);position:absolute;left:0;top:1px;width:18px;height:18px;border-radius:50%;
+  background:var(--coe-t1);color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center}
+.coe-out{background:var(--color-navy);color:#fff;padding:17px 20px}
+.post-content .coe-out p{font-size:15px;line-height:1.62;color:#D8DEE8;margin:0}
+.coe-out b{font-weight:600;color:#fff}
+.coe-notes{padding:14px 20px 15px;border-top:1px solid var(--coe-bd);background:var(--color-surface)}
+.post-content .coe-notes p{font-size:12px;line-height:1.5;color:var(--coe-mut);margin:0 0 8px}
+.coe-num{font-family:var(--coe-mono);font-variant-numeric:tabular-nums}
+
+/* The article prose styles give every li a bullet; none of these lists wants one. */
+.post-content .coe ul > li::before,.post-content .coe ul > li::marker{content:none;display:none}
+.post-content .coe ul,.post-content .coe ol{list-style:none;margin-left:0;padding-left:0}
+
+/* Age-group bars: plain HTML, so nothing scales. */
+.coe-bars{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.post-content .coe-bars li{margin:0;padding:0;display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);
+  align-items:center;column-gap:10px}
+.coe-bars .nm{font-size:12.5px;font-weight:600;color:var(--coe-t2);line-height:1.25}
+.coe-bars .tr{display:flex;align-items:center;gap:8px;min-width:0}
+.coe-bars .bar{height:22px;border-radius:3px;background:var(--coe-a);flex:none}
+.coe-bars .bar.later{background:#7D8794}
+.coe-bars .v{font-family:var(--coe-mono);font-size:12.5px;font-weight:700;color:var(--coe-t1);white-space:nowrap}
+.coe-group{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin:14px 0 8px;
+  padding-top:10px;border-top:1px dashed var(--coe-bd);font-size:12.5px;color:var(--coe-t2)}
+.coe-group:first-child{margin-top:0;padding-top:0;border-top:0}
+.coe-group b{font-family:var(--coe-mono);color:var(--coe-t1)}
+
+/* Renewal paths diagram */
+.coe-paths{display:grid;gap:10px}
+.coe-start{font-size:13px;font-weight:700;color:var(--coe-t1);padding:10px 12px;border-radius:8px;
+  background:var(--color-surface);border:1px solid var(--coe-bd)}
+.coe-path{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:0;border:1px solid var(--coe-bd);
+  border-radius:8px;overflow:hidden}
+.coe-path > div{padding:10px 12px}
+.coe-path .ch{background:#F6F8FB;border-right:1px solid var(--coe-bd)}
+.coe-path .ch b{display:block;font-size:13.5px;color:var(--coe-t1);line-height:1.3}
+.coe-path .ch span{display:block;margin-top:3px;font-size:12px;color:var(--coe-t2);line-height:1.4}
+.coe-path .nx{font-size:12.5px;line-height:1.45;color:var(--coe-t2)}
+.coe-path .nx b{color:var(--coe-t1)}
+@media (max-width:480px){
+  .coe-path{grid-template-columns:1fr}
+  .coe-path .ch{border-right:0;border-bottom:1px solid var(--coe-bd)}
+}
+
+@media (max-width:420px){
+  .coe-head,.coe-key,.coe-body,.coe-out,.coe-notes{padding-left:14px;padding-right:14px}
+  .coe-chart{grid-template-columns:38px minmax(0,1fr)}
+  .coe-chart.rlab{grid-template-columns:38px minmax(0,1fr) 54px}
+  .coe-ptitle{margin-left:42px}
+  .post-content .coe-bars li{grid-template-columns:minmax(0,8.2em) minmax(0,1fr)}
+}
+
+/* "Show the numbers": the chart's data as a real table, folded under the figure. The
+   site's .post-content table rules supply the cell styling and the phone scroll. */
+.coe-data{border-top:1px solid var(--coe-bd);padding:11px 20px}
+.coe-data summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--color-brand-700);line-height:1.4}
+.coe-data[open] summary{margin-bottom:10px}
+.post-content .coe-data table{margin:0;font-size:13px}
+.post-content .coe-data caption{caption-side:top;text-align:left;font-size:12px;color:var(--coe-mut);padding:0 0 6px}
+.post-content .coe-data th[scope="row"]{background:none;color:var(--coe-t1);text-transform:none;letter-spacing:0;font-size:13px;font-weight:600;border-bottom:1px solid var(--color-light)}
+.post-content .coe-data td{text-align:right;white-space:nowrap}
+.post-content .coe-data td[colspan]{text-align:left}
+@media (max-width:420px){.coe-data{padding:10px 14px}}
+
+/* History chart: two flat panels on one time axis, so a price move and the supply move
+   under it sit within one glance. Desktop ~230px + ~170px; phone floors at 150 + 110. */
+.coe-plot.hp{aspect-ratio:3/1;min-height:150px}
+.coe-plot.hs{aspect-ratio:4/1;min-height:110px}
+.coe-panel + .coe-panel.tight{margin-top:10px}
+/* Direct line labels, coloured as their line, with a halo so gridlines do not cut them. */
+.coe-dl{position:absolute;transform:translateY(-50%);font-size:12px;font-weight:700;line-height:1.1;white-space:nowrap;
+  text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff}
+.coe-dl.a{color:var(--coe-a)}
+.coe-dl.b{color:var(--coe-b)}
+
+/* Range toggle on the scenario chart. */
+.coe-range{display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px 0}
+.coe-range button{font-family:inherit;font-size:12.5px;font-weight:600;line-height:1;padding:7px 12px;border-radius:999px;border:1px solid var(--coe-bd);
+  background:#fff;color:var(--coe-t2);cursor:pointer;min-height:32px}
+.coe-range button[aria-pressed="true"]{background:var(--coe-t1);border-color:var(--coe-t1);color:#fff}
+.coe-range button:focus-visible{outline:2px solid var(--coe-ref);outline-offset:2px}
+@media (max-width:420px){.coe-range{padding:10px 14px 0}}
+
+/* Author display rules beat the hidden attribute; restate it for the range views. */
+.coe-chart[hidden]{display:none}
+
+/* The site's ".post-content ol li::before" (a 22px counter circle set 6px down) outranks
+   ".coe-events li::before" and replaced these markers, putting them below the text line
+   and turning the scenario notes' i/ii into 1/2. Restate at higher specificity: an 18px
+   circle on the first 18px text line, carrying the item's own label, in the colour of the
+   numbered markers on the chart. */
+.post-content .coe .coe-events li{counter-increment:none}
+.post-content .coe .coe-events li::before{content:attr(data-n);display:block;position:absolute;left:0;top:0;
+  width:18px;height:18px;border-radius:50%;background:var(--color-brand-700);color:#fff;
+  font-size:11px;font-weight:700;line-height:18px;text-align:center;font-variant-numeric:normal}

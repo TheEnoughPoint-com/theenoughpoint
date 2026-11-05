@@ -167,7 +167,10 @@ const splitX = PAD_L + 3 * groupW;
 .by-zero{stroke:var(--by-ink);stroke-width:1.5;opacity:.55}
 .by-split{stroke:var(--by-rule);stroke-width:1;stroke-dasharray:4 4}
 .by-side{font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:.9px;fill:var(--by-muted)}
-.by-side.cost{fill:#9C7526}
+/* --color-gold-ink, not the #9C7526 that was here: this is 11px SVG text on
+   the white card, and #9C7526 measures 4.21:1 against it. #8A6520 is 5.30:1.
+   The bar fill below keeps the brighter gold — it is a shape, not text. */
+.by-side.cost{fill:var(--color-gold-ink)}
 .by-ylab{font-family:var(--by-mono);font-size:11px;fill:var(--by-muted);text-anchor:end}
 .by-ylab.zero{font-weight:700;fill:var(--by-ink)}
 .by-bar.sh{fill:var(--by-sh)}
@@ -176,7 +179,7 @@ const splitX = PAD_L + 3 * groupW;
 .by-val{font-family:var(--by-mono);font-size:11px;font-weight:700;text-anchor:middle}
 .by-val.sh{fill:var(--by-sh)}
 .by-val.bd{fill:#5F7288}
-.by-val.gd{fill:#9C7526}
+.by-val.gd{fill:var(--color-gold-ink)}   /* 5.30:1 on white; #9C7526 was 4.21:1 */
 .by-yr{font-family:var(--font-body);font-size:14.5px;font-weight:700;fill:var(--by-ink);text-anchor:middle}
 .by-note{font-family:var(--font-body);font-size:11px;fill:var(--by-muted);text-anchor:middle}
 .by-key{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:10px 0 0;

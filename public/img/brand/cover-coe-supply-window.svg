@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Cars reaching age ten in Singapore: about 79,000 a year from October 2026 to September 2029, then about 48,000 a year">
+  <!-- Cover for the COE buy-now-or-wait piece. House system: navy field, gold figure.
+       The figure is the mechanism itself: five twelve-month age groups as bars, three
+       large then two smaller, so the cover explains the supply window without a term
+       from inside the article. Counts: LTA monthly age table at 30 September 2026.
+       Bar heights are to scale (90,000 = 300 units). Safe zone: square crop x 300-900. -->
+  <defs>
+    <radialGradient id="bgCOE" cx="50%" cy="42%" r="76%">
+      <stop offset="0%" stop-color="#10233D"/>
+      <stop offset="100%" stop-color="#081627"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bgCOE)"/>
+
+  <text x="600" y="78" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18"
+        font-weight="700" letter-spacing="3.5" fill="#F6F4EF" opacity="0.6">SINGAPORE CARS REACHING AGE TEN</text>
+
+  <!-- baseline at y=470; scale 300/90000 -->
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <rect x="345" y="215.4" width="86" height="254.6" rx="4" fill="#C89A3C"/>
+    <rect x="451" y="190.1" width="86" height="279.9" rx="4" fill="#C89A3C"/>
+    <rect x="557" y="213.0" width="86" height="257.0" rx="4" fill="#C89A3C"/>
+    <rect x="663" y="317.7" width="86" height="152.3" rx="4" fill="#C89A3C" opacity="0.45"/>
+    <rect x="769" y="304.5" width="86" height="165.5" rx="4" fill="#C89A3C" opacity="0.45"/>
+    <line x1="330" y1="470" x2="870" y2="470" stroke="#F6F4EF" stroke-width="1.5" opacity="0.5"/>
+    <text x="388" y="500" font-size="16" fill="#F6F4EF" opacity="0.75">2026–27</text>
+    <text x="494" y="500" font-size="16" fill="#F6F4EF" opacity="0.75">2027–28</text>
+    <text x="600" y="500" font-size="16" fill="#F6F4EF" opacity="0.75">2028–29</text>
+    <text x="706" y="500" font-size="16" fill="#F6F4EF" opacity="0.75">2029–30</text>
+    <text x="812" y="500" font-size="16" fill="#F6F4EF" opacity="0.75">2030–31</text>
+    <text x="494" y="160" font-family="Georgia, 'Times New Roman', serif" font-size="46" fill="#F6F4EF">79,000 a year</text>
+    <text x="759" y="270" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#F6F4EF" opacity="0.8">then 48,000</text>
+  </g>
+
+  <text x="600" y="556" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="25"
+        fill="#F6F4EF" opacity="0.86">The supply window for COEs, and what happens after it</text>
+</svg>

@@ -1,0 +1,44 @@
+---
+// The three things an owner can do when a private car's first COE runs out, and
+// when each one puts the car back into the supply pipeline. HTML only. Rules per
+// LTA OneMotoring's COE renewal page (checked 5 November 2026). Ordinary private
+// cars only; the ages shown assume the car was registered new.
+import './coe.css';
+import ToolBrand from '../ToolBrand.astro';
+---
+
+<div class="coe" data-card="figure">
+  <div class="coe-head">
+    <span class="coe-lbl">Three ways out of a ten-year COE</span>
+    <span class="coe-sub">Private car registered new &middot; renewing is a fixed price, not a bid</span>
+  </div>
+
+  <div class="coe-body">
+    <div class="coe-paths" role="list">
+      <div class="coe-start">At about age 10, the first COE expires. The owner chooses:</div>
+      <div class="coe-path" role="listitem">
+        <div class="ch"><b>Let the car go</b><span>Deregister: scrap or export</span></div>
+        <div class="nx">The deregistration feeds <b>new COE supply</b> over the following year. Cars reaching
+        ten now get a PARF rebate of 50% of the ARF they paid.</div>
+      </div>
+      <div class="coe-path" role="listitem">
+        <div class="ch"><b>Renew for 5 years</b><span>Pay 50% of the PQP</span></div>
+        <div class="nx">Allowed <b>once only</b>. At about 15 the car must be deregistered, so it reaches
+        the pipeline five years later.</div>
+      </div>
+      <div class="coe-path" role="listitem">
+        <div class="ch"><b>Renew for 10 years</b><span>Pay 100% of the PQP</span></div>
+        <div class="nx">Can be <b>repeated</b> at about 20, 30 and beyond. Each renewal holds the car out
+        of the pipeline for another ten years.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coe-notes">
+    <p>PQP, the Prevailing Quota Premium, is the average COE price of the previous three months with
+    bidding. A renewed car gets no PARF rebate when it is finally deregistered. Renewing before the expiry month forfeits the unused days.
+    A late renewal is possible up to a month after expiry, with a fee. Source: LTA OneMotoring, COE renewal
+    and PARF rebate pages, checked 5 November 2026. Company cars with a statutory lifespan are excluded.</p>
+    <ToolBrand />
+  </div>
+</div>

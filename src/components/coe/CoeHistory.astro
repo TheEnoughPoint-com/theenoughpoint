@@ -1,0 +1,147 @@
+---
+// Twenty-four years of COE prices above the number of certificates offered, on one
+// time axis. Observed history only: nothing here is projected. Prices are the average
+// of each month's bidding results; supply is Categories A and B combined, as a
+// trailing three-month mean of certificates offered (the month-to-month series is
+// saw-toothed by the twice-monthly exercises). Numbered markers flag dated events;
+// they mark timing only and claim no effect. Data generated into coeData.ts.
+import './coe.css';
+import ToolBrand from '../ToolBrand.astro';
+import { COE } from './coeData';
+import { mi, scales, segments, fmtN, round100 } from './chart';
+
+const H = COE.history;
+const X0 = H[0][0], X1 = H[H.length - 1][0];
+const P = scales(X0, X1, 0, 160000);
+const Q = scales(X0, X1, 0, 9000);
+const ptsA = segments(H.map((h) => [mi(h[0]), h[1]]), P.X, P.Y);
+const ptsB = segments(H.map((h) => [mi(h[0]), h[2]]), P.X, P.Y);
+const ptsQ = segments(H.map((h) => [mi(h[0]), h[4]]), Q.X, Q.Y);
+const PGRID = [0, 50000, 100000, 150000];
+const QGRID = [0, 3000, 6000, 9000];
+const YEARS = [2004, 2008, 2012, 2016, 2020, 2024];
+const EVENTS = [
+  { n: 1, m: '2013-02', text: 'February 2013: MAS caps car loans (amount and tenure).' },
+  { n: 2, m: '2020-05', text: 'April to June 2020: no bidding during the circuit breaker; the lines break.' },
+  { n: 3, m: '2025-09', text: 'September 2025: LTA announces smaller EV tax incentives from 2026, and says it expects a short-term rise in COE prices.' },
+];
+const gap = { a: P.xm('2020-04'), b: P.xm('2020-07') };
+// Event markers sit just above the higher of the two price lines near the event, so each
+// number is read against the line it explains rather than from the top of the frame.
+const nearMax = (m: string) => {
+  const i = H.findIndex((h) => h[0] === m);
+  const win = H.slice(Math.max(0, i - 3), i + 4).flatMap((h) => [h[1], h[2]]).filter((v): v is number => v !== null);
+  return Math.max(...win);
+};
+const markTop = (m: string) => P.Y(nearMax(m));
+// Direct labels. Category B: right-aligned just left of where its line first reaches
+// S$110,000 in the post-2020 rise, in the empty space above the 2017-2021 lows.
+// Category A: right-aligned at the plot's right edge, under its line, which has stayed
+// above S$70,000 since mid-2023. Positions follow the data; re-check them if it moves.
+const bCross = H.find((h) => h[0] >= '2021-01' && (h[2] ?? 0) >= 110000)?.[0] ?? '2022-06';
+const YEAR_GRID = [2004, 2008, 2012, 2016, 2020, 2024];
+const an = COE.annual;
+const recent = H.filter((h) => h[0] >= '2021-01' && h[4] !== null);
+const low = recent.reduce((m, h) => ((h[4] as number) < (m[4] as number) ? h : m), recent[0]);
+const lowYear = low[0].slice(0, 4);
+// Annual averages of the monthly series, for the readable table under the chart. Months
+// with no bidding (April to June 2020) carry no price and are skipped in the price mean.
+// JS months are 0-indexed: subtract 1 from the 1-indexed month in "YYYY-MM".
+const lastMonth = new Date(Number(X1.slice(0, 4)), Number(X1.slice(5, 7)) - 1, 1).toLocaleString('en-GB', { month: 'short' });
+const YEAR_NOTE: Record<string, string> = { '2002': ' (Apr–Dec)', '2020': ' (no bidding Apr–Jun)', [X1.slice(0, 4)]: ` (Jan–${lastMonth})` };
+const mean = (v: (number | null)[]) => { const n = v.filter((x): x is number => x !== null); return n.reduce((s, x) => s + x, 0) / n.length; };
+const ANNUAL = [...new Set(H.map((h) => h[0].slice(0, 4)))].map((y) => {
+  const rows = H.filter((h) => h[0].startsWith(y));
+  return { y, a: mean(rows.map((h) => h[1])), b: mean(rows.map((h) => h[2])), q: mean(rows.map((h) => h[3])) };
+});
+---
+
+<div class="coe" data-card="figure">
+  <div class="coe-head">
+    <span class="coe-lbl">When more certificates were offered, COE prices were usually lower</span>
+    <span class="coe-sub">April 2002 to October 2026 &middot; observed results only, nothing projected</span>
+  </div>
+
+  <div class="coe-key">
+    <span class="coe-k"><i class="coe-sw a"></i>Category A premium (Cat A)</span>
+    <span class="coe-k"><i class="coe-sw b"></i>Category B premium (Cat B)</span>
+    <span class="coe-k"><i class="coe-sw hist"></i>A+B certificates offered</span>
+  </div>
+
+  <div class="coe-body">
+    <div class="coe-panel">
+      <p class="coe-ptitle">Price <span>&middot; S$ per COE, monthly average</span></p>
+      <div class="coe-chart">
+        <div class="coe-ycol" aria-hidden="true">
+          {PGRID.map((g) => (<span style={`top:${P.Y(g)}%`}>{g === 0 ? '0' : `${g / 1000}k`}</span>))}
+        </div>
+        <div class="coe-plot hp" role="img"
+             aria-label={`Monthly average COE premiums from April 2002 to October 2026. Category A rose from about S$${fmtN(an.pA2007)} on average in 2007 to S$${fmtN(an.pA2013)} in 2013, fell back to around S$30,000 by 2019, then climbed to about S$131,000 in October 2026. Category B follows a similar path, usually above Category A.`}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <rect x={gap.a} y="0" width={gap.b - gap.a} height="100" fill="#EEEAE1" />
+            {PGRID.map((g) => (<line x1="0" x2="100" y1={P.Y(g)} y2={P.Y(g)} stroke="#E6E1D6" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {YEAR_GRID.map((y) => (<line x1={P.xm(`${y}-01`)} x2={P.xm(`${y}-01`)} y1="0" y2="100" stroke="#EFEBE3" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {EVENTS.filter((e) => e.n !== 2).map((e) => (<line x1={P.xm(e.m)} x2={P.xm(e.m)} y1={markTop(e.m)} y2="100" stroke="#9AA3AD" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />))}
+            {ptsB.map((s) => (<polyline points={s} fill="none" stroke="#A5661A" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke" />))}
+            {ptsA.map((s) => (<polyline points={s} fill="none" stroke="#0B1D33" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke" />))}
+          </svg>
+          {EVENTS.map((e) => (<span class="coe-mark" style={`left:${P.xm(e.m)}%;top:calc(${markTop(e.n === 2 ? '2020-03' : e.m)}% - 24px)`} aria-hidden="true">{e.n}</span>))}
+          <span class="coe-dl b" style={`right:calc(${100 - P.xm(bCross)}% + 6px);top:${P.Y(110000)}%`} aria-hidden="true">Cat B</span>
+          <span class="coe-dl a" style={`right:6px;top:${P.Y(45000)}%`} aria-hidden="true">Cat A</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="coe-panel tight">
+      <p class="coe-ptitle">Supply <span>&middot; Category A+B certificates a month, 3-month average</span></p>
+      <div class="coe-chart">
+        <div class="coe-ycol" aria-hidden="true">
+          {QGRID.map((g) => (<span style={`top:${Q.Y(g)}%`}>{g === 0 ? '0' : `${g / 1000}k`}</span>))}
+        </div>
+        <div class="coe-plot hs" role="img"
+             aria-label={`Category A and B certificates offered a month, three-month average, April 2002 to October 2026. About ${fmtN(an.q2007)} a month on average in 2007, about ${fmtN(an.q2013)} in 2013, a second peak near ${round100(COE.pastPeaks[1].value)} in mid-2016, a low near ${round100(low[4] as number)} in ${lowYear}, and about ${fmtN(H[H.length - 1][4] ?? 0)} in October 2026.`}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <rect x={gap.a} y="0" width={gap.b - gap.a} height="100" fill="#EEEAE1" />
+            {QGRID.map((g) => (<line x1="0" x2="100" y1={Q.Y(g)} y2={Q.Y(g)} stroke="#E6E1D6" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {YEAR_GRID.map((y) => (<line x1={Q.xm(`${y}-01`)} x2={Q.xm(`${y}-01`)} y1="0" y2="100" stroke="#EFEBE3" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {EVENTS.filter((e) => e.n !== 2).map((e) => (<line x1={Q.xm(e.m)} x2={Q.xm(e.m)} y1="0" y2="100" stroke="#9AA3AD" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />))}
+            {ptsQ.map((s) => (<polyline points={s} fill="none" stroke="#55606E" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />))}
+          </svg>
+        </div>
+        <div class="coe-x" aria-hidden="true">
+          {YEARS.map((y) => (<span style={`left:${Q.xm(`${y}-01`)}%`}>{y}</span>))}
+        </div>
+      </div>
+    </div>
+
+    <ol class="coe-events">
+      {EVENTS.map((e) => (<li data-n={e.n}>{e.text}</li>))}
+    </ol>
+  </div>
+
+  <div class="coe-out">
+    <p><b>In 2007 Categories A and B offered about {round100(an.q2007)} certificates a month, and a
+    Category A COE averaged S${fmtN(an.pA2007)}. By 2013 supply was about {round100(an.q2013)} a month
+    and the average was S${fmtN(an.pA2013)}.</b> Supply was not the only force: loan limits, the
+    2008 crash and policy deadlines moved prices too.</p>
+  </div>
+
+  <details class="coe-data">
+    <summary>Show the numbers: yearly averages</summary>
+    <table>
+      <caption>Average COE premium and Category A+B certificates offered a month, by year</caption>
+      <thead><tr><th scope="col">Year</th><th scope="col">Cat A, S$</th><th scope="col">Cat B, S$</th><th scope="col">A+B a month</th></tr></thead>
+      <tbody>
+        {ANNUAL.map((r) => (<tr><th scope="row">{r.y}{YEAR_NOTE[r.y] ?? ''}</th><td>{fmtN(r.a)}</td><td>{fmtN(r.b)}</td><td>{fmtN(r.q)}</td></tr>))}
+      </tbody>
+    </table>
+  </details>
+
+  <div class="coe-notes">
+    <p>Our computation from LTA bidding results: data.gov.sg for 2010 onwards, LTA archive tables for
+    2002 to 2009. Monthly price is the average of that month&rsquo;s exercises. Category definitions
+    changed over the period; older Category A results also covered taxis. Event markers show timing
+    only and do not measure an effect.</p>
+    <ToolBrand />
+  </div>
+</div>

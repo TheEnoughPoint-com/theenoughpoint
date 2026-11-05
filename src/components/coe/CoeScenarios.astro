@@ -1,0 +1,167 @@
+---
+// What COE supply could look like as the large age groups pass through. Three kinds of
+// line, kept visually apart on purpose:
+//   observed history (dark, to October 2026), LTA's announced quota for
+//   November 2026 to January 2027 (a short navy step), and modelled scenarios from
+//   February 2027 (steps, one per quota quarter).
+// Two views of the same data: the full record from April 2002 (default, so the 2005 and
+// 2016 peaks are seen on the line itself) and a closer view from January 2021. A button
+// pair switches between them; both are rendered at build time, the script only toggles
+// which one is shown, so the chart works with scripts off (full view).
+// Scenarios: 30%, 45% and 60% of cars reaching ten assumed to renew, everything else
+// held at the same recent inputs. 45% is drawn strong blue as the historical-median
+// reference, NOT as the most likely outcome; 30% and 60% are grey. The pale band
+// crosses wider historical inputs and is neither a probability range nor a ceiling.
+// No prices are projected. Data generated into coeData.ts from the frozen model output;
+// the steady-state peak values are asserted there.
+import './coe.css';
+import ToolBrand from '../ToolBrand.astro';
+import { COE } from './coeData';
+import { mi, scales, segments, steps, fmtN, round100 } from './chart';
+
+const X1 = '2032-02';
+const A = COE.announced;
+const SC = COE.scenarios;
+const PK = COE.scenarioPeak;
+const last = SC[SC.length - 1];
+const PEAKS = COE.pastPeaks;
+const GRID = [0, 2000, 4000, 6000, 8000];
+const monthName = (ym: string) => new Date(Number(ym.slice(0, 4)), Number(ym.slice(5, 7)) - 1, 1)
+  .toLocaleString('en-GB', { month: 'short', year: 'numeric' }); // JS months are 0-indexed: subtract 1
+// "Feb–Apr 2027", or "Nov 2027–Jan 2028" when a quarter crosses the year.
+const qLabel = (a: string, b: string) => a.slice(0, 4) === b.slice(0, 4)
+  ? `${monthName(a).split(' ')[0]}–${monthName(b)}` : `${monthName(a)}–${monthName(b)}`;
+
+function view(x0: string, years: number[]) {
+  const S = scales(x0, X1, 0, 9000);
+  const hist = COE.history.filter((h) => h[0] >= x0);
+  const line = (k: 'r30' | 'r45' | 'r60') => steps(SC.map((r) => ({ start: r.start, end: r.end, v: r[k] })), S.X, S.Y);
+  const envTop = steps(SC.map((r) => ({ start: r.start, end: r.end, v: r.hi })), S.X, S.Y);
+  // The band's lower edge runs right to left so the polygon closes cleanly.
+  const botPts = [...SC].reverse().map((r) => `${S.X(mi(r.end) + 1).toFixed(3)},${S.Y(r.lo).toFixed(3)} ${S.X(mi(r.start)).toFixed(3)},${S.Y(r.lo).toFixed(3)}`).join(' ');
+  return {
+    S, years,
+    histPts: segments(hist.map((h) => [mi(h[0]), h[4]]), S.X, S.Y),
+    annPts: steps([{ start: A.start, end: A.end, v: A.monthly }], S.X, S.Y),
+    r30: line('r30'), r45: line('r45'), r60: line('r60'),
+    envPoly: `${envTop} ${botPts}`,
+    pkA: S.xm('2028-11'), pkB: S.X(mi('2029-01') + 1),
+    start: S.xm('2026-11'),
+  };
+}
+const FULL = view(COE.history[0][0], [2005, 2010, 2015, 2020, 2025, 2030]);
+const NEAR = view('2021-01', [2022, 2024, 2026, 2028, 2030]);
+const nowV = COE.history[COE.history.length - 1][4] ?? 0;
+const lowRow = COE.history.filter((h) => h[4] !== null).reduce((m, h) => ((h[4] as number) < (m[4] as number) ? h : m));
+const tail = `LTA's announced quota for November 2026 to January 2027 is about ${fmtN(A.monthly)} a month. In the scenarios, supply in November 2028 to January 2029, when the largest age group feeds through, is about ${round100(PK.r30)} a month if 30% of owners renew, ${round100(PK.r45)} if 45% renew and ${round100(PK.r60)} if 60% renew, then falls to between ${round100(last.r60)} and ${round100(last.r30)} by late 2031. Wider assumptions reach about ${round100(PK.envMax)}.`;
+const VIEWS = [
+  { key: 'full', label: 'Since 2002', v: FULL,
+    aria: `Category A and B certificates a month, April 2002 to January 2032. Offered supply peaked near ${round100(PEAKS[0].value)} in ${monthName(PEAKS[0].month)}, fell to about ${round100(lowRow[4] as number)} in ${monthName(lowRow[0])}, peaked again near ${round100(PEAKS[1].value)} in ${monthName(PEAKS[1].month)}, and was about ${fmtN(nowV)} in October 2026. ${tail}` },
+  { key: 'near', label: 'Since 2021', v: NEAR,
+    aria: `Category A and B certificates a month, January 2021 to January 2032. Offered supply was about ${fmtN(nowV)} in October 2026. ${tail} Past peaks were about ${round100(PEAKS[1].value)} in ${monthName(PEAKS[1].month)} and ${round100(PEAKS[0].value)} in ${monthName(PEAKS[0].month)}.` },
+];
+---
+
+<div class="coe" data-card="figure" data-coe-range>
+  <div class="coe-head">
+    <span class="coe-lbl">How many COEs could the large age groups release?</span>
+    <span class="coe-sub">Category A+B certificates a month &middot; history to October 2026, announced quota to January 2027, scenarios after</span>
+  </div>
+
+  <div class="coe-key">
+    <span class="coe-k"><i class="coe-sw hist"></i>Offered so far (3-month average)</span>
+    <span class="coe-k"><i class="coe-sw ann"></i>Announced, Nov 2026&ndash;Jan 2027</span>
+    <span class="coe-k"><i class="coe-sw ref"></i>45% of owners renew (reference)</span>
+    <span class="coe-k"><i class="coe-sw alt"></i>30% or 60% renew</span>
+    <span class="coe-k"><i class="coe-sw env"></i>Wider assumptions</span>
+    <span class="coe-k"><i class="coe-sw peak"></i>Past peaks</span>
+    <span class="coe-k"><i class="coe-sw col"></i>Quarter the largest group feeds through</span>
+  </div>
+
+  <div class="coe-range" role="group" aria-label="Period shown">
+    {VIEWS.map((w, i) => (<button type="button" data-range={w.key} aria-pressed={i === 0 ? 'true' : 'false'}>{w.label}</button>))}
+  </div>
+
+  <div class="coe-body">
+    {VIEWS.map(({ key, v, aria }, i) => (
+      <div class="coe-chart rlab" data-view={key} hidden={i !== 0}>
+        <div class="coe-ycol" aria-hidden="true">
+          {GRID.map((g) => (<span style={`top:${v.S.Y(g)}%`}>{g === 0 ? '0' : `${g / 1000}k`}</span>))}
+        </div>
+        <div class="coe-plot tall" role="img" aria-label={aria}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <rect x={v.start} y="0" width={100 - v.start} height="100" fill="#F4F6F9" />
+            <rect x={v.pkA} y="0" width={Math.max(v.pkB - v.pkA, 0.6)} height="100" fill="#E3EBF6" />
+            {GRID.map((g) => (<line x1="0" x2="100" y1={v.S.Y(g)} y2={v.S.Y(g)} stroke="#E6E1D6" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {PEAKS.map((p) => (<line x1="0" x2="100" y1={v.S.Y(p.value)} y2={v.S.Y(p.value)} stroke="#9AA3AD" stroke-width="1.2" stroke-dasharray="2 4" vector-effect="non-scaling-stroke" />))}
+            <polygon points={v.envPoly} fill="rgba(30,98,181,.13)" />
+            <polyline points={v.r30} fill="none" stroke="#6E7884" stroke-width="1.6" stroke-dasharray="5 4" vector-effect="non-scaling-stroke" />
+            <polyline points={v.r60} fill="none" stroke="#6E7884" stroke-width="1.6" stroke-dasharray="5 4" vector-effect="non-scaling-stroke" />
+            <polyline points={v.r45} fill="none" stroke="#1E62B5" stroke-width="3.2" vector-effect="non-scaling-stroke" />
+            {v.histPts.map((s) => (<polyline points={s} fill="none" stroke="#55606E" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />))}
+            <polyline points={v.annPts} fill="none" stroke="#0B1D33" stroke-width="4" vector-effect="non-scaling-stroke" />
+          </svg>
+          {PEAKS.map((p) => (
+            <span class="coe-tag" style={`right:4px;top:calc(${v.S.Y(p.value)}% - 19px)`}>{p.month.slice(0, 4)} peak {round100(p.value)}</span>
+          ))}
+          <span class="coe-tag" style="right:4px;bottom:4px">Scenarios from 2027</span>
+        </div>
+        <div class="coe-rcol" aria-hidden="true">
+          <span style={`top:${v.S.Y(last.r30)}%;color:#5B6470`}>30%</span>
+          <span style={`top:${v.S.Y(last.r45)}%;color:#1E62B5`}>45%</span>
+          <span style={`top:${v.S.Y(last.r60)}%;color:#5B6470`}>60%</span>
+        </div>
+        <div class="coe-x" aria-hidden="true">
+          {v.years.map((y) => (<span style={`left:${v.S.xm(`${y}-01`)}%`}>{y}</span>))}
+        </div>
+      </div>
+    ))}
+
+    <ol class="coe-events">
+      <li data-n="i">In November 2028 to January 2029, when the largest age group feeds through, the scenarios give about <b class="coe-num">{round100(PK.r30)}</b>, <b class="coe-num">{round100(PK.r45)}</b> and <b class="coe-num">{round100(PK.r60)}</b> certificates a month if 30%, 45% or 60% of owners renew.</li>
+      <li data-n="ii">Wider historical assumptions reach about <b class="coe-num">{round100(PK.envMax)}</b>. Higher levels are still possible if more older cars leave or LTA releases extra supply.</li>
+    </ol>
+  </div>
+
+  <div class="coe-out">
+    <p><b>Until late 2029 the paths run from a little below today&rsquo;s supply to about a third
+    above it, depending on how many owners renew. All of them fall in 2030 as the smaller age groups
+    arrive.</b> The blue line is a reference, not a forecast: 45% is close to the past median, but
+    2025 was nearer 31%.</p>
+  </div>
+
+  <details class="coe-data">
+    <summary>Show the numbers: every quota quarter</summary>
+    <table>
+      <caption>Category A+B certificates a month, by quota quarter and share of owners who renew, rounded to the nearest 100</caption>
+      <thead><tr><th scope="col">Quarter</th><th scope="col">30%</th><th scope="col">45%</th><th scope="col">60%</th><th scope="col">Wider</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">{qLabel(A.start, A.end)}</th><td colspan="4">Announced by LTA: {fmtN(A.monthly)}</td></tr>
+        {SC.map((r) => (<tr><th scope="row">{qLabel(r.start, r.end)}</th><td>{round100(r.r30)}</td><td>{round100(r.r45)}</td><td>{round100(r.r60)}</td><td>{round100(r.lo)}&ndash;{round100(r.hi)}</td></tr>))}
+      </tbody>
+    </table>
+  </details>
+
+  <div class="coe-notes">
+    <p>Our scenario arithmetic, not an LTA forecast. Each quota quarter uses the previous twelve months
+    of modelled deregistrations, as LTA&rsquo;s allocation does; about 10% goes to the open category. Shared
+    inputs: about {round100(COE.tool.otherExits)} other exits a year (2023&ndash;2025 average), {fmtN(COE.tool.netting)} a year deducted for certificates LTA has already brought forward, no new
+    injections, zero vehicle growth. The band crosses the 2016&ndash;2025 extremes of renewal and other
+    exits with and without that deduction. History: data.gov.sg and LTA results; age groups: LTA table at 30 September 2026.</p>
+    <ToolBrand />
+  </div>
+</div>
+
+<script>
+  // Switch between the full record and the closer view. Both views are in the page; this
+  // only flips which one is shown and keeps aria-pressed in step.
+  document.querySelectorAll<HTMLElement>('[data-coe-range]').forEach((card) => {
+    const buttons = card.querySelectorAll<HTMLButtonElement>('[data-range]');
+    const views = card.querySelectorAll<HTMLElement>('[data-view]');
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      const key = b.dataset.range;
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      views.forEach((v) => { v.hidden = v.dataset.view !== key; });
+    }));
+  });
+</script>

@@ -1,0 +1,139 @@
+---
+// COE premiums above Singapore's unemployment rate, quarterly, on one time axis.
+// Observed history only. Premium: quarterly average of the monthly bidding results,
+// all three months required (no value for April to June 2020). Unemployment: total
+// rate, seasonally adjusted, end of quarter. Each quarter is plotted at its middle
+// month (1Q -> Feb, 2Q -> May, 3Q -> Aug, 4Q -> Nov; months 1-indexed as written).
+// Numbered markers flag the three rises in unemployment; they mark timing only.
+// Data and the asserted figures come from the pre-registered jobs test via coeData.ts.
+import './coe.css';
+import ToolBrand from '../ToolBrand.astro';
+import { COE } from './coeData';
+import { mi, scales, segments, fmtN } from './chart';
+
+const J = COE.jobs;
+const R = J.rows; // [quarter 'YYYYQn', Cat A S$, Cat B S$, unemployment %]
+const mid = (q: string) => `${q.slice(0, 4)}-${String(Number(q.slice(5)) * 3 - 1).padStart(2, '0')}`;
+const X0 = '2002-04', X1 = '2026-09';
+const P = scales(X0, X1, 0, 150000);
+const U = scales(X0, X1, 0, 5);
+const ptsA = segments(R.map((r) => [mi(mid(r[0])), r[1]]), P.X, P.Y);
+const ptsB = segments(R.map((r) => [mi(mid(r[0])), r[2]]), P.X, P.Y);
+const ptsU = segments(R.map((r) => [mi(mid(r[0])), r[3]]), U.X, U.Y);
+const PGRID = [0, 50000, 100000, 150000];
+const UGRID = [0, 1, 2, 3, 4, 5];
+const ULAB = [0, 2, 4];
+const YEARS = [2004, 2008, 2012, 2016, 2020, 2024];
+const gap = { a: P.xm('2020-04'), b: P.xm('2020-07') };
+const uAt = (q: string) => (R.find((r) => r[0] === q) as readonly [string, number | null, number | null, number])[3];
+const EVENTS = [
+  { n: 1, q: '2003Q3', text: `2003: unemployment reaches ${J.uPeak.u}%, the highest here. COE prices drift lower as more certificates come out.` },
+  { n: 2, q: '2009Q3', text: `2009: unemployment reaches ${J.u2009}%. Category A averages S$${fmtN(J.pA2009Q1)} in the first quarter, then recovers while unemployment is still high.` },
+  { n: 3, q: '2020Q3', text: `2020: unemployment reaches ${J.u2020}%. COE prices rise, from S$${fmtN(J.pA2020Q1)} for Category A in the first quarter to S$${fmtN(J.pA2020Q4)} in the fourth.` },
+];
+const last = R[R.length - 1];
+// Yearly summary for the table: mean of the quarterly premiums with data, and the highest
+// quarter-end unemployment rate in the year. First and last years are partial.
+const YNOTE: Record<string, string> = { '2002': ' (Apr–Dec)', '2020': ' (no bidding Apr–Jun)', [last[0].slice(0, 4)]: ' (Jan–Sep)' };
+const mean = (v: (number | null)[]) => { const n = v.filter((x): x is number => x !== null); return n.reduce((s, x) => s + x, 0) / n.length; };
+const YEARLY = [...new Set(R.map((r) => r[0].slice(0, 4)))].map((y) => {
+  const rows = R.filter((r) => r[0].startsWith(y));
+  return { y, a: mean(rows.map((r) => r[1])), b: mean(rows.map((r) => r[2])), u: Math.max(...rows.map((r) => r[3])) };
+});
+---
+
+<div class="coe" data-card="figure">
+  <div class="coe-head">
+    <span class="coe-lbl">COE prices fell sharply with unemployment only once, in 2009</span>
+    <span class="coe-sub">April 2002 to September 2026 &middot; quarterly &middot; observed results only, nothing projected</span>
+  </div>
+
+  <div class="coe-key">
+    <span class="coe-k"><i class="coe-sw a"></i>Category A premium (Cat A)</span>
+    <span class="coe-k"><i class="coe-sw b"></i>Category B premium (Cat B)</span>
+    <span class="coe-k"><i class="coe-sw jobs"></i>Unemployment rate</span>
+  </div>
+
+  <div class="coe-body">
+    <div class="coe-panel">
+      <p class="coe-ptitle">Price <span>&middot; S$ per COE, quarterly average</span></p>
+      <div class="coe-chart">
+        <div class="coe-ycol" aria-hidden="true">
+          {PGRID.map((g) => (<span style={`top:${P.Y(g)}%`}>{g === 0 ? '0' : `${g / 1000}k`}</span>))}
+        </div>
+        <div class="coe-plot hp" role="img"
+             aria-label={`Quarterly average COE premiums, April 2002 to September 2026. Category A fell to S$${fmtN(J.pA2009Q1)} in the first quarter of 2009, rose from S$${fmtN(J.pA2020Q1)} to S$${fmtN(J.pA2020Q4)} during 2020, and averaged S$${fmtN(last[1] ?? 0)} in the third quarter of 2026. Category B follows a similar path.`}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <rect x={gap.a} y="0" width={gap.b - gap.a} height="100" fill="#EEEAE1" />
+            {PGRID.map((g) => (<line x1="0" x2="100" y1={P.Y(g)} y2={P.Y(g)} stroke="#E6E1D6" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {YEARS.map((y) => (<line x1={P.xm(`${y}-01`)} x2={P.xm(`${y}-01`)} y1="0" y2="100" stroke="#EFEBE3" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {EVENTS.map((e) => (<line x1={P.xm(mid(e.q))} x2={P.xm(mid(e.q))} y1="0" y2="100" stroke="#9AA3AD" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />))}
+            {ptsB.map((s) => (<polyline points={s} fill="none" stroke="#A5661A" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke" />))}
+            {ptsA.map((s) => (<polyline points={s} fill="none" stroke="#0B1D33" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke" />))}
+          </svg>
+          <span class="coe-dl b" style={`left:${P.xm('2011-01')}%;top:${P.Y(100000)}%`} aria-hidden="true">Cat B</span>
+          <span class="coe-dl a" style={`right:6px;top:${P.Y(62000)}%`} aria-hidden="true">Cat A</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="coe-panel tight">
+      <p class="coe-ptitle">Unemployment <span>&middot; % of the labour force, end of quarter, seasonally adjusted</span></p>
+      <div class="coe-chart">
+        <div class="coe-ycol" aria-hidden="true">
+          {ULAB.map((g) => (<span style={`top:${U.Y(g)}%`}>{`${g}%`}</span>))}
+        </div>
+        <div class="coe-plot hs" role="img"
+             aria-label={`Singapore's total unemployment rate, seasonally adjusted, end of quarter, April 2002 to September 2026. It peaked at ${J.uPeak.u}% in the third quarter of 2003, reached ${J.u2009}% in 2009 and ${J.u2020}% in the third quarter of 2020, and was ${last[3]}% in the third quarter of 2026.`}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <rect x={gap.a} y="0" width={gap.b - gap.a} height="100" fill="#EEEAE1" />
+            {UGRID.map((g) => (<line x1="0" x2="100" y1={U.Y(g)} y2={U.Y(g)} stroke="#E6E1D6" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {YEARS.map((y) => (<line x1={U.xm(`${y}-01`)} x2={U.xm(`${y}-01`)} y1="0" y2="100" stroke="#EFEBE3" stroke-width="1" vector-effect="non-scaling-stroke" />))}
+            {EVENTS.map((e) => (<line x1={U.xm(mid(e.q))} x2={U.xm(mid(e.q))} y1={U.Y(uAt(e.q))} y2="100" stroke="#9AA3AD" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />))}
+            {ptsU.map((s) => (<polyline points={s} fill="none" stroke="#7A3E8E" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />))}
+          </svg>
+          {EVENTS.map((e) => {
+            // A point in the top third has no room above it on a phone: put the marker to its right instead.
+            const x = U.xm(mid(e.q)), y = U.Y(uAt(e.q));
+            const pos = y < 34 ? `left:calc(${x}% + 16px);top:max(3px, calc(${y}% - 9px))` : `left:${x}%;top:calc(${y}% - 24px)`;
+            return (<span class="coe-mark" style={pos} aria-hidden="true">{e.n}</span>);
+          })}
+        </div>
+        <div class="coe-x" aria-hidden="true">
+          {YEARS.map((y) => (<span style={`left:${U.xm(`${y}-01`)}%`}>{y}</span>))}
+        </div>
+      </div>
+    </div>
+
+    <ol class="coe-events">
+      {EVENTS.map((e) => (<li data-n={e.n}>{e.text}</li>))}
+    </ol>
+  </div>
+
+  <div class="coe-out">
+    <p><b>Unemployment rose three times in these twenty-four years. Only in 2009 did COE prices fall
+    sharply with it.</b> In 2020 they rose, as fewer certificates came out.</p>
+  </div>
+
+  <details class="coe-data">
+    <summary>Show the numbers: yearly figures</summary>
+    <table>
+      <caption>Average COE premium, and the highest end-of-quarter unemployment rate, by year</caption>
+      <thead><tr><th scope="col">Year</th><th scope="col">Cat A, S$</th><th scope="col">Cat B, S$</th><th scope="col">Jobless, %</th></tr></thead>
+      <tbody>
+        {YEARLY.map((r) => (<tr><th scope="row">{r.y}{YNOTE[r.y] ?? ''}</th><td>{fmtN(r.a)}</td><td>{fmtN(r.b)}</td><td>{r.u.toFixed(1)}</td></tr>))}
+      </tbody>
+    </table>
+  </details>
+
+  <div class="coe-notes">
+    <p>Unemployment: Ministry of Manpower, total unemployment rate, seasonally adjusted, end of quarter,
+    from SingStat Table Builder, updated 30 October 2026. COE: our quarterly averages of LTA bidding
+    results; no bidding in April to June 2020. Markers show timing only and do not measure an effect.</p>
+    <ToolBrand />
+  </div>
+</div>
+
+<style is:global>
+.coe-sw.jobs{background:#7A3E8E}
+</style>

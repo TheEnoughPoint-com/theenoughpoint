@@ -1,0 +1,124 @@
+---
+// Renew for five years, renew for ten, or replace: cost per year kept, from the
+// reader's own figures. Arithmetic only, with no interest and no verdict:
+//
+//   Renew 10 years = (PQP + PARF given up) / 10 + extra repairs a year
+//   Renew 5 years  = (50% of PQP + PARF given up) / 5 + extra repairs a year
+//   Replace        = (all-in price - PARF at age ten) / 10
+//
+// PARF given up: a car reaching ten now is on a COE from before February 2023, so
+// deregistering at nine to ten years returns 50% of the ARF paid, with no cap. Renewing
+// gives that up. The replacement, on a COE from February 2026, gets 5% of its ARF at
+// nine to ten years, capped at S$30,000. Rules per LTA OneMotoring, checked 5 Nov 2026.
+// PQP defaults are LTA's November 2026 figures, reproduced in the data script.
+import './coe.css';
+import ToolBrand from '../ToolBrand.astro';
+import { COE } from './coeData';
+import { fmtN } from './chart';
+
+const Q = COE.pqp;
+const cfg = JSON.stringify({ A: Q.A, B: Q.B });
+const DEF = { arf: 20000, rep: 1500, price: 180000, newArf: 25000 };
+const pm = new Date(Number(Q.month.slice(0, 4)), Number(Q.month.slice(5, 7)) - 1, 1)
+  .toLocaleString('en-GB', { month: 'long', year: 'numeric' }); // JS months are 0-indexed: subtract 1
+---
+
+<div class="coe coe-tool coe-rt" data-card="tool" data-coe-renew data-cfg={cfg}>
+  <div class="coe-head row">
+    <span>
+      <span class="coe-lbl">Renew or replace: the cost of each year you keep a car</span>
+      <span class="coe-sub">Your own figures &middot; prefilled with {pm} renewal prices and example values</span>
+    </span>
+    <span class="coe-live card-live">Interactive</span>
+  </div>
+
+  <div class="coe-body">
+    <div class="coe-range rt-cat" role="group" aria-label="COE category of your car">
+      <button type="button" data-cat="A" aria-pressed="true">Category A</button>
+      <button type="button" data-cat="B" aria-pressed="false">Category B</button>
+    </div>
+
+    <div class="rt-grid">
+      <label class="rt-f"><span class="rt-l">Renewal price (PQP), S$</span>
+        <input type="number" inputmode="numeric" min="0" step="100" value={Q.A} data-in="pqp" />
+        <span class="rt-h">LTA&rsquo;s {pm} figure for your category; change it to the month you expect</span></label>
+      <label class="rt-f"><span class="rt-l">ARF you paid on this car, S$</span>
+        <input type="number" inputmode="numeric" min="0" step="500" value={DEF.arf} data-in="arf" />
+        <span class="rt-h">On the car&rsquo;s registration papers. Example value</span></label>
+      <label class="rt-f"><span class="rt-l">Extra repairs a year if you keep it, S$</span>
+        <input type="number" inputmode="numeric" min="0" step="100" value={DEF.rep} data-in="rep" />
+        <span class="rt-h">Your estimate. Example value</span></label>
+      <label class="rt-f"><span class="rt-l">Replacement car, all-in price, S$</span>
+        <input type="number" inputmode="numeric" min="0" step="1000" value={DEF.price} data-in="price" />
+        <span class="rt-h">Car, COE and ARF together. Example value</span></label>
+      <label class="rt-f"><span class="rt-l">Replacement car&rsquo;s ARF, S$</span>
+        <input type="number" inputmode="numeric" min="0" step="500" value={DEF.newArf} data-in="narf" />
+        <span class="rt-h">Sets its smaller rebate at age ten. Example value</span></label>
+    </div>
+
+    <ul class="coe-cmp rt-out" aria-live="polite">
+      <li><span class="nm">Renew for 10 years<br /><em>cash now <span data-out="c10"></span></em></span><span class="tr"><i class="bar you" data-bar="r10"></i><span class="v" data-out="r10"></span></span></li>
+      <li><span class="nm">Renew for 5 years<br /><em>cash now <span data-out="c5"></span></em></span><span class="tr"><i class="bar ann" data-bar="r5"></i><span class="v" data-out="r5"></span></span></li>
+      <li><span class="nm">Replace the car<br /><em>cash now <span data-out="cr"></span></em></span><span class="tr"><i class="bar pk" data-bar="rp"></i><span class="v" data-out="rp"></span></span></li>
+    </ul>
+    <p class="rt-k">Cost per year kept, S$. Cash now for replacing is the price less the rebate on your current car.</p>
+  </div>
+
+  <div class="coe-notes">
+    <p>Renewing: (PQP, or half of it for five years, plus the PARF rebate you give up, 50% of your ARF)
+    spread over the years kept, plus extra repairs. Replacing: (all-in price less the new car&rsquo;s
+    rebate at ten, 5% of its ARF up to S$30,000) over ten years. Left out: interest, insurance, road tax,
+    fuel, and any scrap or export value. A five-year renewal cannot be repeated, so at about fifteen the
+    car must go. Arithmetic on your inputs, not a recommendation.</p>
+    <ToolBrand />
+  </div>
+</div>
+
+<style is:global>
+.coe-rt .rt-cat{padding:0 0 14px}
+.rt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;margin:0 0 16px}
+@media (max-width:560px){.rt-grid{grid-template-columns:minmax(0,1fr)}}
+.rt-f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.rt-l{font-size:13px;font-weight:600;color:var(--color-dark);line-height:1.35}
+.rt-f input{font-family:var(--font-mono),Menlo,Consolas,monospace;font-size:16px;padding:8px 10px;min-height:40px;
+  border:1px solid var(--color-border);border-radius:6px;background:#fff;color:var(--color-dark);width:100%;box-sizing:border-box}
+.rt-f input:focus-visible{outline:2px solid #1E62B5;outline-offset:1px}
+.rt-h{font-size:11.5px;color:var(--color-muted);line-height:1.35}
+.coe-rt .bar.you{background:#1E62B5}
+.coe-rt .bar.ann{background:#0B1D33}
+.coe-rt .bar.pk{background:#AAB3BE}
+.post-content .coe-cmp.rt-out li{grid-template-columns:minmax(0,9.5em) minmax(0,1fr)}
+.post-content .coe-rt p.rt-k{font-size:12px;color:var(--color-muted);margin:8px 0 4px;line-height:1.45}
+</style>
+
+<script is:inline>
+(function () {
+  document.querySelectorAll('[data-coe-renew]').forEach(function (root) {
+    var c = JSON.parse(root.getAttribute('data-cfg'));
+    var get = function (k) { return root.querySelector('[data-in="' + k + '"]'); };
+    var num = function (k) { var v = Number(get(k).value); return isFinite(v) && v > 0 ? v : 0; };
+    var fmt = function (v) { return 'S$' + Math.round(v).toLocaleString('en-SG'); };
+    var out = function (k, v) { root.querySelector('[data-out="' + k + '"]').textContent = fmt(v); };
+    function run() {
+      var pqp = num('pqp'), parf = 0.5 * num('arf'), rep = num('rep'), price = num('price');
+      var endNew = Math.min(0.05 * num('narf'), 30000);
+      var r10 = (pqp + parf) / 10 + rep, r5 = (0.5 * pqp + parf) / 5 + rep, rp = Math.max(price - endNew, 0) / 10;
+      var max = Math.max(r10, r5, rp, 1);
+      out('r10', r10); out('r5', r5); out('rp', rp);
+      out('c10', pqp); out('c5', 0.5 * pqp); out('cr', Math.max(price - parf, 0));
+      [['r10', r10], ['r5', r5], ['rp', rp]].forEach(function (p) {
+        root.querySelector('[data-bar="' + p[0] + '"]').style.width = (p[1] / max) * 62 + '%';
+      });
+    }
+    root.querySelectorAll('[data-cat]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        root.querySelectorAll('[data-cat]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        get('pqp').value = String(c[b.getAttribute('data-cat')]);
+        run();
+      });
+    });
+    root.querySelectorAll('input').forEach(function (el) { el.addEventListener('input', run); });
+    run();
+  });
+})();
+</script>
